@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Page 0</title>
+    <style> 
+      .bg-orange {
+        background-color: rgb(255, 162, 0) !important;
+      }
+      .bg-rouge {
+        background-color: rgba(255, 0, 0, 0.781) !important;
+      }
+	</style>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Librairie mathjax -->
+    <script src="https://polyfill.io/v3/polyfill.js?features=es6"></script>
+    
+    <!-- Configuration de MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+
+    <!-- Librairie mathjax -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>    
+  </head>
+
+  <body>
+      <!-- Entete -->
+      <div class="container-fluid bg-rouge p-3 m-3 d-grid place-items-start" style="width: 400px;">
+        <h1 id="idNumExercice"></h1>
+        <h3 id="idAuteur"><h3>
+        <h4 id="idDate"></h4>
+      </div>
+      
+      <div class="container p-1 m-4 d-grid place-items-start">
+        <div class="row">
+
+          <div class="col-sm-8 bg-orange mb-3">
+            <h4>Enoncé : </h4>
+            <p id="idEnonce"></p>
+          </div>
+        </div>
+
+        <div class="row">  
+          <div class="col-sm-8 bg-orange mb-3">
+            <h4 id="idIndications"></h4>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-sm-8 bg-orange">
+            <h4 id="idCorrection"></h4>
+          </div>
+        </div>
+      
+      </div>
+    <script>
+        // Exercice 23 codé en dur
+        var exercice = 
+`\exercice{23, ridde, 1999/11/01}
+
+\enonce
+Mettre sous forme trigonom\'etrique $1 + e^{i\theta}$ où $\theta \in ]-\pi,\pi [$.
+Donner une interpr\'etation g\'eom\'etrique.
+
+\finenonce
+
+\noindication
+
+\correction
+$$1+e^{i\theta}= e^{\frac{i\theta}{2}}(e^{-\frac{i\theta}{2}}+e^{\frac{i\theta}{2}})
+=2\cos \frac{\theta}{2} e^{\frac{i\theta}{2}}.$$
+Comme $\theta \in ]-\pi,+\pi[$ alors
+  le module est 
+$2\cos \frac{\theta}{2} \geq 0$ et l'argument
+est $\frac{\theta}{2}$.
+Géométriquement,  on trace le cercle de centre $1$ et de rayon
+$1$. L'angle en $0$ du triangle $(0,1,1+e^{i\theta})$ est
+$\frac{\theta}{2}$ et donc est le double de l'angle en $0$
+du triangle $(0,2,1+e^{i\theta})$ qui vaut $\theta$.
+
+C'est le résulat géométrique (théorème de l'angle au centre)
+qui affirme que pour un cercle l'angle au centre est le double de l'angle inscrit.
+\fincorrection
+
+\finexercice`;
+        var entete = exercice.split("\exercice")[0];
+        var enonce = exercice.split("\enonce")[0];
+        var indication = exercice[1][1].split("")
+        exercice.split("\exercice")
+        const numExercice = "23";
+        const auteur = "ridde";
+        const date = "1999/11/01";
+        document.getElementById("idNumExercice").innerHTML = "Exercice " + numExercice;
+        document.getElementById("idAuteur").innerHTML = "Auteur : " + auteur;
+        document.getElementById("idDate").innerHTML = "Le : " + date;
+        
+    
+
+        document.getElementById("idEnonce").innerHTML = `Mettre sous forme trigonom\'etrique $1 + e^{i\theta}$ où $\theta \in ]-\pi,\pi [$.
+            Donner une interpr\'etation g\'eom\'etrique.`.replace(/\'e/g, "é");
+
+        const indication = "noindication";
+        document.getElementById("idIndications").innerHTML = "Indications : <br>";
+
+        const correction = `$$1+e^{i\theta}= e^{\frac{i\theta}{2}}(e^{-\frac{i\theta}{2}}+e^{\frac{i\theta}{2}})
+                                =2\cos \frac{\theta}{2} e^{\frac{i\theta}{2}}.$$
+                                Comme $\theta \in ]-\pi,+\pi[$ alors
+                                le module est 
+                                $2\cos \frac{\theta}{2} \geq 0$ et l'argument
+                                est $\frac{\theta}{2}$.
+                                Géométriquement,  on trace le cercle de centre $1$ et de rayon
+                                $1$. L'angle en $0$ du triangle $(0,1,1+e^{i\theta})$ est
+                                $\frac{\theta}{2}$ et donc est le double de l'angle en $0$
+                                du triangle $(0,2,1+e^{i\theta})$ qui vaut $\theta$.
+
+                                C'est le résulat géométrique (théorème de l'angle au centre)
+                                qui affirme que pour un cercle l'angle au centre est le double de l'angle inscrit.`;
+
+        document.getElementById("idCorrection").innerHTML = "Correction : <br>" + correction;
+
+        function greet() {
+            console.log("Javascript started!");
+        }
+        greet();
+
+    </script>
+  </body>
+</html>
