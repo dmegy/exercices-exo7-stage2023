@@ -110,6 +110,7 @@
         <button class="waves-effect waves-light btn" href="javascript:void(0);" onClick="copier()">Copier l'URL dans
           le presse-papier</button>
         <button class="waves-effect waves-light btn" onclick="addToFavorites()">Ajouter aux favoris</button>
+        <button class="waves-effect waves-light btn" onclick="partagerPlanche()">Partager la planche</button>
       </div>
     </div>
   </div>
@@ -187,8 +188,8 @@
     basDroit = document.getElementById("txt-module").value;
     titre = document.getElementById("txt-titre").value;
 
-    // update titre de la page avec le titre la liste d'exercices le haut gauche et le haut droit le bas gauche et le bas droit
-    document.title = "Exo7 | Feuille d'exercices | " + document.getElementById("txt-titre").value + " | exos : " + document.getElementById("maListe").value + " | " + document.getElementById("txt-annee").value + " | " + document.getElementById("txt-num").value + " | " + document.getElementById("txt-univ").value + " | " + document.getElementById("txt-module").value;
+    // update titre de la page avec le titre la liste d'exercices 
+    document.title = "Exo7 : planche " + document.getElementById("txt-titre").value + " | exos " + document.getElementById("maListe").value;
 
     // planche.html?liste=10+13-15&titre=mon%20titre&hautgauche=blabla&hautdroite=paf&basgauche=hello&basdroite=blabla
 
@@ -240,5 +241,13 @@
 
     alert("Appuyez sur Ctrl+D (ou Cmd+D pour Mac) pour ajouter cette page aux favoris.");
 
+  }
+
+  function partagerPlanche() {
+    var subject = "Planche d'exercices"; // Sujet de l'email
+    var body = "Lien vers la planche d'exercices \"" + document.title + "\", " + window.location.href; // Corps de l'email
+    var mailtoLink = "mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body); // URL mailto
+
+    window.location.href = mailtoLink; // Ouvre le client mail de l'utilisateur avec le nouvel email pré-rempli
   }
 </script>
