@@ -2,15 +2,8 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Page 0</title>
-    <style> 
-      .bg-orange {
-        background-color: rgb(255, 162, 0) !important;
-      }
-      .bg-rouge {
-        background-color: rgba(255, 0, 0, 0.781) !important;
-      }
-	</style>
+    <title>Page sans fetch sans parsage</title>
+
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Librairie mathjax -->
@@ -35,81 +28,92 @@
   </head>
 
   <body>
+    <div class="container-fluid">
       <!-- Entete -->
-      <div class="container-fluid bg-rouge p-3 m-3 d-grid place-items-start" style="width: 400px;">
-        <h1 id="idNumExercice"></h1>
-        <h3 id="idAuteur"><h3>
-        <h4 id="idDate"></h4>
-      </div>
-      
-      <div class="container p-1 m-4 d-grid place-items-start">
-        <div class="row">
+      <h1 id="idNumExercice"></h1>
+      <h3 id="idAuteur"><h3>
+      <h4 id="idDate"></h4>
+      <br>
+      <br>
+      <h4>Enoncé : </h4>
+      <p id="idEnonce"></p>
+      <br>
+      <h4>Indications : </h4>
+      <p id="idIndications"></p>
+      <br>
+      <h4>Correction : </h4>
+      <p id="idCorrection"></p> 
+            
+    </div>
 
-          <div class="col-sm-8 bg-orange mb-3">
-            <h4>Enoncé : </h4>
-            <p id="idEnonce"></p>
-          </div>
-        </div>
-
-        <div class="row">  
-          <div class="col-sm-8 bg-orange mb-3">
-            <h4 id="idIndications"></h4>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-sm-8 bg-orange">
-            <h4 id="idCorrection"></h4>
-          </div>
-        </div>
-      
-      </div>
     <script>
+      // Remplace tous les  \'[lettre]  par la lettre avec accent
+      function replaceAccents(chaine) {
+        const accents = [String.raw`\\'e`, String.raw`\\\`e`, String.raw`\\\^e`, String.raw`\\"e`,
+                        String.raw`\\\`a`, String.raw`\\\^a`, String.raw`\\\^i`, String.raw`\\"i`,
+                        String.raw`\\\^o`, String.raw`\\"o`, String.raw`\\\^u`, String.raw`\\"u`];
+
+          // Flag 'g' pour remplacer toutes les occurrences.
+          const exp_reg0 = new RegExp(accents[0], 'g');
+          chaine = chaine.replace(exp_reg0, "é");
+          
+          const exp_reg1 = new RegExp(accents[1], 'g');
+          chaine = chaine.replace(exp_reg1, "è");
+
+          const exp_reg2 = new RegExp(accents[2], 'g');
+          chaine = chaine.replace(exp_reg2, "ê");
+
+          const exp_reg3 = new RegExp(accents[3], 'g');
+          chaine = chaine.replace(exp_reg3, "ë");
+
+          const exp_reg4 = new RegExp(accents[4], 'g');
+          chaine = chaine.replace(exp_reg4, "à");
+
+          const exp_reg5 = new RegExp(accents[5], 'g');
+          chaine = chaine.replace(exp_reg5, "â");
+
+          const exp_reg6 = new RegExp(accents[6], 'g');
+          chaine = chaine.replace(exp_reg6, "î");
+
+          const exp_reg7 = new RegExp(accents[7], 'g');
+          chaine = chaine.replace(exp_reg7, "ï");
+
+          const exp_reg8 = new RegExp(accents[8], 'g');
+          chaine = chaine.replace(exp_reg8, "ô");
+
+          const exp_reg9 = new RegExp(accents[9], 'g');
+          chaine = chaine.replace(exp_reg9, "ö");
+
+          const exp_reg10 = new RegExp(accents[10], 'g');
+          chaine = chaine.replace(exp_reg10, "û");
+
+          const exp_reg11 = new RegExp(accents[11], 'g');
+          chaine = chaine.replace(exp_reg11, "ü");
+          return chaine;
+      } 
+
         // Exercice 23 codé en dur
-        var exercice = 
-`\exercice{23, ridde, 1999/11/01}
+        var numExercice = "23";
+        var auteur = String.raw`ridde`;
+        auteur = replaceAccents(auteur);
+        var date = "1999/11/01";
 
-\enonce
-Mettre sous forme trigonom\'etrique $1 + e^{i\theta}$ où $\theta \in ]-\pi,\pi [$.
-Donner une interpr\'etation g\'eom\'etrique.
-
-\finenonce
-
-\noindication
-
-\correction
-$$1+e^{i\theta}= e^{\frac{i\theta}{2}}(e^{-\frac{i\theta}{2}}+e^{\frac{i\theta}{2}})
-=2\cos \frac{\theta}{2} e^{\frac{i\theta}{2}}.$$
-Comme $\theta \in ]-\pi,+\pi[$ alors
-  le module est 
-$2\cos \frac{\theta}{2} \geq 0$ et l'argument
-est $\frac{\theta}{2}$.
-Géométriquement,  on trace le cercle de centre $1$ et de rayon
-$1$. L'angle en $0$ du triangle $(0,1,1+e^{i\theta})$ est
-$\frac{\theta}{2}$ et donc est le double de l'angle en $0$
-du triangle $(0,2,1+e^{i\theta})$ qui vaut $\theta$.
-
-C'est le résulat géométrique (théorème de l'angle au centre)
-qui affirme que pour un cercle l'angle au centre est le double de l'angle inscrit.
-\fincorrection
-
-\finexercice`;
-        const numExercice = "23";
-        const auteur = "ridde";
-        const date = "1999/11/01";
         document.getElementById("idNumExercice").innerHTML = "Exercice " + numExercice;
         document.getElementById("idAuteur").innerHTML = "Auteur : " + auteur;
         document.getElementById("idDate").innerHTML = "Le : " + date;
         
-    
+        // Enonce
+        var enonce = String.raw`Mettre sous forme trigonom\'etrique $1 + e^{i\theta}$ où $\theta \in ]-\pi,\pi [$.
+            Donner une interpr\'etation g\'eom\'etrique.`
+        enonce = replaceAccents(enonce);
+        document.getElementById("idEnonce").innerHTML = enonce;
 
-        document.getElementById("idEnonce").innerHTML = `Mettre sous forme trigonom\'etrique $1 + e^{i\theta}$ où $\theta \in ]-\pi,\pi [$.
-            Donner une interpr\'etation g\'eom\'etrique.`.replace(/\'e/g, "é");
+        // Indications
+        var indications = "";
+        document.getElementById("idIndications").innerHTML = indications;
 
-        const indication = "noindication";
-        document.getElementById("idIndications").innerHTML = "Indications : <br>";
-
-        const correction = `$$1+e^{i\theta}= e^{\frac{i\theta}{2}}(e^{-\frac{i\theta}{2}}+e^{\frac{i\theta}{2}})
+        // Correction
+        var correction = String.raw`$$1+e^{i\theta}= e^{\frac{i\theta}{2}}(e^{-\frac{i\theta}{2}}+e^{\frac{i\theta}{2}})
                                 =2\cos \frac{\theta}{2} e^{\frac{i\theta}{2}}.$$
                                 Comme $\theta \in ]-\pi,+\pi[$ alors
                                 le module est 
@@ -122,13 +126,8 @@ qui affirme que pour un cercle l'angle au centre est le double de l'angle inscri
 
                                 C'est le résulat géométrique (théorème de l'angle au centre)
                                 qui affirme que pour un cercle l'angle au centre est le double de l'angle inscrit.`;
-
-        document.getElementById("idCorrection").innerHTML = "Correction : <br>" + correction;
-
-        function greet() {
-            console.log("Javascript started!");
-        }
-        greet();
+        correction = replaceAccents(correction);
+        document.getElementById("idCorrection").innerHTML = correction;
 
     </script>
   </body>
