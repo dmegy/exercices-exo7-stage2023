@@ -109,7 +109,7 @@
           <a href="javascript:void(0);" onClick="copier()">Copier l'URL dans le presse-papier</a>
           <span> (Vous pouvez aussi mettre cette page en favori.)</span>
 
-          <button onclick="updateUrl()">Mettre à jour l'URL</button>
+          <button onclick="fav()">Ajouter aux favoris</button>
 
         </form>
       </div>
@@ -117,6 +117,8 @@
   </div>
 
 </body>
+
+</html>
 
 <script type="text/javascript">
 
@@ -127,9 +129,7 @@
   let basGauche = "";
   let basDroit = "";
   let maListePlus = "";
-  //const racine = "https://phil1010.github.io/exercices-exo7/plancheURLDynamique.html";
-  let loc = document.location;
-  const racine = loc.origin+loc.pathname;
+  const racine = window.location.origin + window.location.pathname;
   let permalien = racine;
 
   /*
@@ -137,13 +137,13 @@
   */
   function recupListeURL() {
     // récupération des variables dans l'URL
-    var urlParams = new URLSearchParams(window.location.search);
-    var url_liste = urlParams.get("liste");
-    var url_titre = urlParams.get("titre");
-    var url_hg = urlParams.get("hautgauche");
-    var url_hd = urlParams.get("hautdroite");
-    var url_bg = urlParams.get("basgauche");
-    var url_bd = urlParams.get("basdroite");
+    let urlParams = new URLSearchParams(window.location.search);
+    let url_liste = urlParams.get("liste");
+    let url_titre = urlParams.get("titre");
+    let url_hg = urlParams.get("hautgauche");
+    let url_hd = urlParams.get("hautdroite");
+    let url_bg = urlParams.get("basgauche");
+    let url_bd = urlParams.get("basdroite");
 
     // Remplissage des champs du formulaire
     if (url_liste != null) {
@@ -172,7 +172,7 @@
 
 
   function copier() {
-    var copyText = document.getElementById("permalien");
+    let copyText = document.getElementById("permalien");
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     document.execCommand("copy");
@@ -226,16 +226,8 @@
   }
 
   function getLien() {
-    var lien = document.getElementById("permalien").value;
+    let lien = document.getElementById("permalien").value;
   }
 
-  function updateUrl() {
-    // Récupérer l'URL souhaitée
-    var newUrl = '/' + document.getElementById("permalien").value;
-    var firstPart = newUrl.split('/')[0] + '//' + newUrl.split('/')[2];
-    window.history.pushState({}, '', newUrl);
-  }
 
 </script>
-
-</html>
