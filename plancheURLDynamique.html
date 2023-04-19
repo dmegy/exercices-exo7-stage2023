@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -126,7 +127,9 @@
   let basGauche = "";
   let basDroit = "";
   let maListePlus = "";
-  const racine = "https://phil1010.github.io/exercices-exo7/plancheURLDynamique.html";
+  //const racine = "https://phil1010.github.io/exercices-exo7/plancheURLDynamique.html";
+  let loc = document.location;
+  const racine = loc.origin+loc.pathname;
   let permalien = racine;
 
   /*
