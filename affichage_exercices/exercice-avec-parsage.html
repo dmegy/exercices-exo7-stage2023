@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Page sans fetch sans parsage</title>
+    <title>exo20/8 avec parsage</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,8 +12,8 @@
     <!-- Configuration de MathJax -->
     <script>
         MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            tex: {    
+              inlineMath: [['$', '$'], ['\\(', '\\)']]
             },
             svg: {
                 fontCache: 'global'
@@ -28,24 +28,6 @@
   </head>
 
   <body>
-    <div class="container-fluid">
-      <!-- Entete -->
-      <h1 id="num"></h1>
-      <h3 id="auteur"><h3>
-      <h4 id="date"></h4>
-      <br>
-      <br>
-      <h4>Enoncé : </h4>
-      <p id="enonce"></p>
-      <br>
-      <h4>Indication : </h4>
-      <p id="indication"></p>
-      <br>
-      <h4>Correction : </h4>
-      <p id="correction"></p> 
-            
-    </div>
-
     <script>
       // Remplace tous les  \'[lettre]  par la lettre avec accent
       function replaceAccents(chaine) {
@@ -82,102 +64,145 @@
       } 
 
 
-
-
       // différents exemples d'exos pour test.
-
+      // NOTE : ne pas ajouter d'indentation manuellement après copier-coller.
     let exo20 = String.raw`\exercice{20, bodin, 1998/09/01}
-        \video{8nXKgqMsucU}
-        \enonce
-         Soit $z$ un nombre complexe de module $\rho$,
-        d'argument $\theta$, et soit $\overline{z}$ son conjugu\'e.
-        Calculer
-        $(z+\overline{z})(z^2+\overline{z}^2)\ldots(z^n+\overline{z}^n)$
-        en fonction de $\rho$ et $\theta$.
+\video{8nXKgqMsucU}
+\enonce
+ Soit $z$ un nombre complexe de module $\rho$,
+d'argument $\theta$, et soit $\overline{z}$ son conjugu\'e.
+Calculer
+$(z+\overline{z})(z^2+\overline{z}^2)\ldots(z^n+\overline{z}^n)$
+en fonction de $\rho$ et $\theta$.
 
-        \finenonce
+\finenonce
 
-        \indication
-        Utiliser la formule d'Euler pour faire appara\^{\i}tre des cosinus.
-        \finindication
+\indication
+Utiliser la formule d'Euler pour faire appara\^{\i}tre des cosinus.
+\finindication
 
-        \correction
-        \'Ecrivons $z = \rho e^{i\theta}$, alors $\overline{z} = \rho
-        e^{-i\theta}$. Donc
-        \begin{align*}
-        P &= \prod_{k=1}^n \left(z^k+{\overline{z}}^k \right)\\
-        &= \prod_{k=1}^n \rho^k \left(  (e^{i\theta})^k + (e^{-i\theta})^k \right)\\
-        &= \prod_{k=1}^n \rho^k \left(  e^{ik\theta} + e^{-ik\theta}) \right)\\
-        &= \prod_{k=1}^n 2 \rho^k \cos {k\theta}\\
-        &= 2^n.\rho.\rho^2.\ldots.\rho^n \prod_{k=1}^n \cos {k\theta}\\
-        &= 2^n\rho^{\frac{n(n+1)}{2}} \prod_{k=1}^n \cos {k\theta}.\\
-        \end{align*}
-        \fincorrection
-        \finexercice`;
+\correction
+\'Ecrivons $z = \rho e^{i\theta}$, alors $\overline{z} = \rho
+e^{-i\theta}$. Donc
+\begin{align*}
+P &= \prod_{k=1}^n \left(z^k+{\overline{z}}^k \right)\\
+&= \prod_{k=1}^n \rho^k \left(  (e^{i\theta})^k + (e^{-i\theta})^k \right)\\
+&= \prod_{k=1}^n \rho^k \left(  e^{ik\theta} + e^{-ik\theta}) \right)\\
+&= \prod_{k=1}^n 2 \rho^k \cos {k\theta}\\
+&= 2^n.\rho.\rho^2.\ldots.\rho^n \prod_{k=1}^n \cos {k\theta}\\
+&= 2^n\rho^{\frac{n(n+1)}{2}} \prod_{k=1}^n \cos {k\theta}.\\
+\end{align*}
+\fincorrection
+\finexercice`;
 
     let exo8 = String.raw`\exercice{8, cousquer, 2003/10/01}
-        \enonce
-         Calculer le module et l'argument des nombres complexes suivants, ainsi
-        que de leurs conjugués :
-        \begin{enumerate}
-        \item $1+i(1+\sqrt2)$.
-        \item $\sqrt{10+2\sqrt5}+i(1-\sqrt5)$.
-        \item $\frac{\tan\varphi -i}{\tan\varphi +i}$ où $\varphi$ est un angle donné.
-        \end{enumerate}
 
-        \finenonce
+\enonce
+ Calculer le module et l'argument des nombres complexes suivants, ainsi
+que de leurs conjugués :
+\begin{enumerate}
+\item $1+i(1+\sqrt2)$.
+\item $\sqrt{10+2\sqrt5}+i(1-\sqrt5)$.
+\item $\frac{\tan\varphi -i}{\tan\varphi +i}$ où $\varphi$ est un angle donné.
+\end{enumerate}
 
-        \noindication
+\finenonce
 
-        \correction
-        $\rho =\sqrt{4+2\sqrt2}$, $\theta ={3\pi \over8}$; \qquad
-        $\rho =4$, $\theta =-{\pi \over 10}$; \qquad
-        $\rho =1$, $\theta =2\varphi +\pi $.
+\noindication
 
-        \fincorrection
+\correction
+$\rho =\sqrt{4+2\sqrt2}$, $\theta ={3\pi \over8}$; \qquad 
+$\rho =4$, $\theta =-{\pi \over 10}$; \qquad
+$\rho =1$, $\theta =2\varphi +\pi $.
 
-        \finexercice`;
+\fincorrection
 
-
+\finexercice`;
 
     // initialisation des variables
-
-    let numExercice = "monNumero";
-    let auteur = String.raw`Auteur`;
-    auteur = replaceAccents(auteur);
-    let date = "maDate";
-    let [enonce, indication, correction]=["monEnonce","monIndication","maCorrection"];
-
-    // - - - - 
-    //
-    //  ICI LE PARSAGE
-    //
-    // - - - -
-
-
+    let html = numExercice = auteur = date = enonce = indication = correction = '';
     let monExo = exo8;
-    // on parse 'monExo' et on met le résultat dans les variables
+    
+    // Mots clés devant figurant dans chaque exercice 
+    var motsObligatoires= [String.raw`\exercice`, String.raw`\finexercice`, String.raw`\enonce`,String.raw`\finenonce`];
+    // Vérifie si ces mots sont présents dans le texte de l'exercice
+    var latexValide= motsObligatoires.every(item => monExo.includes(item));
 
+    if (!latexValide){ // Si non présents, exercice incorrect
+      document.write("<h2> Le code latex de l'exercice contient une erreur </h2>");
+      throw new Error("Code latex incorrect");} // Arret du script
+    
 
-    // enfin, remplacement des accents.
+    
+    //Si l'exercice est correctement écrit :
 
+    // Gestion de bug avec le tag LaTeX : \begin{enumerate}
+    var beginEnumerate = monExo.indexOf(String.raw`\begin{enumerate}`);
+    // Suppression du tag s'il est présent dans l'exercice
+    if (beginEnumerate != -1){ 
+      monExo = monExo.replaceAll(String.raw`\begin{enumerate}`, '');
+      monExo = monExo.replaceAll(String.raw`\item`, '');
+      monExo = monExo.replaceAll(String.raw`\end{enumerate}`, '');
+    }
+
+    // Récupération de l'entête
+    const debutEntete = monExo.indexOf("{");
+    const finEntete = monExo.indexOf("}");
+
+    var entete = monExo.slice(debutEntete+1, finEntete);
+    entete = entete.split(", ");
+
+    numExercice = entete[0];
+    auteur = entete[1];
+    date = entete[2];
+
+    // Récupération de vidéo
+    const debutVideo = monExo.indexOf(String.raw`\video`);
+    if (debutVideo != -1){ // S'il y a une vidéo
+      video = monExo.slice(debutVideo, debutVideo+100);
+      var finVideo = video.indexOf("}");
+      video = video.slice(7, finVideo);
+    }
+
+    // Récupération de l'énoncé
+    const debutEnonce = monExo.indexOf(String.raw`\enonce`);
+    const finEnonce = monExo.indexOf(String.raw`\finenonce`);
+    enonce = monExo.slice(debutEnonce+7, finEnonce);
+    
+    // Récupération de l'indication s'il y en a
+    const debutIndication = monExo.indexOf(String.raw`\indication`);
+    if (debutIndication != -1){
+      const finIndication = monExo.indexOf(String.raw`\finindication`);
+      indication = monExo.slice(debutIndication+12, finIndication);
+    }
+    
+    // Récupération de la correction s'il y en a
+    const debutCorrection = monExo.indexOf(String.raw`\correction`);
+    if (debutCorrection != -1){
+      const finCorrection = monExo.indexOf(String.raw`\fincorrection`);
+      correction = monExo.slice(debutCorrection+12, finCorrection-1);
+    }
+
+    // Remplacement des accents.
+    auteur = replaceAccents(auteur);
     enonce = replaceAccents(enonce);
     indication = replaceAccents(indication);
-    correction = replaceAccents(correction);
-
-    // - - - modification de la page web
-
-
-    document.getElementById("num").innerHTML = "Exercice " + numExercice;
-    document.getElementById("auteur").innerHTML = "Auteur : " + auteur;
-    document.getElementById("date").innerHTML = "Le : " + date;
+    correction = replaceAccents(correction)
     
-    document.getElementById("enonce").innerHTML = enonce;
-    document.getElementById("indication").innerHTML = indication;
-    document.getElementById("correction").innerHTML = correction;
+    // Affichage de la page
+    html =
+  '<div class="container-fluid">' +
+  '<h1>Exercice ' + numExercice + '</h1>' +
+  '<h3>Auteur : ' + auteur + '</h3>' +
+  '<h4>Le : ' + date + '</h4>' +
+  '<br> <br>' + 
+  '<h4>Enoncé : </h4>' + enonce + '<br>' +
+  '<h4> Indications : </h4>' + indication + '<br>' +
+  '<h4> Correction : </h4>' + correction +
+  '</div>';
 
-
-
+  document.write(html);
+  
     </script>
   </body>
 </html>
