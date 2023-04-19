@@ -30,19 +30,19 @@
   <body>
     <div class="container-fluid">
       <!-- Entete -->
-      <h1 id="idNumExercice"></h1>
-      <h3 id="idAuteur"><h3>
-      <h4 id="idDate"></h4>
+      <h1 id="numExercice"></h1>
+      <h3 id="auteur"><h3>
+      <h4 id="date"></h4>
       <br>
       <br>
       <h4>Enoncé : </h4>
-      <p id="idEnonce"></p>
+      <p id="enonce"></p>
       <br>
       <h4>Indications : </h4>
-      <p id="idIndications"></p>
+      <p id="indications"></p>
       <br>
       <h4>Correction : </h4>
-      <p id="idCorrection"></p> 
+      <p id="correction"></p> 
             
     </div>
 
@@ -97,20 +97,15 @@
         var auteur = String.raw`ridde`;
         auteur = replaceAccents(auteur);
         var date = "1999/11/01";
-
-        document.getElementById("idNumExercice").innerHTML = "Exercice " + numExercice;
-        document.getElementById("idAuteur").innerHTML = "Auteur : " + auteur;
-        document.getElementById("idDate").innerHTML = "Le : " + date;
         
         // Enonce
         var enonce = String.raw`Mettre sous forme trigonom\'etrique $1 + e^{i\theta}$ où $\theta \in ]-\pi,\pi [$.
             Donner une interpr\'etation g\'eom\'etrique.`
         enonce = replaceAccents(enonce);
-        document.getElementById("idEnonce").innerHTML = enonce;
 
         // Indications
         var indications = "";
-        document.getElementById("idIndications").innerHTML = indications;
+        indications = replaceAccents(indications);
 
         // Correction
         var correction = String.raw`$$1+e^{i\theta}= e^{\frac{i\theta}{2}}(e^{-\frac{i\theta}{2}}+e^{\frac{i\theta}{2}})
@@ -127,7 +122,13 @@
                                 C'est le résulat géométrique (théorème de l'angle au centre)
                                 qui affirme que pour un cercle l'angle au centre est le double de l'angle inscrit.`;
         correction = replaceAccents(correction);
-        document.getElementById("idCorrection").innerHTML = correction;
+
+        document.getElementById("numExercice").innerHTML = "Exercice " + numExercice;
+        document.getElementById("auteur").innerHTML = "Auteur : " + auteur;
+        document.getElementById("date").innerHTML = "Le : " + date;
+        document.getElementById("enonce").innerHTML = enonce;
+        document.getElementById("indications").innerHTML = indications;
+        document.getElementById("correction").innerHTML = correction;
 
     </script>
   </body>
