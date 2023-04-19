@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@exo7math">
+  <meta name="twitter:creator" content="@exo7math">
+  <meta name="twitter:title" content="Exportez vos feuilles d'exercices">
+  <meta name="twitter:description"
+    content="Choisissez vos exercices et sauvegardez votre feuille au format LaTeX, PDF, ou ouvrez votre feuille dans Overleaf">
+  <meta name="twitter:image" content="export.png">
+  <style>
+    hr.hrule {
+      border: 1px solid black;
+    }
+
+    label {
+      margin-right: 20px;
+    }
+  </style>
+  <script type="text/javascript">
+
+    var maListe = "";
+    var titre = "";
+    var hautGauche = "";
+    var hautDroite = "";
+    var basGauche = "";
+    var basDroit = "";
+    var maListePlus = "";
+    var racine = "https://phil1010.github.io/exercices-exo7/plancheURLDynamique.html";
+    var permalien = racine;
+
+    function recupListeURL() {
+      // récupération des variables dans l'URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var url_liste = urlParams.get("liste");
+      var url_titre = urlParams.get("titre");
+      var url_hg = urlParams.get("hautgauche");
+      var url_hd = urlParams.get("hautdroite");
+      var url_bg = urlParams.get("basgauche");
+      var url_bd = urlParams.get("basdroite");
+
+      // Remplissage des champs du formulaire
+      if (url_liste != null) {
+        maListe = url_liste.split('+').join(' ');
+        document.getElementById("maListe").value = maListe;
+      }
+      if (url_titre != null) {
+        titre = url_titre; // Store the title in the titre variable
+        document.getElementById("txt-titre").value = titre;
+      }
+      if (url_hg != null) {
+        document.getElementById("txt-annee").value = url_hg;
+        hautGauche = url_hg;
+      }
+      if (url_hd != null) {
+        document.getElementById("txt-num").value = url_hd;
+        hautDroite = url_hd;
+      }
+      if (url_bg != null) {
+        document.getElementById("txt-univ").value = url_bg;
+      }
+      if (url_bd != null) {
+        document.getElementById("txt-module").value = url_bd;
+      }
+    }
+
+
+    function copier() {
+      var copyText = document.getElementById("permalien");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+    }
+
+    function maj() {// mise à jour des champs, du titre de la page etc
+      maListe = document.getElementById("maListe").value;
+      hautGauche = document.getElementById("txt-annee").value;
+      hautDroite = document.getElementById("txt-num").value;
+      basGauche = document.getElementById("txt-univ").value;
+      basDroit = document.getElementById("txt-module").value;
+      titre = document.getElementById("txt-titre").value;
+
+      // update titre
+      document.title = "Exo7 | Feuille d'exercices | " + document.getElementById("txt-titre").value;
+
+      // planche.html?liste=10+13-15&titre=mon%20titre&hautgauche=blabla&hautdroite=paf&basgauche=hello&basdroite=blabla
+
+
+      // update du permalien en bas
+      permalien = racine;
+      if (maListe != "") {
+        permalien += "?liste=" + document.getElementById("maListe").value.split(' ').join('+');
+      }
+      if (document.getElementById("txt-titre").value != "") {
+        permalien += "&titre=" + encodeURIComponent(document.getElementById("txt-titre").value);
+      }
+      if (hautGauche != "") {
+        permalien += "&hautgauche=" + encodeURIComponent(hautGauche);
+      }
+      if (hautDroite != "") {
+        permalien += "&hautdroite=" + encodeURIComponent(hautDroite);
+      }
+      if (basGauche != "") {
+        permalien += "&basgauche=" + encodeURIComponent(basGauche);
+      }
+      if (basDroit != "") {
+        permalien += "&basdroite=" + encodeURIComponent(basDroit);
+      }
+
+      document.getElementById("permalien").value = permalien;
+      // fin update permalien 
+
+    }
+
+    function demarrage() {
+      recupListeURL();
+      document.getElementById("maListe").value = maListe;
+      document.getElementById("permalien").value = permalien;
+
+    }
+
+    function getLien() {
+      var lien = document.getElementById("permalien").value;
+    }
+
+    function updateUrl() {
+      // Récupérer l'URL souhaitée
+      var newUrl = '/' + document.getElementById("permalien").value;
+      var firstPart = newUrl.split('/')[0] + '//' + newUrl.split('/')[2];
+      window.history.pushState({}, '', newUrl);
+    }
+
+  </script>
+</head>
+
+<body class="grey darken-1" onload="demarrage()">
+
+  <div class="container">
+
+    <div class="card white z-depth-3">
+      <div class="card-content" style="padding:10%">
+
+        <form target="_blank" name="formulaire" action="http://exo7.emath.fr/bin/extract5.php" method="post">
+
+          <div style="display:flex;justify-content: space-between;">
+            <input type=text id="txt-annee" name="txt-annee"
+              style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput" onkeyup="maj()">
+            <input type=text id="txt-num" name="txt-num"
+              style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput"
+              onkeyup="maj()">
+          </div>
+          <div style="display:flex;justify-content: space-between;">
+            <input type=text id="txt-univ" name="txt-univ"
+              style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput" onkeyup="maj()">
+            <input type=text id="txt-module" name="txt-module"
+              style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput"
+              onkeyup="maj()">
+          </div>
+          <hr class="hrule">
+          <div style="text-align:center">
+            <input type=text id="txt-titre" name="txt-titre" size="30" align="center"
+              style="width:60%;font-size:200%;text-align:center;border:1px dashed grey; padding:3px; height:2rem"
+              class="textinput" onkeyup="maj()">
+          </div>
+          <hr class="hrule">
+          <br /><br />
+          <h6>Exercices à inclure dans la feuille :</h6>
+          <textarea name="MesExos" id="maListe" rows="5" cols="100" style="width=100%;height:3em;resize:none;"
+            onkeyup="maj()"></textarea>
+          <!-- $theliste est la liste qui peux provenir d'une selection en ligne -->
+          <br>
+          <i> Vous pouvez saisir directement les numéros des exercices.
+            Exemple : 7 11 14-18 : pour les exercices 7, 11 et de 14 à 18.</i>
+
+
+
+
+
+          <div style="padding-top:20px">
+
+            <h6>Parties des exercices à inclure (si disponible) :</h6>
+
+            <label>
+              <input type="checkbox" name="Pos[]" value="e1" checked="checked">
+              <span>Énoncés</span>
+            </label>
+            <br />
+            <label>
+              <input type="checkbox" name="Pos[]" value="i1" checked="checked">
+              <span>Indications</span>
+            </label>
+            <label>
+              <input type="checkbox" name="Pos[]" value="i2" checked="checked">
+              <span>sur une page à part</span>
+            </label>
+            <br />
+            <label>
+              <input type="checkbox" name="Pos[]" value="c1" checked="checked">
+              <span>Corrections</span>
+            </label>
+            <label>
+              <input type="checkbox" name="Pos[]" value="c2" checked="checked">
+              <span>sur une page à part</span>
+            </label>
+          </div>
+
+          <div style="text-align:center;padding:20px">
+
+            <input class="btn" type="submit" name="pdf" value="Exporter en PDF">
+            <input class="btn" type="submit" name="tex" value="Exporter en LaTeX">
+          </div>
+
+          <h6>Lien pour accéder à cette page avec cette même liste pré-chargée:</h6>
+
+          <input id="permalien" value="@getLien()" type="text" style="width:100%">
+          <a href="javascript:void(0);" onClick="copier()">Copier l'URL dans le presse-papier</a>
+          <span> (Vous pouvez aussi mettre cette page en favori.)</span>
+
+          <button onclick="updateUrl()">Mettre à jour l'URL</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
