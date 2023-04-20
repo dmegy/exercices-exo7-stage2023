@@ -152,7 +152,7 @@ $\rho =1$, $\theta =2\varphi +\pi $.
     var entete = monExo.slice(debutEntete+1, finEntete);
     entete = entete.split(", ");
 
-    numExercice = entete[0];
+     numExercice = entete[0];
     auteur = entete[1];
     date = entete[2];
 
@@ -187,10 +187,11 @@ $\rho =1$, $\theta =2\varphi +\pi $.
     auteur = replaceAccents(auteur);
     enonce = replaceAccents(enonce);
     indication = replaceAccents(indication);
-    correction = replaceAccents(correction)
+    correction = replaceAccents(correction);
+    correction = correction.replaceAll(String.raw`\qquad`, '&emsp;');
     
     // Affichage de la page
-    html =
+    htmlText =
   '<div class="container-fluid">' +
   '<h1>Exercice ' + numExercice + '</h1>' +
   '<h3>Auteur : ' + auteur + '</h3>' +
@@ -200,9 +201,9 @@ $\rho =1$, $\theta =2\varphi +\pi $.
   '<h4> Indications : </h4>' + indication + '<br>' +
   '<h4> Correction : </h4>' + correction +
   '</div>';
-
-  document.write(html);
   
+  document.write(htmlText);
+
     </script>
   </body>
 </html>
