@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -41,23 +40,23 @@
 
           <div style="display:flex;justify-content: space-between;">
             <input type=text id="txt-annee" name="txt-annee"
-              style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput" onkeyup="maj()">
+              style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput" onkeyup="maj()" value="[?]">
             <input type=text id="txt-num" name="txt-num"
               style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput"
-              onkeyup="maj()">
+              onkeyup="maj()" value="[??]">
           </div>
           <div style="display:flex;justify-content: space-between;">
             <input type=text id="txt-univ" name="txt-univ"
-              style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput" onkeyup="maj()">
+              style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput" onkeyup="maj()" value="[???]">
             <input type=text id="txt-module" name="txt-module"
               style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput"
-              onkeyup="maj()">
+              onkeyup="maj()" value="[????]">
           </div>
           <hr class="hrule">
           <div style="text-align:center">
             <input type=text id="txt-titre" name="txt-titre" size="30" align="center"
               style="width:60%;font-size:200%;text-align:center;border:1px dashed grey; padding:3px; height:2rem"
-              class="textinput" onkeyup="maj()">
+              class="textinput" onkeyup="maj()"  value="[Titre de la planche d'exos]">
           </div>
           <hr class="hrule">
           <br /><br />
@@ -99,19 +98,20 @@
 
           <div style="text-align:center;padding:20px">
 
-            <input class="btn" type="submit" name="pdf" value="Exporter en PDF">
-            <input class="btn" type="submit" name="tex" value="Exporter en LaTeX">
+            <input class="btn" type="submit" name="pdf" value="PDF (nouvel onglet)">
+            <input class="btn" type="submit" name="tex" value="LaTeX (nouvel onglet)">
           </div>
 
           <h6>Lien pour accéder à cette page avec cette même liste pré-chargée:</h6>
 
           <input id="permalien" value="@getLien()" type="text" style="width:100%">
-          <a href="javascript:void(0);" onClick="copier()">Copier l'URL dans le presse-papier</a>
-          <span> (Vous pouvez aussi mettre cette page en favori.)</span>
-
-          <button onclick="fav()">Ajouter aux favoris</button>
 
         </form>
+        <button class="waves-effect waves-light btn" href="javascript:void(0);" onClick="copier()">Copier l'URL dans
+          le presse-papier</button>
+        <button class="waves-effect waves-light btn" onclick="partagerPlanche()">Envoyer par mail</button>
+        <br /><br />
+        <span>Il est également possible de mettre en favori cette planche d'exercices déjà préremplie (bouton du navigateur, ou bien Ctrl+D / Cmd+D)</span>
       </div>
     </div>
   </div>
@@ -131,6 +131,7 @@
   let maListePlus = "";
   const racine = window.location.origin + window.location.pathname;
   let permalien = racine;
+
 
   /*
     Rempli les champs du formulaire avec les variables de l'URL
@@ -178,7 +179,10 @@
     document.execCommand("copy");
   }
 
-  function maj() {// mise à jour des champs, du titre de la page etc
+  /* 
+    mise à jour des champs, du titre de la page etc
+  */
+  function maj() {
     maListe = document.getElementById("maListe").value;
     hautGauche = document.getElementById("txt-annee").value;
     hautDroite = document.getElementById("txt-num").value;
@@ -186,8 +190,8 @@
     basDroit = document.getElementById("txt-module").value;
     titre = document.getElementById("txt-titre").value;
 
-    // update titre
-    document.title = "Exo7 | Feuille d'exercices | " + document.getElementById("txt-titre").value;
+    // update titre de la page avec le titre la liste d'exercices 
+    document.title = "Exo7 : planche " + document.getElementById("txt-titre").value + " | exos " + document.getElementById("maListe").value;
 
     // planche.html?liste=10+13-15&titre=mon%20titre&hautgauche=blabla&hautdroite=paf&basgauche=hello&basdroite=blabla
 
@@ -215,19 +219,77 @@
 
     document.getElementById("permalien").value = permalien;
     // fin update permalien 
+    history.pushState(null, null, permalien);
 
   }
 
   function demarrage() {
     recupListeURL();
+    maj();
     document.getElementById("maListe").value = maListe;
     document.getElementById("permalien").value = permalien;
-
   }
 
   function getLien() {
     let lien = document.getElementById("permalien").value;
   }
 
+  /**
+   * Formatte une chaîne de caractères représentant une liste avec des virgules et des "et" de manière appropriée.
+   * Les éléments représentant des intervalles de valeurs seront également gérés.
+   *
+   * @param {string} liste La chaîne de caractères représentant la liste à formater.
+   * @returns {string} La chaîne de caractères formatée.
+   */
+  function formatListe(liste) {
+    // Divise la chaîne de caractères `liste` en un tableau de chaînes de caractères à l'aide de la méthode `split()`
+    let listeArray = liste.split(" ");
+
+    // Initialise une chaîne de caractères vide pour stocker la liste formatée
+    let formattedListe = "";
+
+    // Initialise des variables pour stocker les valeurs de début et de fin des intervalles
+    let start, end;
+
+    // Parcourt chaque élément du tableau `listeArray`
+    for (let i = 0; i < listeArray.length; i++) {
+      // Si l'élément contient le caractère "-", il s'agit d'un intervalle de valeurs
+      if (listeArray[i].indexOf("-") != -1) {
+        // Divise l'élément en deux parties `start` et `end`
+        let range = listeArray[i].split("-");
+        start = range[0];
+        end = range[1];
+        // Ajoute la chaîne `"start à end"` à la variable `formattedListe`
+        formattedListe += start + " à " + end;
+      } else {
+        // Sinon, ajoute simplement l'élément à la variable `formattedListe`
+        formattedListe += listeArray[i];
+      }
+
+      // Si l'élément n'est pas le dernier élément de la liste, ajoute une virgule et un espace
+      if (i < listeArray.length - 1) {
+        formattedListe += ", ";
+      }
+    }
+
+    // Remplace la dernière virgule et l'espace qui se trouvent dans la chaîne formatée par "et"
+    formattedListe = formattedListe.replace(/,\s([^,]+)$/, " et $1");
+
+    // Retourne la chaîne de caractères formatée
+    return formattedListe;
+  }
+
+
+  /**
+   * Ouvre le client mail de l'utilisateur avec un nouvel email pré-rempli.
+   * Le corps de l'email contient une liste d'exercices, des liens vers le site exo7 et le lien vers la planche.
+   */
+  function partagerPlanche() {
+    let subject = "Feuille d'exercices" + document.title; // Sujet de l'email
+    let body = "Voici une feuille d'exercices compilée à partir du site exo7 " + "(https://exo7.emath.fr, https://github.com/exo7math/exercices-exo7, https://exo7math.github.io/exercices-exo7).\n\nCette feuille contient les exercices " + formatListe(document.getElementById("maListe").value) + ".\n\nLe lien pour accéder à cette fiche directement est: " + window.location.href; // Corps de l'email
+    let mailtoLink = "mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body); // URL mailto
+
+    window.location.href = mailtoLink; // Ouvre le client mail de l'utilisateur avec le nouvel email pré-rempli
+  }
 
 </script>
