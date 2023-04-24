@@ -6,6 +6,9 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+
 
 
     <!--Import Google Icon Font-->
@@ -113,6 +116,9 @@
                         <input class="btn" type="button" value="Code source des exercices" onclick="ouvrirExosSource()">
                         <input class="btn" type="button" value="Sauvegarder le code source "
                             onclick="sauvegarderExos()">
+                        <br>
+                        <br>
+                        <input class="btn" type="button" value="Test fetch API" onclick="fetchAPI()">
                     </div>
 
                     <h6>Lien pour accéder à cette page avec cette même liste pré-chargée:</h6>
@@ -441,4 +447,20 @@
             throw error;
         }
     }
+
+    function fetchAPI() {
+        const form = document.querySelector('form[name="formulaire"]');
+        const url = form.action;
+
+        fetch(url)
+            .then(response => console.log(response + " " + response.text()))
+    }
+
+
+
+
+
+
+
+
 </script>
