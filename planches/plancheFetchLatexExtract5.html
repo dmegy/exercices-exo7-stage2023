@@ -118,7 +118,7 @@
                             onclick="sauvegarderExos()">
                         <br>
                         <br>
-                        <input class="btn" type="button" value="Test fetch API" onclick="fetchAPI()">
+                        <input class="btn" type="button" value="Test fetch API" onclick="fetchFormData()">
                     </div>
 
                     <h6>Lien pour accéder à cette page avec cette même liste pré-chargée:</h6>
@@ -456,6 +456,27 @@
             .then(response => console.log(response + " " + response.text()))
     }
 
+    function fetchFormData() {
+        const form = document.querySelector('form[name="formulaire"]');
+        const formData = new FormData(form);
+        fetch('http://exo7.emath.fr/bin/extract5.php', {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                // Traiter la réponse de la requête ici
+                console.log('Données envoyées avec succès');
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'envoi des données :', error);
+            });
+    }
 
 
 
