@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Page fetch 23</title>
+    <title>Page avec fetch exo23</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -29,9 +29,10 @@
 
   <body>
     <div class="container-fluid">
-      <h1 id="numExercice"></h1>
-      <h3 id="auteur"><h3>
-      <h4 id="date"></h4>
+      <h1>Exercice <span id="numExercice"></span></h1>
+      <h3>Auteur : <span id="auteur"></span></h3>
+      <h4>Le <span id="date"></span></h4>
+      <p><span id="redirectionVideo"></span></p>
       <br>
       <br>
       <h4>Enoncé : </h4>
@@ -41,61 +42,37 @@
       <p id="indications"></p>
       <br>
       <h4>Correction : </h4>
-      <p id="correction"></p> 
-            
+      <p id="correction"></p>   
     </div>
-      
-    </div>
-    <script>
-      
-      
-      // Remplace tous les  \'[lettre]  par la lettre avec accent
-      function replaceAccents(chaine) {
-        const accents = [String.raw`\\'e`, String.raw`\\\`e`, String.raw`\\\^e`, String.raw`\\"e`,
-                        String.raw`\\\`a`, String.raw`\\\^a`, String.raw`\\\^i`, String.raw`\\"i`,
-                        String.raw`\\\^o`, String.raw`\\"o`, String.raw`\\\^u`, String.raw`\\"u`];
 
-          // Flag 'g' pour remplacer toutes les occurrences.
-          const exp_reg0 = new RegExp(accents[0], 'g');
-          chaine = chaine.replace(exp_reg0, "é");
-          const exp_reg1 = new RegExp(accents[1], 'g');
-          chaine = chaine.replace(exp_reg1, "è");
-          const exp_reg2 = new RegExp(accents[2], 'g');
-          chaine = chaine.replace(exp_reg2, "ê");
-          const exp_reg3 = new RegExp(accents[3], 'g');
-          chaine = chaine.replace(exp_reg3, "ë");
-          const exp_reg4 = new RegExp(accents[4], 'g');
-          chaine = chaine.replace(exp_reg4, "à");
-          const exp_reg5 = new RegExp(accents[5], 'g');
-          chaine = chaine.replace(exp_reg5, "â");
-          const exp_reg6 = new RegExp(accents[6], 'g');
-          chaine = chaine.replace(exp_reg6, "î");
-          const exp_reg7 = new RegExp(accents[7], 'g');
-          chaine = chaine.replace(exp_reg7, "ï");
-          const exp_reg8 = new RegExp(accents[8], 'g');
-          chaine = chaine.replace(exp_reg8, "ô");
-          const exp_reg9 = new RegExp(accents[9], 'g');
-          chaine = chaine.replace(exp_reg9, "ö");
-          const exp_reg10 = new RegExp(accents[10], 'g');
-          chaine = chaine.replace(exp_reg10, "û");
-          const exp_reg11 = new RegExp(accents[11], 'g');
-          chaine = chaine.replace(exp_reg11, "ü");
+    <script>
+      // Remplacement des symboles spéciaux
+      function replaceAccents(chaine) {  
+        const specialChars = { 
+          "\\'e":"é", "\\\`e":"è", "\\^e":"ê", '\\"e':"ë", "\\\`a":"à", "\\\^a":"â", '\\\"a':"ä", "\\'a":"á", "\\'i":"í",
+          "\\\^i":"î", "\\^{\\i}":"î", '\\"i':"ï", "\\\^o":"ô", '\\"o':"ö", "\\'o":"ó", "\\\^u":"û", '\\"u':"ü", "\\'u":"ú", "\\cc":"ç", 
+          "\\cC":"Ç", "\\~n":"ñ", "\\~N":"Ñ", "\\AE":"Æ", "\\ae":"æ", "\\OE":"Œ", "\\oe":"œ", "\\ss":"ß","\\qquad":"&emsp;", "\\'E":"É",
+          "\\begin{enumerate}":'<br>', "\\item":'<br> &emsp; - ', "\\end{enumerate}":'<br>'
+        };
+        for (var eachKey in specialChars){
+          chaine = chaine.replaceAll(eachKey, specialChars[eachKey]);
+        }
           return chaine;
       } 
 
-    let exo23 = 'https://raw.githubusercontent.com/exo7math/exercices-exo7/master/exercices/ex000023.txt';
+    let URLexo23 = 'https://raw.githubusercontent.com/exo7math/exercices-exo7/master/exercices/ex000020.txt';
 
 
-fetch(exo23)
+fetch(URLexo23)
   .then(response => response.text())
   .then(fetchedText => {
     
     // code source latex
     let exercice = document.createElement('div');
-    exercice.textContent = fetchedText;
+    exercice.innerHTML = fetchedText;
 
     // Mots clés devant figurant dans chaque exercice 
-    var motsObligatoires = [String.raw`\exercice`, String.raw`\finexercice`, String.raw`\enonce`,String.raw`\finenonce`];
+    var motsObligatoires = ["\\exercice", "\\finexercice", "\\enonce", "\\finenonce"];
     // Vérifie si ces mots sont présents dans le texte de l'exercice
     let latexValide = motsObligatoires.every(item => fetchedText.includes(item));
     
@@ -103,16 +80,8 @@ fetch(exo23)
       document.write("<h2> Le code latex de l'exercice contient une erreur </h2>");
       throw new Error("Code latex incorrect");} // Arrêt du script
     
-  //Si l'exercice est correctement écrit :
-    // Gestion de bug avec le tag LaTeX : \begin{enumerate}
-    var beginEnumerate = fetchedText.indexOf(String.raw`\begin{enumerate}`);
-    // Suppression du tag s'il est présent dans l'exercice
-    if (beginEnumerate != -1){ 
-      fetchedText = fetchedText.replaceAll(String.raw`\begin{enumerate}`, '');
-      fetchedText = fetchedText.replaceAll(String.raw`\item`, '');
-      fetchedText = fetchedText.replaceAll(String.raw`\end{enumerate}`, '');
-    }
 
+    //Si l'exercice est correctement écrit :
     // initialisation des variables
     let numExercice = document.getElementById("numExercice");
     let auteur = document.getElementById("auteur");
@@ -127,58 +96,80 @@ fetch(exo23)
     var entete = fetchedText.slice(debutEntete+1, finEntete);
     entete = entete.split(", ");
     
-    numExercice.textContent = "Exercice " + entete[0];
-    auteur.textContent = "Auteur : " + entete[1];
-    date.textContent = " Le " + entete[2];
+    numExercice.innerHTML = entete[0];
+    auteur.innerHTML = entete[1];
+    date.innerHTML = entete[2];
 
-    // Récupération de vidéo s'il y en a
-    const debutVideo = fetchedText.indexOf(String.raw`\video`);
-    if (debutVideo != -1){ // S'il y a une vidéo
-      let video = document.getElementById('h1');
-      video.textContent = fetchedText.slice(debutVideo, debutVideo+100);
-      var finVideo = video.indexOf("}");
-      video.textContent = video.textContent.slice(7, finVideo);
+// Récupération de la vidéo
+const regexString = "\\\\video\\{([^}]+)\\}";
+      // \\\\ échappe 2 backslashes.
+      // video match la chaine de caracteres"video"
+      // \\{ match l'accolade {. Le backslash \ échappe le symbole spécial { dans les expressions régulières pour matcher le caractère littéral : {.
+      // ( et ) délimitent le capturing group, qui capture le texte qui match le pattern entre les parenthèses.
+      // [^}] match tous caracteres sauf l'accolade fermante }.
+      // + match 1 ou plus occurrences du pattern [^}] donc 1 ou plusieurs caractères compris entre les parenthèses
+      // \\} match le caractère littéral accolade fermante }. Backslash utilisé pour échapper le symbole spécial {
+    const regex = new RegExp(regexString);
+    const match = fetchedText.match(regex);
+
+    // S'il y a une vidéo :
+    if (match) { 
+      const codeVideo = match[1]; // Code de la vidéo (par exemple : 8nXKgqMsucU)
+      const urlVideo = "https://www.youtube.com/watch?v=" + codeVideo; // URL Youtube de la vidéo
+      const redirectionVideo = document.getElementById('redirectionVideo');
+      
+      // On donne la valeur href pour attribut
+      redirectionVideo.setAttribute('data-href', urlVideo);
+    
+      // Texte html affiché
+      redirectionVideo.innerHTML = 'Lien vers la video';
+
+      // Fonction appelée quand le texte est cliqué
+      redirectionVideo.addEventListener('click', function() {
+        // On get l'URL de l'attribut data-href
+        const url = this.getAttribute('data-href');
+        // Redirection au lien
+        window.location.href = url;});
     }
 
     // Récupération de l'énoncé
-    const debutEnonce = fetchedText.indexOf(String.raw`\enonce`);
-    const finEnonce = fetchedText.indexOf(String.raw`\finenonce`);
-    enonce.textContent = fetchedText.slice(debutEnonce+7, finEnonce);
+    const debutEnonce = fetchedText.indexOf("\\enonce");
+    const finEnonce = fetchedText.indexOf("\\finenonce");
+    enonce.innerHTML = fetchedText.slice(debutEnonce+7, finEnonce);
     
     // Récupération de l'indication s'il y en a
-    const debutIndication = fetchedText.indexOf(String.raw`\indication`);
+    const debutIndication = fetchedText.indexOf("\\indication");
     if (debutIndication != -1){
-      const finIndication = fetchedText.indexOf(String.raw`\finindication`);
-      indication.textContent = fetchedText.slice(debutIndication+12, finIndication);
+      const finIndication = fetchedText.indexOf("\\finindication");
+      indication.innerHTML = fetchedText.slice(debutIndication+12, finIndication);
     }
     
     // Récupération de la correction s'il y en a
-    const debutCorrection = fetchedText.indexOf(String.raw`\correction`);
+    const debutCorrection = fetchedText.indexOf("\\correction");
     if (debutCorrection != -1){
-      const finCorrection = fetchedText.indexOf(String.raw`\fincorrection`);
-      correction.textContent = fetchedText.slice(debutCorrection+12, finCorrection-1);
+      const finCorrection = fetchedText.indexOf("\\fincorrection");
+      correction.innerHTML = fetchedText.slice(debutCorrection+12, finCorrection-1);
     }
 
      // Remplacement des accents.
-    auteur.textContent = replaceAccents(auteur.textContent);
-    enonce.textContent = replaceAccents(enonce.textContent);
-    indication.textContent = replaceAccents(indication.textContent);
-    correction.textContent = replaceAccents(correction.textContent);
-    correction.textContent = correction.textContent.replaceAll(String.raw`\qquad`, '&emsp;');
+    auteur.innerHTML = replaceAccents(auteur.innerHTML);
+    enonce.innerHTML = replaceAccents(enonce.innerHTML);
+    indication.innerHTML = replaceAccents(indication.innerHTML);
+    correction.innerHTML = replaceAccents(correction.innerHTML);
     
     // Chargement de la librairie Mathjax
     setTimeout(() => {
-      MathJax.typesetPromise([enonce]) // Typeset the text element
+      MathJax.typesetPromise([enonce])
         .catch(error => console.error('Failed to typeset math:', error));
-    }, 100); // Adjust the delay as needed
+    }, 100);
     setTimeout(() => {
-      MathJax.typesetPromise([indication]) // Typeset the text element
+      MathJax.typesetPromise([indication])
         .catch(error => console.error('Failed to typeset math:', error));
-    }, 100); // Adjust the delay as needed
+    }, 100);
     setTimeout(() => {
-      MathJax.typesetPromise([correction]) // Typeset the text element
+      MathJax.typesetPromise([correction])
         .catch(error => console.error('Failed to typeset math:', error));
-    }, 100); // Adjust the delay as needed
+    }, 100);
   })
   .catch(error => {
     console.error('Failed to fetch text:', error);
