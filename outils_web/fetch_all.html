@@ -74,16 +74,43 @@
     }
 
     
+    // un peu dégueu mais bon : y a-t-il une fonction déjà intégrée ?
+    const padToSix = (n) => {
+      if (n<=999999) { n = ("00000"+n).slice(-6); }
+      return n;
+    }
+
+    const url = (n) => {
+      const fileName = "ex"+padToSix(n)+".txt";
+      //const path = "https://github.com/exo7math/exercices-exo7/blob/master/exercices/";
+      const path= "../exercices/";
+      return `${path}${fileName}`;
+    }
 
 
 
-
-
-    const demarrage = () => {
+    const demarrage = async () => {
       document.getElementById("exos").innerHTML += boites; 
       // remarque : ne pas faire ça dans la boucle ! sinon ça plante le navigateur très vite, à partir de qq milliers de cellules.
 
+      for(let i=1; i<= N; i++){
+        let element = document.getElementById("exo"+i);
+        try {
+          const response = await fetch(url(i));
+          if(!response.ok){
+            element.classList.add("error-response-not-ok");
+          } else{
+            element.classList.add("success");
+            const result = await response.text();
+            messages[i] = result;
 
+          }
+        } catch (error) {
+          // TypeError: Failed to fetch
+          messages[i]='Il y a eu une erreur lors du fetch : '+error;
+          element.classList.add("error-fetch");
+        }
+      }
 
     }
 
