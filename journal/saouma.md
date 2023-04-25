@@ -1,6 +1,6 @@
 # Journal
 
-# Journal
+Exemple d'utilisation : 
 
 ## Date (chronologique inverse)
 
@@ -30,4 +30,51 @@ Et on peut mettre des liens, par exemple
 
 
 ## 24 avril
+
+    - Note : le fichier exercice-fetch-23 fetch en fait l'exercice 20 parce que j'ai oublié de changer l'URL
+    - Modification du code de exercice-avec-parsage et exercice-fetch-23 en fonction des change requests dont on a parlé. (Modification de :
+
+            la technique d'affichage dans exercice-avec-parsage (DOM).
+
+            les remplacements de symboles speciaux / accents.
+
+            video mieux gérée mais ce n'est probablement pas la façon dont on voudrait l'afficher.
+
+            et autres petites modifications...)
+
+    - J'aimerais améliorer le parsage de tout le code source et le faire d'une manière plus propre comme pour la video (Regex) mais j'attendrai votre retour sur ce que j'ai déjà implémenté d'abord.
+    - Question : pour le cas de latex invalide, est-ce que je devrais imprimer le message d'erreur d'une autre façon que "document.write()" ?
+    - Note to self : il y a sûrement des balises et symboles spéciaux non gérés. Par exemple dans l'exercice 2548
+
+
+## 20 avril:
+
+fetch avec parsage presque fini. 
+    beaucoup de bugs quand on combine fetch et mathjax (librairie ne se charge pas au bon moment). 
+
+
+## 19 avril
+
+Refinition/correction de la première page.
+    Deuxième page presque finie, parsage et affichage fonctionne.
+
+De nouveaux bugs apparaissent souvent. Par exemple la commande latex : \qquad n'est pas  (DM : ok on en a parlé hier soir je crois, on va replace avec un code html &emsp;) interprétée dans la page web comme une commande et est affichée en texte. J'ai essayé de reconfigurer mathjax depuis un moment ou trouver une autre solution sans succès pour l'instant.
+
+Sinon, le reste fonctionne, il restera juste à détecter le maximum de bugs éventuels (tester plusieurs exercices avec de nouveaux tags problématiques comme \qquad etc.)
+
+## 18 avril
+
+Finition de la premiere page et prise en main de bootstrap.
+Style de page très moyen.
+Debut de deuxieme page (sans fetch, avec parsage du texte). Blocage sur le problème des backslash comme discuté par mail.
+Objectif pour la suite : débloquer et finir la deuxième page tout en améliorant le côté style (CSS/Bootstrap).
+
+    (Votre solution avec String.raw`...` a débloqué le problème. Merci je ne connaissais pas cette solution.
+
+Une fois ça fait je ferai le premier commit avec la page .io pour pouvoir visualiser.
+
+## 17 avril
+
+Création de la première page pour visualiser un exo (sans fetch et sans parsage tout codé en dur).
+Début prise en main de Mathjax et Bootstrap.
 
