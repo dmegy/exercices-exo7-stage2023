@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body{
+      font-family:arial;
+      background-color: #333;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container{
+      margin : auto;
+      background-color: white;
+      width : 90%;
+      padding : 1rem;
+      margin:2rem;
+      filter: drop-shadow(0px 0px 20px black);
+    }
+    .exos{
+      width:100%;
+    }
+    .exo{
+      display: inline-block;
+      margin:2px;
+      padding : 2px;
+      font-size: .5rem;
+    }
+
+    .before-fetch{
+      border : 1px black solid;
+    }
+    .error-fetch{
+      border : 1px red solid;
+    }
+    .error-response-not-ok{
+      border : 1px orange solid;
+    }
+    .success{
+      border : 1px green solid;
+    }
+
+    hr.hrule {
+      border: 1px solid black;
+    }
+
+    label {
+      margin-right: 20px;
+    }
+  </style>
+
+  <script>
+    const N=8000; // le nombre d'exos chargés par défaut
+    const demarrage = function(){
+      console.log("demarrage !");
+      const t0= new Date().getTime();
+      let boites="";
+
+      for (let i=1; i<= N; i++){
+        boites += `<div class="exo before-fetch" id="exo${i}">${i}</div>`;
+      }
+
+      document.getElementById("exos").innerHTML += boites; 
+      // remarque : ne pas faire ça dans la boucle ! sinon ça plante le navigateur très vite, à partir de qq milliers de cellules.
+
+      const t1= new Date().getTime();
+
+    }
+  </script>
+
+</head>
+
+<body onload="demarrage()">
+  <div class="container">
+  <h2>Test de fetch de tous les exos d'un coup</h2>
+  <div id="exos">
+    
+  </div> 
+  </div>
+</body>
+
+</html>
