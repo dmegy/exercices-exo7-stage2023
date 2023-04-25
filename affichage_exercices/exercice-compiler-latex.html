@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Page sans fetch sans parsage</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Librairie mathjax -->
+    <script src="https://polyfill.io/v3/polyfill.js?features=es6"></script>
+    
+    <!-- Configuration de MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+
+    <!-- Librairie mathjax -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>    
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <!-- Entete -->
+      <h1 id="num"></h1>
+      <h3 id="auteur"><h3>
+      <h4 id="date"></h4>
+      <br>
+      <br>
+      <h4>Enoncé : </h4>
+      <p id="enonce"></p>
+      <br>
+      <h4>Indication : </h4>
+      <p id="indication"></p>
+      <br>
+      <h4>Correction : </h4>
+      <p id="correction"></p> 
+            
+    </div>
+
+    <script>
+      // Remplace tous les  \'[lettre]  par la lettre avec accent
+      function replaceAccents(chaine) {
+        const accents = [String.raw`\\'e`, String.raw`\\\`e`, String.raw`\\\^e`, String.raw`\\"e`,
+                        String.raw`\\\`a`, String.raw`\\\^a`, String.raw`\\\^i`, String.raw`\\"i`,
+                        String.raw`\\\^o`, String.raw`\\"o`, String.raw`\\\^u`, String.raw`\\"u`];
+
+          // Flag 'g' pour remplacer toutes les occurrences.
+          const exp_reg0 = new RegExp(accents[0], 'g');
+          chaine = chaine.replace(exp_reg0, "é");
+          const exp_reg1 = new RegExp(accents[1], 'g');
+          chaine = chaine.replace(exp_reg1, "è");
+          const exp_reg2 = new RegExp(accents[2], 'g');
+          chaine = chaine.replace(exp_reg2, "ê");
+          const exp_reg3 = new RegExp(accents[3], 'g');
+          chaine = chaine.replace(exp_reg3, "ë");
+          const exp_reg4 = new RegExp(accents[4], 'g');
+          chaine = chaine.replace(exp_reg4, "à");
+          const exp_reg5 = new RegExp(accents[5], 'g');
+          chaine = chaine.replace(exp_reg5, "â");
+          const exp_reg6 = new RegExp(accents[6], 'g');
+          chaine = chaine.replace(exp_reg6, "î");
+          const exp_reg7 = new RegExp(accents[7], 'g');
+          chaine = chaine.replace(exp_reg7, "ï");
+          const exp_reg8 = new RegExp(accents[8], 'g');
+          chaine = chaine.replace(exp_reg8, "ô");
+          const exp_reg9 = new RegExp(accents[9], 'g');
+          chaine = chaine.replace(exp_reg9, "ö");
+          const exp_reg10 = new RegExp(accents[10], 'g');
+          chaine = chaine.replace(exp_reg10, "û");
+          const exp_reg11 = new RegExp(accents[11], 'g');
+          chaine = chaine.replace(exp_reg11, "ü");
+          return chaine;
+      } 
+
+
+
+
+      // différents exemples d'exos pour test.
+
+    let exo20 = String.raw`\exercice{20, bodin, 1998/09/01}
+        \video{8nXKgqMsucU}
+        \enonce
+         Soit $z$ un nombre complexe de module $\rho$,
+        d'argument $\theta$, et soit $\overline{z}$ son conjugu\'e.
+        Calculer
+        $(z+\overline{z})(z^2+\overline{z}^2)\ldots(z^n+\overline{z}^n)$
+        en fonction de $\rho$ et $\theta$.
+
+        \finenonce
+
+        \indication
+        Utiliser la formule d'Euler pour faire appara\^{\i}tre des cosinus.
+        \finindication
+
+        \correction
+        \'Ecrivons $z = \rho e^{i\theta}$, alors $\overline{z} = \rho
+        e^{-i\theta}$. Donc
+        \begin{align*}
+        P &= \prod_{k=1}^n \left(z^k+{\overline{z}}^k \right)\\
+        &= \prod_{k=1}^n \rho^k \left(  (e^{i\theta})^k + (e^{-i\theta})^k \right)\\
+        &= \prod_{k=1}^n \rho^k \left(  e^{ik\theta} + e^{-ik\theta}) \right)\\
+        &= \prod_{k=1}^n 2 \rho^k \cos {k\theta}\\
+        &= 2^n.\rho.\rho^2.\ldots.\rho^n \prod_{k=1}^n \cos {k\theta}\\
+        &= 2^n\rho^{\frac{n(n+1)}{2}} \prod_{k=1}^n \cos {k\theta}.\\
+        \end{align*}
+        \fincorrection
+        \finexercice`;
+
+    let exo8 = String.raw`\exercice{8, cousquer, 2003/10/01}
+        \enonce
+         Calculer le module et l'argument des nombres complexes suivants, ainsi
+        que de leurs conjugués :
+        \begin{enumerate}
+        \item $1+i(1+\sqrt2)$.
+        \item $\sqrt{10+2\sqrt5}+i(1-\sqrt5)$.
+        \item $\frac{\tan\varphi -i}{\tan\varphi +i}$ où $\varphi$ est un angle donné.
+        \end{enumerate}
+
+        \finenonce
+
+        \noindication
+
+        \correction
+        $\rho =\sqrt{4+2\sqrt2}$, $\theta ={3\pi \over8}$; \qquad
+        $\rho =4$, $\theta =-{\pi \over 10}$; \qquad
+        $\rho =1$, $\theta =2\varphi +\pi $.
+
+        \fincorrection
+
+        \finexercice`;
+
+
+
+    // initialisation des variables
+
+    let numExercice = "monNumero";
+    let auteur = String.raw`Auteur`;
+    auteur = replaceAccents(auteur);
+    let date = "maDate";
+    let [enonce, indication, correction]=["monEnonce","monIndication","maCorrection"];
+
+    // - - - - 
+    //
+    //  ICI LE PARSAGE
+    //
+    // - - - -
+
+
+    let monExo = exo8;
+    // on parse 'monExo' et on met le résultat dans les variables
+
+
+    // enfin, remplacement des accents.
+
+    enonce = replaceAccents(enonce);
+    indication = replaceAccents(indication);
+    correction = replaceAccents(correction);
+
+    // - - - modification de la page web
+
+
+    document.getElementById("num").innerHTML = "Exercice " + numExercice;
+    document.getElementById("auteur").innerHTML = "Auteur : " + auteur;
+    document.getElementById("date").innerHTML = "Le : " + date;
+    
+    document.getElementById("enonce").innerHTML = enonce;
+    document.getElementById("indication").innerHTML = indication;
+    document.getElementById("correction").innerHTML = correction;
+
+
+
+    </script>
+  </body>
+</html>
