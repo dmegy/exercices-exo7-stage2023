@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Page avec fetch exo23</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Librairie mathjax -->
+    <script src="https://polyfill.io/v3/polyfill.js?features=es6"></script>
+
+    <!-- Configuration de MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+
+    <!-- Librairie mathjax -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>    
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <h1>Exercice <span id="numExercice"></span></h1>
+      <h3>Auteur : <span id="auteur"></span></h3>
+      <h4>Le <span id="date"></span></h4>
+      <p><span id="redirectionVideo"></span></p>
+      <br>
+      <br>
+      <h4>Enoncé : </h4>
+      <p id="enonce"></p>
+      <br>
+      <h4>Indications : </h4>
+      <p id="indications"></p>
+      <br>
+      <h4>Correction : </h4>
+      <p id="correction"></p>   
+    </div>
+
+    <script>
+      // Remplacement des symboles spéciaux
+      function replaceAccents(chaine) {  
+        const specialChars = { 
+          "\\'e":"é", "\\\`e":"è", "\\^e":"ê", '\\"e':"ë", "\\\`a":"à", "\\\^a":"â", '\\\"a':"ä", "\\'a":"á", "\\'i":"í",
+          "\\\^i":"î", "\\^{\\i}":"î", '\\"i':"ï", "\\\^o":"ô", '\\"o':"ö", "\\'o":"ó", "\\\^u":"û", '\\"u':"ü", "\\'u":"ú", "\\cc":"ç", 
+          "\\cC":"Ç", "\\~n":"ñ", "\\~N":"Ñ", "\\AE":"Æ", "\\ae":"æ", "\\OE":"Œ", "\\oe":"œ", "\\ss":"ß","\\qquad":"&emsp;", "\\'E":"É",
+          "\\begin{enumerate}":'<br>', "\\item":'<br> &emsp; - ', "\\end{enumerate}":'<br>'
+        };
+        for (var eachKey in specialChars){
+          chaine = chaine.replaceAll(eachKey, specialChars[eachKey]);
+        }
+          return chaine;
+      } 
+
+    let URLexo23 = 'https://raw.githubusercontent.com/exo7math/exercices-exo7/master/exercices/ex000020.txt';
+
+
+fetch(URLexo23)
+  .then(response => response.text())
+  .then(fetchedText => {
+    
+    // code source latex
+    let exercice = document.createElement('div');
+    exercice.innerHTML = fetchedText;
+
+    // Mots clés devant figurant dans chaque exercice 
+    var motsObligatoires = ["\\exercice", "\\finexercice", "\\enonce", "\\finenonce"];
+    // Vérifie si ces mots sont présents dans le texte de l'exercice
+    let latexValide = motsObligatoires.every(item => fetchedText.includes(item));
+    
+    if (!latexValide){ // Si non présents, exercice incorrect
+      document.write("<h2> Le code latex de l'exercice contient une erreur </h2>");
+      throw new Error("Code latex incorrect");} // Arrêt du script
+    
+
+    //Si l'exercice est correctement écrit :
+    // initialisation des variables
+    let numExercice = document.getElementById("numExercice");
+    let auteur = document.getElementById("auteur");
+    let date = document.getElementById("date");
+    let enonce = document.getElementById("enonce");
+    let indication = document.getElementById("indications");
+    let correction = document.getElementById("correction");
+    
+    // Récupération de l'entête
+    const debutEntete = fetchedText.indexOf("{");
+    const finEntete = fetchedText.indexOf("}");
+    var entete = fetchedText.slice(debutEntete+1, finEntete);
+    entete = entete.split(", ");
+    
+    numExercice.innerHTML = entete[0];
+    auteur.innerHTML = entete[1];
+    date.innerHTML = entete[2];
+
+// Récupération de la vidéo
+const regexString = "\\\\video\\{([^}]+)\\}";
+      // \\\\ échappe 2 backslashes.
+      // video match la chaine de caracteres"video"
+      // \\{ match l'accolade {. Le backslash \ échappe le symbole spécial { dans les expressions régulières pour matcher le caractère littéral : {.
+      // ( et ) délimitent le capturing group, qui capture le texte qui match le pattern entre les parenthèses.
+      // [^}] match tous caracteres sauf l'accolade fermante }.
+      // + match 1 ou plus occurrences du pattern [^}] donc 1 ou plusieurs caractères compris entre les parenthèses
+      // \\} match le caractère littéral accolade fermante }. Backslash utilisé pour échapper le symbole spécial {
+    const regex = new RegExp(regexString);
+    const match = fetchedText.match(regex);
+
+    // S'il y a une vidéo :
+    if (match) { 
+      const codeVideo = match[1]; // Code de la vidéo (par exemple : 8nXKgqMsucU)
+      const urlVideo = "https://www.youtube.com/watch?v=" + codeVideo; // URL Youtube de la vidéo
+      const redirectionVideo = document.getElementById('redirectionVideo');
+      
+      // On donne la valeur href pour attribut
+      redirectionVideo.setAttribute('data-href', urlVideo);
+    
+      // Texte html affiché
+      redirectionVideo.innerHTML = 'Lien vers la video';
+
+      // Fonction appelée quand le texte est cliqué
+      redirectionVideo.addEventListener('click', function() {
+        // On get l'URL de l'attribut data-href
+        const url = this.getAttribute('data-href');
+        // Redirection au lien
+        window.location.href = url;});
+    }
+
+    // Récupération de l'énoncé
+    const debutEnonce = fetchedText.indexOf("\\enonce");
+    const finEnonce = fetchedText.indexOf("\\finenonce");
+    enonce.innerHTML = fetchedText.slice(debutEnonce+7, finEnonce);
+    
+    // Récupération de l'indication s'il y en a
+    const debutIndication = fetchedText.indexOf("\\indication");
+    if (debutIndication != -1){
+      const finIndication = fetchedText.indexOf("\\finindication");
+      indication.innerHTML = fetchedText.slice(debutIndication+12, finIndication);
+    }
+    
+    // Récupération de la correction s'il y en a
+    const debutCorrection = fetchedText.indexOf("\\correction");
+    if (debutCorrection != -1){
+      const finCorrection = fetchedText.indexOf("\\fincorrection");
+      correction.innerHTML = fetchedText.slice(debutCorrection+12, finCorrection-1);
+    }
+
+     // Remplacement des accents.
+    auteur.innerHTML = replaceAccents(auteur.innerHTML);
+    enonce.innerHTML = replaceAccents(enonce.innerHTML);
+    indication.innerHTML = replaceAccents(indication.innerHTML);
+    correction.innerHTML = replaceAccents(correction.innerHTML);
+    
+    // Chargement de la librairie Mathjax
+    setTimeout(() => {
+      MathJax.typesetPromise([enonce])
+        .catch(error => console.error('Failed to typeset math:', error));
+    }, 100);
+    setTimeout(() => {
+      MathJax.typesetPromise([indication])
+        .catch(error => console.error('Failed to typeset math:', error));
+    }, 100);
+    setTimeout(() => {
+      MathJax.typesetPromise([correction])
+        .catch(error => console.error('Failed to typeset math:', error));
+    }, 100);
+  })
+  .catch(error => {
+    console.error('Failed to fetch text:', error);
+  });
+    </script>
+  </body>
+</html>
