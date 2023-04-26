@@ -78,7 +78,12 @@
 }
 
 % ----- Commandes supplementaires------
-
+\\begin{document}
+\\textsf{\\textbf{ 1 } } \\hfill\\textsf{\\textbf{ 2 } }
+\\textsf{\\textbf{ 3 } } \\hfill\\textsf{ \\textbf{ 4 } }
+\\vspace * { 0.5ex }\\hrule\\vspace * { 1.5ex }
+\\hfil\\textsf{ \\textbf{ \\Large 5 } }
+\\vspace * { 1ex }\\hrule\\vspace * { 5ex }
 
 
 

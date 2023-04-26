@@ -495,32 +495,8 @@
         const exos = getExos(); // Récupérer la liste des numéros d'exercices
         try {
             // Récupérer le contenu du fichier texte
-            const fileResponse = await fetch("https://raw.githubusercontent.com/dmegy/exercices-exo7-stage2023/main/exercices/_preambule.txt");
-            let fileContent = await fileResponse.text() + `%----- Presentation ------
-\\setlength{ \\parindent } { 0cm }
-
-\\newcommand{ \\ExoSept } { \\textbf{ \\textsf{ Exo7 } } }
-\\newcommand{ \\LogoExoSept } {
-\\setlength{ \\unitlength } { 0.6em }
-\\begin{ picture } (0, 0) \\thicklines     \\put(0, 4){ \\line(0, 1){ 3 } } \\put(0, 7){ \\line(1, 0){ 3 } }
-\\put(3, 7){ \\line(0, -1){ 7 } } \\put(0, 4){ \\line(1, 0){ 7 } } \\put(3, 0){ \\line(1, 0){ 4 } }
-\\put(7, 0){ \\line(0, 1){ 4 } } \\put(3, 7){ \\line(4, -3){ 4 } } \\put(7, 4){ \\line(3, 4){ 3 } }
-\\put(10, 8){ \\line(-4, 3){ 4 } } \\put(3, 7){ \\line(3, 4){ 3 } } \\put(4.6, 6.8){ \\mbox{ \\ExoSept } }
-\\end{ picture }
-}
-
-% ----- Commandes supplementaires------
-
-
-\\begin{document}
-
-\\textsf{\\textbf{ 1 } } \\hfill\\textsf{\\textbf{ 2 } }
-
-\\textsf{\\textbf{ 3 } } \\hfill\\textsf{ \\textbf{ 4 } }
-
-\\vspace * { 0.5ex }\\hrule\\vspace * { 1.5ex }
-\\hfil\\textsf{ \\textbf{ \\Large 5 } }
-\\vspace * { 1ex }\\hrule\\vspace * { 5ex }` + "\n" + "% Cette fiche contient les exercices:" + formatListe(document.getElementById("maListe").value) + "\n" + "\n";
+            const fileResponse = await fetch("https://raw.githubusercontent.com/Phil1010/exercices-exo7-stage2023/main/exercices/_preambule.txt");
+            let fileContent = await fileResponse.text() + "\n" + "% Cette fiche contient les exercices:" + formatListe(document.getElementById("maListe").value) + "\n" + "\n";
 
             checkCheckBoxes();
 
