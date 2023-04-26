@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+
+    body{
+      font-family:arial;
+      background-color: #333;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container{
+      margin : auto;
+      background-color: white;
+      width : 90%;
+      padding : 1rem;
+      margin:2rem;
+      filter: drop-shadow(0px 0px 20px black);
+    }
+    .exos{
+      width:100%;
+    }
+    .exo{
+      display: inline-block;
+      margin:2px;
+      padding : 2px;
+      font-size: .5rem;
+      cursor:pointer;
+    }
+
+    .before-fetch{
+      border : 1px black solid;
+    }
+    .error-fetch{
+      border : 1px red solid;
+    }
+    .error-response-not-ok{
+      border : 1px orange solid;
+    }
+    .success{
+      border : 1px green solid;
+    }
+
+    hr.hrule {
+      border: 1px solid black;
+    }
+
+    label {
+      margin-right: 20px;
+    }
+  </style>
+
+  <script>
+    const N=8000; // le nombre d'exos chargés par défaut
+
+    let messages=[]; // contiendra soit l'exo i, soit l'erreur.
+    for(let i=1; i<= N; i++){
+      messages[i]=`Conteneur de l'exercice ${i}, avant le fetch`;
+    }
+
+
+
+    const t0= new Date().getTime();
+    let boites="";
+
+    for (let i=1; i<= N; i++){
+      boites += `<div class="exo before-fetch" id="exo${i}" onclick="afficher(${i})">${i}</div>`;
+    }
+
+    
+    // un peu dégueu mais bon : y a-t-il une fonction déjà intégrée ?
+    const padToSix = (n) => {
+      if (n<=999999) { n = ("00000"+n).slice(-6); }
+      return n;
+    }
+
+    const url = (n) => {
+      const fileName = "ex"+padToSix(n)+".txt";
+      //const path = "https://github.com/exo7math/exercices-exo7/blob/master/exercices/";
+      const path= "../exercices/";
+      return `${path}${fileName}`;
+    }
+
+
+
+    const demarrage = async () => {
+      document.getElementById("exos").innerHTML += boites; 
+      // remarque : ne pas faire ça dans la boucle ! sinon ça plante le navigateur très vite, à partir de qq milliers de cellules.
+
+      for(let i=1; i<= N; i++){
+        let element = document.getElementById("exo"+i);
+        try {
+          const response = await fetch(url(i));
+          if(!response.ok){
+            element.classList.add("error-response-not-ok");
+          } else{
+            element.classList.add("success");
+            const result = await response.text();
+            messages[i] = result;
+
+          }
+        } catch (error) {
+          // TypeError: Failed to fetch
+          messages[i]='Il y a eu une erreur lors du fetch : '+error;
+          element.classList.add("error-fetch");
+        }
+      }
+
+    }
+
+    const afficher  = (num) => {
+      // on fait une fonction pour ça pour pouvoir changer la façon d'afficher : alert, affichage d'u n <dialog>, console.log ...
+      alert(messages[num]);
+
+    }
+  </script>
+
+</head>
+
+<body onload="demarrage()">
+  <div class="container">
+  <h2>Test de fetch de tous les exos d'un coup</h2>
+  <div id="exos">
+    
+  </div> 
+  </div>
+
+
+</body>
+
+</html>
