@@ -495,7 +495,7 @@
         const exos = getExos(); // Récupérer la liste des numéros d'exercices
         try {
             // Récupérer le contenu du fichier texte
-            const fileResponse = await fetch("https://raw.githubusercontent.com/dmegy/exercices-exo7-stage2023/blob/main/exercices/_preambule.txt");
+            const fileResponse = await fetch("https://raw.githubusercontent.com/dmegy/exercices-exo7-stage2023/main/exercices/_preambule.txt");
             let fileContent = await fileResponse.text() + `%----- Presentation ------
 \\setlength{ \\parindent } { 0cm }
 
