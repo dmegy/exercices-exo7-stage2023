@@ -2,182 +2,212 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Page sans fetch sans parsage</title>
+    <title>Page fetch liste</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Librairie mathjax -->
-    <script src="https://polyfill.io/v3/polyfill.js?features=es6"></script>
     
     <!-- Configuration de MathJax -->
     <script>
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
     </script>
 
     <!-- Librairie mathjax -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>    
   </head>
 
   <body>
-    <div class="container-fluid">
-      <!-- Entete -->
-      <h1 id="num"></h1>
-      <h3 id="auteur"><h3>
-      <h4 id="date"></h4>
-      <br>
-      <br>
-      <h4>Enoncé : </h4>
-      <p id="enonce"></p>
-      <br>
-      <h4>Indication : </h4>
-      <p id="indication"></p>
-      <br>
-      <h4>Correction : </h4>
-      <p id="correction"></p> 
-            
-    </div>
+    <div class="container-fluid"></div>
 
     <script>
-      // Remplace tous les  \'[lettre]  par la lettre avec accent
-      function replaceAccents(chaine) {
-        const accents = [String.raw`\\'e`, String.raw`\\\`e`, String.raw`\\\^e`, String.raw`\\"e`,
-                        String.raw`\\\`a`, String.raw`\\\^a`, String.raw`\\\^i`, String.raw`\\"i`,
-                        String.raw`\\\^o`, String.raw`\\"o`, String.raw`\\\^u`, String.raw`\\"u`];
-
-          // Flag 'g' pour remplacer toutes les occurrences.
-          const exp_reg0 = new RegExp(accents[0], 'g');
-          chaine = chaine.replace(exp_reg0, "é");
-          const exp_reg1 = new RegExp(accents[1], 'g');
-          chaine = chaine.replace(exp_reg1, "è");
-          const exp_reg2 = new RegExp(accents[2], 'g');
-          chaine = chaine.replace(exp_reg2, "ê");
-          const exp_reg3 = new RegExp(accents[3], 'g');
-          chaine = chaine.replace(exp_reg3, "ë");
-          const exp_reg4 = new RegExp(accents[4], 'g');
-          chaine = chaine.replace(exp_reg4, "à");
-          const exp_reg5 = new RegExp(accents[5], 'g');
-          chaine = chaine.replace(exp_reg5, "â");
-          const exp_reg6 = new RegExp(accents[6], 'g');
-          chaine = chaine.replace(exp_reg6, "î");
-          const exp_reg7 = new RegExp(accents[7], 'g');
-          chaine = chaine.replace(exp_reg7, "ï");
-          const exp_reg8 = new RegExp(accents[8], 'g');
-          chaine = chaine.replace(exp_reg8, "ô");
-          const exp_reg9 = new RegExp(accents[9], 'g');
-          chaine = chaine.replace(exp_reg9, "ö");
-          const exp_reg10 = new RegExp(accents[10], 'g');
-          chaine = chaine.replace(exp_reg10, "û");
-          const exp_reg11 = new RegExp(accents[11], 'g');
-          chaine = chaine.replace(exp_reg11, "ü");
-          return chaine;
+      // Remplacement des symboles spéciaux
+      function replaceSymbols(myString) {  
+        const specialChars = { 
+          "\\'e":"é", "\\\`e":"è", "\\^e":"ê", '\\"e':"ë", "\\\`a":"à", "\\\^a":"â", '\\\"a':"ä", "\\'a":"á", "\\'i":"í",
+          "\\\^i":"î", "\\^{\\i}":"î", '\\"i':"ï", "\\\^o":"ô", '\\"o':"ö", "\\'o":"ó", "\\\^u":"û", '\\"u':"ü", "\\'u":"ú",
+          "\\cc":"ç", "\\cC":"Ç", "\\~n":"ñ", "\\~N":"Ñ", "\\AE":"Æ", "\\ae":"æ", "\\OE":"Œ", "\\oe":"œ", "\\ss":"ß",
+          "\\qquad":"&emsp;", "\\'E":"É", "\\begin{enumerate}":'<br>', "\\item":'<br> &emsp; - ', "\\end{enumerate}":'<br>',
+          "\\N":"ℕ", "\\N*":"ℕ*", "\\R":"ℝ", "\\R*":"ℝ*", "\\C":"ℂ", "\\C*":"ℂ*", "\\Z":"ℤ", "\\Z*":"ℤ*", "\\Zz":"ℤz",
+          "\\Cc":"ℂc", "\\Q":"ℚ", "\\Q*":"ℚ*",
+          "\\emph":"<em>", "\\\\":"<br>",
+        };
+        for (var eachKey in specialChars){
+          myString = myString.replaceAll(eachKey, specialChars[eachKey]);
+        }
+          return myString;
       } 
 
-
-
-
-      // différents exemples d'exos pour test.
-
-    let exo20 = String.raw`\exercice{20, bodin, 1998/09/01}
-        \video{8nXKgqMsucU}
-        \enonce
-         Soit $z$ un nombre complexe de module $\rho$,
-        d'argument $\theta$, et soit $\overline{z}$ son conjugu\'e.
-        Calculer
-        $(z+\overline{z})(z^2+\overline{z}^2)\ldots(z^n+\overline{z}^n)$
-        en fonction de $\rho$ et $\theta$.
-
-        \finenonce
-
-        \indication
-        Utiliser la formule d'Euler pour faire appara\^{\i}tre des cosinus.
-        \finindication
-
-        \correction
-        \'Ecrivons $z = \rho e^{i\theta}$, alors $\overline{z} = \rho
-        e^{-i\theta}$. Donc
-        \begin{align*}
-        P &= \prod_{k=1}^n \left(z^k+{\overline{z}}^k \right)\\
-        &= \prod_{k=1}^n \rho^k \left(  (e^{i\theta})^k + (e^{-i\theta})^k \right)\\
-        &= \prod_{k=1}^n \rho^k \left(  e^{ik\theta} + e^{-ik\theta}) \right)\\
-        &= \prod_{k=1}^n 2 \rho^k \cos {k\theta}\\
-        &= 2^n.\rho.\rho^2.\ldots.\rho^n \prod_{k=1}^n \cos {k\theta}\\
-        &= 2^n\rho^{\frac{n(n+1)}{2}} \prod_{k=1}^n \cos {k\theta}.\\
-        \end{align*}
-        \fincorrection
-        \finexercice`;
-
-    let exo8 = String.raw`\exercice{8, cousquer, 2003/10/01}
-        \enonce
-         Calculer le module et l'argument des nombres complexes suivants, ainsi
-        que de leurs conjugués :
-        \begin{enumerate}
-        \item $1+i(1+\sqrt2)$.
-        \item $\sqrt{10+2\sqrt5}+i(1-\sqrt5)$.
-        \item $\frac{\tan\varphi -i}{\tan\varphi +i}$ où $\varphi$ est un angle donné.
-        \end{enumerate}
-
-        \finenonce
-
-        \noindication
-
-        \correction
-        $\rho =\sqrt{4+2\sqrt2}$, $\theta ={3\pi \over8}$; \qquad
-        $\rho =4$, $\theta =-{\pi \over 10}$; \qquad
-        $\rho =1$, $\theta =2\varphi +\pi $.
-
-        \fincorrection
-
-        \finexercice`;
-
-
-
-    // initialisation des variables
-
-    let numExercice = "monNumero";
-    let auteur = String.raw`Auteur`;
-    auteur = replaceAccents(auteur);
-    let date = "maDate";
-    let [enonce, indication, correction]=["monEnonce","monIndication","maCorrection"];
-
-    // - - - - 
-    //
-    //  ICI LE PARSAGE
-    //
-    // - - - -
-
-
-    let monExo = exo8;
-    // on parse 'monExo' et on met le résultat dans les variables
-
-
-    // enfin, remplacement des accents.
-
-    enonce = replaceAccents(enonce);
-    indication = replaceAccents(indication);
-    correction = replaceAccents(correction);
-
-    // - - - modification de la page web
-
-
-    document.getElementById("num").innerHTML = "Exercice " + numExercice;
-    document.getElementById("auteur").innerHTML = "Auteur : " + auteur;
-    document.getElementById("date").innerHTML = "Le : " + date;
+      /**
+      *Fonction pour formatter le numéro d'un exercice à 6 chiffres
+      *
+      @param {string} number - Le numéro de l'exercice
+      @returns {string} Le numéro formatté
+      */
+      function formatExoNumber(number) {
+        // Conversion en string
+        let str = String(number);
+        
+        // string de 6 chiffres maximum
+        if (str.length > 6) {
+          throw new Error('Taille du nombre est supérieur à 6');
+        }
+        
+        // padStart :
+        // 1er paramètre = taille total voulue du string.
+        // 2ème paramètre = string ajouté pour compléter le string de base
+        return str.padStart(6, '0');
+      }
     
-    document.getElementById("enonce").innerHTML = enonce;
-    document.getElementById("indication").innerHTML = indication;
-    document.getElementById("correction").innerHTML = correction;
+    
+      /**
+      *Fonction asynchrone pour fetch le texte de l'url d'un exercice puis appel de la fonction de parsage
+      *
+      @param {string} url - L'url du texte brut de l'exercice
+      @returns {Promise<string>} Le texte de l'exercice en chaîne de caractères.
+      */
+      const fetchText = async (url) => {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const text = await response.text();
+        parseText(text);
+      };
 
 
+      /**
+      *Fonction pour parser le texte fetché. Découpage et stockage dans des variables, puis concaténation dans une seule chaîne
+      *de caractères pour l'affichage.
+      *
+      @param {string} fetchedText - Le texte fetché à parser
+      */
+      const parseText = (fetchedText) => {
 
+        // initialisation des variables
+        var exerciceContainer = document.createElement('div');
+        exerciceContainer.className = 'container-fluid';
+        let numExercice = document.createElement("h1");
+        let auteur = document.createElement("h3");
+        let date = document.createElement("h4");
+        let enonce = document.createElement("p");
+        let indication = document.createElement("p");
+        let correction = document.createElement("p");
+        
+        // Mots clés devant figurant dans chaque exercice 
+        var motsObligatoires = ["\\exercice", "\\finexercice", "\\enonce", "\\finenonce"];
+        // Vérifie si ces mots sont présents dans le texte de l'exercice
+        let latexValide = motsObligatoires.every(item => fetchedText.includes(item));
+        
+        if (!latexValide){ // Si non présents, exercice incorrect
+          document.write("<h2> Le code latex de l'exercice contient une erreur </h2>");
+          throw new Error("Code latex incorrect");} // Arrêt du script
+        
+
+        // Si l'exercice est correctement écrit :      
+        // Récupération de l'entête
+        const debutEntete = fetchedText.indexOf("{");
+        const finEntete = fetchedText.indexOf("}");
+        var entete = fetchedText.slice(debutEntete+1, finEntete);
+        entete = entete.split(", ");
+        
+        numExercice.innerHTML = entete[0];
+        auteur.innerHTML = entete[1];
+        date.innerHTML = entete[2];
+
+        // Récupération de la vidéo
+        const regexString = "\\\\video\\{([^}]+)\\}";
+          // \\\\ échappe 2 backslashes.
+          // video match la chaine de caracteres"video"
+          // \\{ match l'accolade {. Le backslash \ échappe le symbole spécial { dans les expressions régulières pour matcher le caractère littéral : {.
+          // ( et ) délimitent le capturing group, qui capture le texte qui match le pattern entre les parenthèses.
+          // [^}] match tous caracteres sauf l'accolade fermante }.
+          // + match 1 ou plus occurrences du pattern [^}] donc 1 ou plusieurs caractères compris entre les parenthèses
+          // \\} match le caractère littéral accolade fermante }. Backslash utilisé pour échapper le symbole spécial {
+        const regex = new RegExp(regexString);
+        const match = fetchedText.match(regex);
+
+        // S'il y a une vidéo :
+        if (match) { 
+          const codeVideo = match[1]; // Code de la vidéo (par exemple : 8nXKgqMsucU)
+          const urlVideo = "https://www.youtube.com/watch?v=" + codeVideo; // URL Youtube de la vidéo
+          const redirectionVideo = document.createElement('p');
+          
+          // On donne la valeur href pour attribut
+          redirectionVideo.setAttribute('data-href', urlVideo);
+        
+          // Texte html affiché
+          redirectionVideo.innerHTML = 'Lien vers la video';
+
+          // Fonction appelée quand le texte est cliqué
+          redirectionVideo.addEventListener('click', function() {
+            // On get l'URL de l'attribut data-href
+            const url = this.getAttribute('data-href');
+            // Redirection au lien
+            window.location.href = url;});
+        }
+
+        // Récupération de l'énoncé
+        const debutEnonce = fetchedText.indexOf("\\enonce");
+        const finEnonce = fetchedText.indexOf("\\finenonce");
+        enonce.innerHTML = fetchedText.slice(debutEnonce+7, finEnonce);
+        
+        // Récupération de l'indication s'il y en a
+        const debutIndication = fetchedText.indexOf("\\indication");
+        if (debutIndication != -1){
+          const finIndication = fetchedText.indexOf("\\finindication");
+          indication.innerHTML = fetchedText.slice(debutIndication+12, finIndication);
+        }
+        
+        // Récupération de la correction s'il y en a
+        const debutCorrection = fetchedText.indexOf("\\correction");
+        if (debutCorrection != -1){
+          const finCorrection = fetchedText.indexOf("\\fincorrection");
+          correction.innerHTML = fetchedText.slice(debutCorrection+12, finCorrection-1);
+        }
+
+        // Remplacement des accents.
+        auteur.innerHTML = replaceSymbols(auteur.innerHTML);
+        enonce.innerHTML = replaceSymbols(enonce.innerHTML);
+        indication.innerHTML = replaceSymbols(indication.innerHTML);
+        correction.innerHTML = replaceSymbols(correction.innerHTML);
+
+        // Affichage de l'exercice
+        exerciceContainer.innerHTML = `
+          <h1>Exercice ` + numExercice.innerHTML + `</h1>` +
+          `<h3>Auteur : ` + auteur.innerHTML + `</h3>` +
+          `<h4>Le ` + date.innerHTML + `</h4>` +
+          `<br><br>` +
+          `<h4>Enoncé : </h4>` + 
+          `<p>` + enonce.innerHTML + `</p>` +
+          `<br>` + 
+          `<h4>Indications : </h4>` +
+          `<p>` + indication.innerHTML + `</p>` + 
+          `<br>` +
+          `<h4>Correction : </h4>` +
+          `<p>` + correction.innerHTML + `</p>` +
+          `<br><br><br><br>`;
+
+        // Interprétation MathJax
+        MathJax.typesetPromise([exerciceContainer])
+          .catch(err => console.error(err));
+
+        document.body.appendChild(exerciceContainer);    
+      };
+
+
+      const params = new URLSearchParams(window.location.search);
+      let numExo = parseInt(params.get('exo'));
+      let URLexo = 'https://raw.githubusercontent.com/exo7math/exercices-exo7/master/exercices/ex' + formatExoNumber(numExo) + '.txt';
+
+      fetchText(URLexo);
+      
     </script>
   </body>
 </html>
