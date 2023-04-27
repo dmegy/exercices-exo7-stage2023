@@ -25,6 +25,12 @@ Et on peut mettre des liens, par exemple
 
 
 
+## 26 avril
+    - Finition de exercice-fetch-random et exercice-fetch-liste-en-dur. Différence au niveau de l'affichage (côté html / javascript)
+    - Beaucoup de bugs dans la liason entre MathJax et le fetch. (Si je fetch d'une manière, je dois reconfigurer MathJax etc)
+    - Problème rencontré également avec l'utilisation d'une boucle for, j'ai donc utilisé Promise.all 
+    - J'ai eu du mal avec Promise.all au début puis quand ça fonctionnait, à faire fonctionner MathJax avec.
+
 ## 25 avril
 
 
