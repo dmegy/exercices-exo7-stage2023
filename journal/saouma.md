@@ -23,6 +23,11 @@ Et on peut mettre des liens, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
 
+## 27 avril 
+    - exercice-fetch-variable-GET et exercice-fetch-liste-GET.
+    - J'ai appeler la fonction parseText() dans la fonction fetchText() au lieu de l'appeler après fetchText().
+        C'était un moyen de contourner un problème (le texte fetché était de type object au lieu de string et je ne pouvais donc pas le parser). J'aimerais quand même revoir ça pour trouver une solution plus propre ça ne devrait pas être compliqué.
+    - Pour la version avec la liste d'exos : le paramètre dans l'URL est une liste, je trouve que c'est plus pratique que de donner un paramètre différent pour chaque exo.
 
 
 ## 26 avril
