@@ -19,6 +19,14 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 26 avril
+
+L'exportation en LaTeX via github est complet (avec préambule + options utilisateurs), le LaTeX retourné est maintenant compilable.
+
+## 25 avril
+
+Début de l'implémentation de l'exportation en LaTeX via github (préambule).
+
 ## 24 avril
 
 Le fetch avec les données de l'API, provoque une erreur de protocole avec le serveur.

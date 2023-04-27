@@ -392,11 +392,87 @@
         const texts = await Promise.all(urls.map(url => fetchData(url)));
 
         // Concaténer les textes des fichiers texte des exercices
-        const concatenatedText = texts.join("\n\n");
+        let concatenatedText = texts.join("\n");
+
+        const checkboxes = document.getElementsByName("Pos[]");
+
+        const enoncesChecked = checkboxes[0].checked;
+        const indicationsChecked = checkboxes[1].checked;
+        const surPageIndicationsChecked = checkboxes[2].checked;
+        const correctionsChecked = checkboxes[3].checked;
+        const surPageCorrectionsChecked = checkboxes[4].checked;
+
+        if (!enoncesChecked) {
+            // Supprimer le texte entre les balises "\enonce" et "\finenonce"
+            concatenatedText = concatenatedText.replace(/\\enonce[\s\S]*?\\finenonce/g, "");
+        }
+
+        if (!indicationsChecked) {
+            // Supprimer le texte entre les balises "\indication" et "\finindication"
+            concatenatedText = concatenatedText.replace(/\\indication[\s\S]*?\\finindication/g, "");
+        }
+
+        if (!correctionsChecked) {
+            // Supprimer le texte entre les balises "\correction" et "\fincorrection"
+            concatenatedText = concatenatedText.replace(/\\correction[\s\S]*?\\fincorrection/g, "");
+        }
+
+        if (surPageIndicationsChecked) {
+            // Regrouper les indications en fin du document et dans une nouvelle page
+            concatenatedText = moveIndicationsToEnd(concatenatedText);
+        }
+
+        if (surPageCorrectionsChecked) {
+            // Regrouper les corrections en fin du document et dans une nouvelle page
+            concatenatedText = moveCorrectionsToEnd(concatenatedText);
+        }
 
         return concatenatedText;
     }
 
+    function moveCorrectionsToEnd(concatenatedText) {
+        // Récupérer tous les blocs "correction"
+        const correctionsRegex = /\\correction([\s\S]*?)\\fincorrection/g;
+        const corrections = concatenatedText.match(correctionsRegex);
+        if (corrections) {
+            // Retirer les blocs "correction" du document
+            concatenatedText = concatenatedText.replace(correctionsRegex, "");
+
+            // Ajouter tous les blocs "correction" à la fin du document
+            concatenatedText += "\n\\section*{Corrections}";
+            for (const correction of corrections) {
+                concatenatedText += `\n${correction}`;
+            }
+
+            // Ajouter une nouvelle page à la fin du document
+            concatenatedText += "\n\\newpage";
+        }
+
+        return concatenatedText;
+    }
+
+
+    function moveIndicationsToEnd(concatenatedText) {
+        // Récupérer tous les blocs "indication"
+        const indicationsRegex = /\\indication([\s\S]*?)\\finindication/g;
+        const indications = concatenatedText.match(indicationsRegex);
+
+        if (indications) {
+            // Retirer les blocs "indication" du document
+            concatenatedText = concatenatedText.replace(indicationsRegex, "");
+
+            // Ajouter une nouvelle page à la fin du document
+            concatenatedText += "\n\\newpage";
+
+            // Ajouter tous les blocs "indication" à la fin du document
+            concatenatedText += "\n\\section*{Indications}";
+            for (const indication of indications) {
+                concatenatedText += `\n${indication}`;
+            }
+        }
+        concatenatedText += "\n\\newpage";
+        return concatenatedText;
+    }
     /**
     *Ouvre un onglet avec les exercices récupérés à partir de la liste des numéros d'exercices fournie.    
     */
@@ -449,39 +525,6 @@
         }
     }
 
-    function checkCheckBoxes() {
-        const checkboxes = document.getElementsByName("Pos[]");
-
-        // Vérifier si chaque case à cocher est cochée ou non
-        const enoncesChecked = checkboxes[0].checked;
-        const indicationsChecked = checkboxes[1].checked;
-        const surPageIndicationsChecked = checkboxes[2].checked;
-        const correctionsChecked = checkboxes[3].checked;
-        const surPageCorrectionsChecked = checkboxes[4].checked;
-
-        // Faire quelque chose en fonction des cases cochées ou non
-        if (enoncesChecked) {
-            console.log("Enoncé");
-            // Do something
-        }
-
-        if (indicationsChecked) {
-            // Do something
-        }
-
-        if (surPageIndicationsChecked) {
-            // Do something
-        }
-
-        if (correctionsChecked) {
-            // Do something
-        }
-
-        if (surPageCorrectionsChecked) {
-            // Do something
-        }
-    }
-
     function fetchAPI() {
         const form = document.querySelector('form[name="formulaire"]');
         const url = form.action;
@@ -495,10 +538,18 @@
         const exos = getExos(); // Récupérer la liste des numéros d'exercices
         try {
             // Récupérer le contenu du fichier texte
-            const fileResponse = await fetch("https://raw.githubusercontent.com/Phil1010/exercices-exo7-stage2023/main/exercices/_preambule.txt");
-            let fileContent = await fileResponse.text() + "\n" + "% Cette fiche contient les exercices:" + formatListe(document.getElementById("maListe").value) + "\n" + "\n";
+            const fileResponse = await fetch("https://raw.githubusercontent.com/dmegy/exercices-exo7-stage2023/main/exercices/_preambule.txt");
+            let fileContent = await fileResponse.text() + `
+\\begin{document}
 
-            checkCheckBoxes();
+\\textsf{\\textbf{ `+ getHautGauche() + ` } } \\hfill\\textsf{\\textbf{ ` + getHautDroit() + ` } }
+
+\\textsf{\\textbf{ `+ getBasGauche() + ` } } \\hfill\\textsf{ \\textbf{ ` + getBasDroit() + ` } }
+
+\\vspace * { 0.5ex }\\hrule\\vspace * { 1.5ex }
+\\hfil\\textsf{ \\textbf{ \\Large 5 } }
+\\vspace * { 1ex }\\hrule\\vspace * { 5ex }` + "\n" + "% Cette fiche contient les exercices:" + getMaliste() + "\n" + "\n";
+
 
             // Concaténer le contenu du fichier avec le résultat de la fonction fetchExos()
             let concatenatedText = fileContent + await fetchExos(exos);
@@ -519,8 +570,34 @@
         }
     }
 
+    //get the value of maListe
+    function getMaliste() {
+        const maListe = formatListe(document.getElementById("maListe").value);
+        return maListe;
+    }
+    // get the value of hautGauche
+    function getHautGauche() {
+        const hautGauche = document.getElementById("txt-annee").value;
+        return hautGauche;
+    }
 
+    // get the value of hautDroit
+    function getHautDroit() {
+        const hautDroit = document.getElementById("txt-num").value;
+        return hautDroit;
+    }
 
+    // get the value of basGauche
+    function getBasGauche() {
+        const basGauche = document.getElementById("txt-univ").value;
+        return basGauche;
+    }
+
+    // get the value of basDroit
+    function getBasDroit() {
+        const basDroit = document.getElementById("txt-module").value;
+        return basDroit;
+    }
 
 
 </script>
