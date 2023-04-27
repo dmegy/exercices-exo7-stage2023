@@ -19,6 +19,11 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 27 avril
+
+planche-extract-latex-manuel.html terminer.
+![Interface proposé pour la planche](img/planche-extract-latex-manuel.png)
+
 ## 26 avril
 
 L'exportation en LaTeX via github est complet (avec préambule + options utilisateurs), le LaTeX retourné est maintenant compilable.
