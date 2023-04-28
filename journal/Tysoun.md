@@ -19,6 +19,16 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 28 avril
+
+Correction de la planche-extract-latex-manuel.html :
+
+- selection utilisateur pour "Ouvrir avec overleaf"
+- nom explicites pour fichiers sauvegardés
+- historique (le pushState devien replaceState)
+- titre doc ajouter
+- ajout des vérifications du formulaire
+
 ## 27 avril
 
 planche-extract-latex-manuel.html terminer.
