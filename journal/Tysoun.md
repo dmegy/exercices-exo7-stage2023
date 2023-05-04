@@ -19,6 +19,14 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 04 mai
+
+Objectif : Commencer le quiz-exo7
+
+## 03 mai
+
+La fonctionnalité de préview qui consistait à récupérer le rendu pdf de l'API d'Overleaf et le mettre dans un iframe n'est pas implémenté.
+
 ## 02 mai
 
 Objectif : planche-avec-preview

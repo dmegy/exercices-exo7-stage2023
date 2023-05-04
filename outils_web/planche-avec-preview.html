@@ -2,10 +2,23 @@
 <html>
 
 <head>
-    <script async
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- Configuration de MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+
+    <!-- Librairie mathjax -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
+
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Pour le Toast -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
@@ -145,14 +158,14 @@
                         <a id="clipboard-btn" class="waves-effect waves-light btn" data-clipboard-target="#permalien"
                             onclick="copier()">
                             <i class="material-icons left">content_copy</i>
-                            Copier le lien
+                            Copier
                         </a>
 
                         &nbsp;&nbsp;&nbsp;&nbsp;
 
                         <a class="waves-effect waves-light btn" onclick="partagerPlanche()">
                             <i class="material-icons">share</i>
-                            <span class="btn-share-text">Partager la planche</span>
+                            <span class="btn-share-text">Partager</span>
                         </a>
 
                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -166,6 +179,7 @@
 
                         <button class="btn" id="preview-button" onclick="preview()">Previsualiser</button>
 
+                        <iframe id="preview-frame" frameborder="0"></iframe>
 
                         <style>
                             .btn-share-text {
@@ -770,37 +784,9 @@
     }
 
     function preview() {
-        var code = getCodeLatex(); // obtenir le code LaTeX
+        //console.log("preview");
+        //console.log(getCodeLatex());
 
-        // envoyer le code à compiler vers le service de compilation en ligne
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://latexonline.cc/compile", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onload = function () {
-            var response = JSON.parse(xhr.responseText);
-            if (xhr.readyState == 4 && xhr.status == "200") {
-                // extraire le lien vers le PDF généré
-                var pdfUrl = response.pdf_url;
-
-                // créer un iframe pour afficher le PDF
-                var iframe = document.createElement("iframe");
-                iframe.src = pdfUrl;
-                iframe.width = "100%";
-                iframe.height = "500px";
-
-                // ajouter l'iframe à la page
-                document.body.appendChild(iframe);
-            } else {
-                console.error(response);
-            }
-        };
-
-        // envoyer le code LaTeX à compiler
-        var data = JSON.stringify({
-            "compiler": "pdflatex",
-            "code": code
-        });
-        xhr.send(data);
     }
 
 
