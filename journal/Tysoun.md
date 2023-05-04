@@ -19,6 +19,29 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 04 mai
+
+Objectif : Commencer le quiz-exo7
+
+## 03 mai
+
+La fonctionnalité de préview qui consistait à récupérer le rendu pdf de l'API d'Overleaf et le mettre dans un iframe n'est pas implémenté.
+
+## 02 mai
+
+Objectif : planche-avec-preview
+Problème rencontré : compilé le code LaTex, erreur de la restriction "X-Frame-Options" définie par le serveur empêche le chargement de la page Overleaf dans l'iframe cette restriction est définie du côté serveur et ne peut être contournée du côté client en utilisant uniquement du JavaScript. Une solution possible consiste à utiliser un proxy côté serveur pour contourner la restriction. Le proxy peut agir comme un intermédiaire entre le navigateur client et le serveur Overleaf, en demandant la page Overleaf et en la renvoyant au navigateur client sous forme d'un document HTML qui peut être chargé dans l'iframe. Mais là aussi il faut la main sur le serveur.
+
+## 28 avril
+
+Correction de la planche-extract-latex-manuel.html :
+
+- selection utilisateur pour "Ouvrir avec overleaf"
+- nom explicites pour fichiers sauvegardés
+- historique (le pushState devien replaceState)
+- titre doc ajouter
+- ajout des vérifications du formulaire
+
 ## 27 avril
 
 planche-extract-latex-manuel.html terminer.
