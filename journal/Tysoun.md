@@ -19,9 +19,14 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 05 mai
+
+Erreur lors du test de texlive, en local le test de la doc de github ne trouve pas le fichier pdftex-worker.js
+Le test est sera disponible dans mon github.
+
 ## 04 mai
 
-Objectif : Commencer le quiz-exo7
+Prise en main de texlive
 
 ## 03 mai
 
