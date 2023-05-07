@@ -29,12 +29,12 @@
   <meta name="twitter:image" content="export.png">
   <style>
     form {
-      display : inline-block;
+      display : inline;
     }
 
     h6{
       font-weight: bold;
-      padding-top: 1rem;
+      padding-top: .5rem;
     }
 
     hr.hrule {
@@ -49,6 +49,17 @@
       position: relative;
       top: -4px;
       margin-left: 5px;
+    }
+    kbd {
+      border: 2px solid #666; 
+      box-shadow: 2px 2px #666; 
+      font-size: .85em; 
+      line-height: .85em; 
+      display: inline-block;
+      font-weight: 600;
+      letter-spacing: .05em; 
+      padding: 3px 5px;
+      white-space: nowrap;
     }
 </style>
 
@@ -170,35 +181,29 @@
             <i class="material-icons">save</i>
             <span class="btn-share-text">LaTeX</span>
           </a>
+          <!--<a class="waves-effect waves-light btn" onclick="alert('todo')">
+            <i class="material-icons">email</i>
+            <span class="btn-share-text">LaTeX</span>
+          </a>-->
 
 
 
           <h6>
             <!--<i class="material-icons left">share</i>-->
-            Partage de cette page web
-            (avec cette liste d'exercices pré-enregistrée)
+            Partage du lien vers cette page (avec la liste pré-enregistrée)
           </h6>
+            
+          <input id="permalien" value="@getLien()" type="text" style="display:none">
+          <a id="clipboard-btn" class="waves-effect waves-light btn" data-clipboard-target="#permalien" onclick="copier()">
+            <i class="material-icons left">content_copy</i>
+            Copier le lien
+          </a>
+          <a class="waves-effect waves-light btn" onclick="partagerPlanche()">
+            <i class="material-icons left">email</i>
+            Envoi du lien par email
+          </a>
 
-          <input id="permalien" value="@getLien()" type="text" style="width:100%">
-
-
-
-          <div class="valign-wrapper">
-            <a id="clipboard-btn" class="waves-effect waves-light btn" data-clipboard-target="#permalien"
-              onclick="copier()">
-              <i class="material-icons left">content_copy</i>
-              Copier le lien
-            </a>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            <a class="waves-effect waves-light btn" onclick="partagerPlanche()">
-              <i class="material-icons left">email</i>
-              Envoi par email
-            </a>
-          </div>
-
-        <p>Vous pouvez mettre cette page en favori en appuyant sur cmd+D ou ctrl+D</p>
+        <p>Vous pouvez également mettre cette page (avec la liste pré-enregistrée) en favori en appuyant sur <kbd>Cmd</kbd> + <kbd>D</kbd> ou <kbd>Ctrl</kbd> + <kbd>D</kbd> .</p>
 
       </div><!-- /card-content-->
     </div><!-- /card-->
