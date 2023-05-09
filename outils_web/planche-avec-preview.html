@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <script src="librairies/texlive.js/promisejs/promisejs/promise.js"></script>
-    <script src="librairies/texlive.js/pdftex.js"></script>
+    <script src="texlive.js/promisejs/promisejs/promise.js"></script>
+    <script src="texlive.js/pdftex.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Pour le Toast -->
@@ -128,9 +128,9 @@
                         <input class="btn" type="button" value="Sauvegarder code LaTeX " onclick="sauvegarderExos()">
                         <br>
                         <br>
-                        <input class="btn" type="button" value="Ouvrir code LaTeX (avec préambule)"
+                        <input class="btn" type="button" value="Ouvrir code LaTeX (préambule)"
                             onclick="fetchLaTeXGithub()">
-                        <input class="btn" type="button" value="Sauvegarder code LaTeX (avec préambule)"
+                        <input class="btn" type="button" value="Sauvegarder code LaTeX (préambule)"
                             onclick="sauvegarderEnLaTeX()">
                     </div>
                     <h6>Lien pour accéder à cette page avec cette même liste pré-chargée:</h6>
@@ -154,9 +154,16 @@
                             <i class="material-icons">share</i>
                             <span class="btn-share-text">Partager la planche</span>
                         </a>
+                        <style>
+                            .btn-share-text {
+                                position: relative;
+                                top: -4px;
+                                margin-left: 5px;
+                            }
+                        </style>
+                    </div>
 
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-
+                    <div class="valign-wrapper">
                         <form action="https://www.overleaf.com/docs" method="post" target="_blank">
                             <textarea rows="8" cols="60" name="snip" style="display: none;"></textarea>
                             <input class="btn" type="submit" value="Ouvrir dans Overleaf">
@@ -167,15 +174,6 @@
                         <button class="btn" id="preview-button" onclick="preview()">Previsualiser</button>
 
                         <iframe id="preview-frame" frameborder="0"></iframe>
-
-
-                        <style>
-                            .btn-share-text {
-                                position: relative;
-                                top: -4px;
-                                margin-left: 5px;
-                            }
-                        </style>
                     </div>
                 </section>
 
