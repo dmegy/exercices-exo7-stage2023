@@ -3,20 +3,8 @@
 
 <head>
 
-    <!-- Configuration de MathJax -->
-    <script>
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
-    </script>
+    <script src="librairies/texlive.js"></script>
 
-    <!-- Librairie mathjax -->
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
 
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Pour le Toast -->
@@ -388,6 +376,8 @@
 
         // prepare l'ouverture de la fiche d'exos dans overleaf
         ouvrirAvecOverleaf();
+
+        preview();
 
         isValidList(maListe);
         limits();
@@ -783,10 +773,25 @@
         }
     }
 
-    function preview() {
-        //console.log("preview");
-        //console.log(getCodeLatex());
 
+    //console.log("preview");
+    //console.log(getCodeLatex());
+
+    function preview() {
+
+        var texlive = new texlivejs.TexLive();
+
+
+        var pdftex = new PDFTeX();
+        var latex_code = "" +
+            "\\documentclass{article}" +
+            "\\begin{document}" +
+            "\\LaTeX is great!" +
+            "$E = mc^2$" +
+            "\\end{document}";
+
+        pdftex.compile(latex_code)
+            .then(function (pdf) { window.open(pdf) });
     }
 
 
