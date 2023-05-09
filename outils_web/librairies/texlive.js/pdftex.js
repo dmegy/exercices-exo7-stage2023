@@ -1,9 +1,5 @@
 var PDFTeX = function (opt_workerPath) {
-  console.log(" 11111     PDFTEX INFO SUR LE PATH DE PDFWORKER");
-  console.log(window.location.pathname);
   if (!opt_workerPath) {
-    console.log("PDFTEX INFO SUR LE PATH DE PDFWORKER");
-    console.log(window.location.pathname);
     opt_workerPath = "librairies/texlive.js/pdftex-worker.js";
   }
   var worker = new Worker(opt_workerPath);

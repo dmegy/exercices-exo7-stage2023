@@ -774,12 +774,7 @@
     //console.log(getCodeLatex());
 
     async function preview() {
-        //testaze
-        console.log("preview");
-        console.log(window.location.pathname);
-
         var pdftex = new PDFTeX();
-        console.log("preview     pdfTex = " + pdftex);
         var latex_code = "" +
             "\\documentclass{article}" +
             "\\begin{document}" +
@@ -792,13 +787,12 @@
                 // PDF compilation completed
                 // Use 'pdf' variable as desired
                 console.log(pdf);
-                // Example: Download PDF
-                var link = document.createElement('a');
-                link.href = pdf;
-                link.download = 'output.pdf';
-                link.click();
+                // Example: Display PDF in iframe
+                var iframe = document.getElementById('preview-frame');
+                iframe.src = pdf;
             });
     }
+
 
     //get the value of maListe
     function getMaliste() {
