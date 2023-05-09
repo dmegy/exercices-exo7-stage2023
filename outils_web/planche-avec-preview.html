@@ -778,10 +778,6 @@
     //console.log(getCodeLatex());
 
     function preview() {
-
-        var texlive = new texlivejs.TexLive();
-
-
         var pdftex = new PDFTeX();
         var latex_code = "" +
             "\\documentclass{article}" +
@@ -791,8 +787,18 @@
             "\\end{document}";
 
         pdftex.compile(latex_code)
-            .then(function (pdf) { window.open(pdf) });
+            .then(function (pdf) {
+                // PDF compilation completed
+                // Use 'pdf' variable as desired
+                console.log(pdf);
+                // Example: Download PDF
+                var link = document.createElement('a');
+                link.href = pdf;
+                link.download = 'output.pdf';
+                link.click();
+            });
     }
+
 
 
 
