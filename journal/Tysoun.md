@@ -19,6 +19,10 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 09 mai
+
+Avancement de la fonctionnalité de preview. La preview d'un fichier basique avec les packages existant déjà dans texlive.js est effectué mais il reste la version avec les packages à inclures.
+
 ## 05 mai
 
 Erreur lors du test de texlive, en local le test de la doc de github ne trouve pas le fichier pdftex-worker.js
