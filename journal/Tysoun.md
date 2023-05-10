@@ -19,6 +19,11 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 10 mai
+
+Le package "fancybox.sty" à pu être rajouter manuelement il reste le package "tikz.sty" et les erreurs avec babels.
+fancybox.sty trouver sur le site suivant : https://ctan.org/pkg/fancybox
+
 ## 09 mai
 
 Avancement de la fonctionnalité de preview. La preview d'un fichier basique avec les packages existant déjà dans texlive.js est effectué mais il reste la version avec les packages à inclures.
