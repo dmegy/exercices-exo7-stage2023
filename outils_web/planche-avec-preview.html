@@ -795,7 +795,10 @@
 
     async function preview() {
         var pdftex = new PDFTeX();
-        var latex_code = getCodeLatex().replace(/\\usepackage\[[^\]]+\]\{(?:french|fancybox|tikz)\}/g, '');
+        var latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
+            .replace(/\\usepackage\{fancybox\}/g, '')
+            .replace(/\\usepackage\{tikz\}/g, '');
+
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
