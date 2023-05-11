@@ -165,7 +165,7 @@
 
                     <div class="valign-wrapper">
                         <form action="https://www.overleaf.com/docs" method="post" target="_blank">
-                            <textarea rows="8" cols="60" name="snip" style="display: none;"></textarea>
+                            <textarea id="codeLatex" rows="8" cols="60" name="snip" style="display: none;"></textarea>
                             <input class="btn" type="submit" value="Ouvrir dans Overleaf">
                         </form>
 
@@ -173,7 +173,9 @@
 
                         <button class="btn" id="preview-button" onclick="preview()">Previsualiser</button>
 
-                        <iframe id="preview-frame" frameborder="0"></iframe>
+                        <div class="iframe-container">
+                            <iframe id="preview-frame" frameborder="0"></iframe>
+                        </div>
                     </div>
                 </section>
 
@@ -181,6 +183,24 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 10%;
+            /* Ratio 16:9 (change as needed) */
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 
 </body>
 
@@ -775,12 +795,7 @@
 
     async function preview() {
         var pdftex = new PDFTeX();
-        var latex_code = "" +
-            "\\documentclass{article}" +
-            "\\begin{document}" +
-            "\\LaTeX is great!" +
-            "$E = mc^2$" +
-            "\\end{document}";
+        var latex_code = getCodeLatex().replace(/\\usepackage\[[^\]]+\]\{(?:french|fancybox|tikz)\}/g, '');
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
@@ -793,6 +808,10 @@
             });
     }
 
+    function getCodeLatex() {
+        const codeLatex = document.getElementById("codeLatex").value;
+        return codeLatex;
+    }
 
     //get the value of maListe
     function getMaliste() {
