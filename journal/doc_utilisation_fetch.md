@@ -19,6 +19,8 @@ fetch(url, options)
   .catch((error) => console.error(error));
 ```
 
+
+
 ## Fetch avec await
 
 await permet d'attendre la résolution de la promesse avant de la renvoyer.
@@ -37,3 +39,22 @@ async function fetchSomeData(url) {
   }
 }
 ```
+
+## avantages de l'usage avec await
+  Code plus lisible (on utilise pas une chaine de ".then()") Surtout pour la gestion d'erreurs (try-catch au lieu de plusieurs catch)
+
+
+## désavantages de l'usage avec await
+  Seulement utilisable dans une fonction async.
+  Peut bloquer l'exécution globale lorsqu'on veut faire plusieurs fetch d'un coup -> application potentiellement lente. D'où l'utilisation de Promise.all()
+
+
+## fichiers utilisant .then
+  exercice-fetch-23.html
+  exercice-fetch-random.html
+
+
+## fichiers utilisant await
+  exercice-fetch-liste-en-dur.html
+  exercice-fetch-liste-GET.html
+  exercice-fetch-variable-GET.html

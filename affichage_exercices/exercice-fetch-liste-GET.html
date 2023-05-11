@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Page fetch liste</title>
 
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
@@ -21,13 +24,118 @@
 
     <!-- Librairie mathjax -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
+
+    <style>
+      .wrapperBoutons {
+        display: inline-block;
+        margin-right: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      .btn{
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
+    </style>
   </head>
 
   <body>
+    <!-- Affichage des exercices -->
     <div class="container-fluid"></div>
 
+    <!-- BOUTONS -->
+        <!-- Ouvrir dans Overleaf -->
+    <form action="https://www.overleaf.com/docs" class="wrapperBoutons" method="post" target="_blank">
+      <textarea rows="8" cols="60" name="snip" style="display:none;"></textarea>
+      <input class="btn" type="submit" value="Ouvrir dans Overleaf">
+    </form>
+    
+        <!-- Exporter en PDF -->
+    <form target="_blank" name="formulaire" action="http://exo7.emath.fr/bin/extract5.php" class="wrapperBoutons" method="post">
+      <textarea name="MesExos" id="maListe" hidden></textarea>
+      <input class="btn" type="submit" name="pdf" value="Exporter en PDF">
+    </form>
+ 
+        <!-- Ouvrir code LaTeX-->
+    <input class="btn wrapperBoutons" type="button" value="Ouvrir code LaTeX" onclick="ouvrirExosSource()">
+        <!-- Sauvegarder code LaTeX-->
+    <input class="btn" type="button" value="Sauvegarder code LaTeX " onclick="sauvegarderExos()">
+    
+
     <script>
-      // Remplacement des symboles spéciaux
+      /**
+       * Fonction permettant d'ouvrir la page dans Overleaf
+       */
+      async function ouvrirAvecOverleaf() {
+        try {
+          // Récupérer le contenu du fichier texte
+          const fileResponse = await fetch(
+              "https://raw.githubusercontent.com/dmegy/exercices-exo7-stage2023/main/exercices/_preambule.txt"
+          );
+          let fileContent = (await fileResponse.text());
+
+          // Concaténer le contenu du fichier avec le résultat de la fonction fetchExos()
+          let concatenatedText = fileContent + (await fetchExosViaGithub(listeURLs));
+          concatenatedText += "\n" + "\\end{document}";
+
+          // Mettre le contenu dans le textarea du formulaire
+          const textarea = document.querySelector('textarea[name="snip"]');
+          if (textarea) {
+            textarea.value = concatenatedText;
+          }
+        }
+        catch (error) {
+            console.error(error);
+        }
+      }
+
+
+      /**
+       * Ouvre un onglet avec les exercices récupérés à partir de la liste des numéros d'exercices fournie.    
+       */
+      async function ouvrirExosSource() {
+        const exos = getURLsExos(); // Récupérer la liste des URLs des exercices
+        try {
+          const concatenatedText = await fetchExosViaGithub(exos);
+
+          // Créer un nouveau fichier texte avec le contenu concaténé
+          const file = new File([concatenatedText], "exercices.txt", {
+            type: "text/plain",
+          });
+
+          // Créer une URL de l'objet file pour l'ouvrir dans un nouvel onglet
+          const fileUrl = URL.createObjectURL(file);
+
+          // Ouvrir le fichier dans un nouvel onglet
+          window.open(fileUrl, "_blank");
+        } catch (error) {
+            console.error(error);
+        }
+      }
+
+      
+      /**
+       * Récupère le contenu de plusieurs fichiers texte d'exercices en ligne et les concatène.
+       * @async
+       * @param {number[]} exos - Un tableau de numéros d'exercices.
+       * @returns {Promise<string>} - Une promesse contenant le texte concaténé des fichiers texte des exercices.
+       */
+      async function fetchExosViaGithub(urls) {
+        // Récupérer le contenu de tous les fichiers texte des exercices
+        const texts = await Promise.all(urls.map(url => fetchText(url)));
+
+        // Concaténer les textes des fichiers texte des exercices
+        let concatenatedText = texts.join("\n");
+
+        return concatenatedText;
+      }
+
+
+      /**
+       * Remplacement des symboles spéciaux dans une chaîne de caractères
+       * @param {string} myString - La chaîne de caractères
+       * @returns <string> - La chaîne de caractères avec les symboles remplacés
+       */
       function replaceSymbols(myString) {  
         const specialChars = { 
           "\\'e":"é", "\\\`e":"è", "\\^e":"ê", '\\"e':"ë", "\\\`a":"à", "\\\^a":"â", '\\\"a':"ä", "\\'a":"á", "\\'i":"í",
@@ -41,15 +149,18 @@
         for (var eachKey in specialChars){
           myString = myString.replaceAll(eachKey, specialChars[eachKey]);
         }
-          return myString;
+        return myString;
       } 
 
+
       /**
-      *Fonction pour formatter le numéro d'un exercice à 6 chiffres
-      *
-      @param {string} number - Le numéro de l'exercice
-      @returns {string} Le numéro formatté
-      */
+       * Fonction pour formatter le numéro d'un exercice en 6 chiffres
+       * e.g 26 -> 000026 
+       *
+       * @param {string} number - Le numéro de l'exercice
+       * @returns {string} Le numéro formatté
+       * @throws {Error} Si le nombre contient plus de 6 chiffres
+       */
       function formatExoNumber(number) {
         // Conversion en string
         let str = String(number);
@@ -67,11 +178,12 @@
     
     
       /**
-      *Fonction asynchrone pour fetch le texte de l'url d'un exercice
-      *
-      @param {string} url - L'url du texte brut de l'exercice
-      @returns {Promise<string>} Le texte de l'exercice en chaîne de caractères.
-      */
+       * Fonction asynchrone pour fetch le texte de l'url d'un exercice
+       *
+       * @param {string} url - L'url du texte brut de l'exercice
+       * @returns {Promise<string>} Le texte de l'exercice en chaîne de caractères.
+       * @throws {Error} Si le fetch retourne une autre réponse que OK   
+       */
       const fetchText = async (url) => {
         const response = await fetch(url);
         if (!response.ok) {
@@ -83,11 +195,12 @@
 
 
       /**
-      *Fonction pour parser le texte fetché. Découpage et stockage dans des variables, puis concaténation dans une seule chaîne
-      *de caractères pour l'affichage.
-      *
-      @param {string} fetchedText - Le texte fetché à parser
-      */
+       * Fonction pour parser le texte fetché. Découpage et stockage dans des variables, puis concaténation dans une seule chaîne
+       * de caractères pour l'affichage.
+       *
+       * @param {string} fetchedText - Le texte fetché à parser
+       * @throws {Error} Si le code LaTeX est incorrect
+       */
       const parseText = (fetchedText) => {
 
         // initialisation des variables
@@ -109,7 +222,6 @@
           document.write("<h2> Le code latex de l'exercice contient une erreur </h2>");
           throw new Error("Code latex incorrect");} // Arrêt du script
         
-
         // Si l'exercice est correctement écrit :      
         // Récupération de l'entête
         const debutEntete = fetchedText.indexOf("{");
@@ -203,8 +315,46 @@
 
 
       /**
-      *Fonction asynchrone pour fetch le texte des URLs de plusieurs exercices et les traiter
-      @param {string} listeURLs - Les URLs des textes bruts des exercices
+       * Fonction qui parse le paramètre "exos" 
+       * Permet d'utiliser des intervalles dans le parametre exos.
+       * @param {string} dataParam - La chaîne de caractères donnée en paramètres, e.g. "[1-3,5,8-10]"
+       * @returns {Array<number>} Une liste d'entiers représentant tous les exercices concernés
+       * @throws {Error} Si le paramètre est invalide ou contient des valeurs non entières
+       */
+      function parseDataParam(dataParam) {
+        if (dataParam) {
+          /** Explications Regex :
+                    /  ->  début de l'expression régulière
+                    (  ->  début du capturing group
+              \d+-\d+  ->  un ou plusieurs chiffres suivis du caractère "-" puis d'un ou plusieurs chiffres encore
+              |        ->  opérateur logique "OR"
+              \d+      ->  un ou plusieurs chiffres
+                    )  ->  fin du capturing group
+                    /  ->  fin de l'expression régulière
+                    g  ->  "global". Pour chercher tous les matches                     
+          */
+          const regex = /(\d+-\d+|\d+)/g;
+          const ranges = dataParam.match(regex);
+          const numbers = ranges.reduce((acc, range) => {
+          const [start, end] = range.split("-").map(Number);
+          if (end) {
+              for (let i = start; i <= end; i++) {
+              acc.push(i);
+              }
+          } else {
+              acc.push(start);
+          }
+          return acc;
+          }, []);
+          return numbers;
+        }
+        return [];
+      }      
+
+
+      /**
+      * Fonction asynchrone pour fetch le texte des URLs de plusieurs exercices et les traiter
+      * @param {string} listeURLs - Les URLs des textes bruts des exercices
       */
       const fetchAndProcessAll = async (listeURLs) => {
         const textPromises = listeURLs.map(url => fetchText(url));
@@ -212,18 +362,81 @@
         const parsedDataArray = texts.map(text => parseText(text));
       };
 
-      const params = new URLSearchParams(window.location.search);
-      const dataString = params.get("exos");
-      const listeExos = JSON.parse(dataString);
 
-      let listeURLs = [];
-      for (var i = 0; i < listeExos.length; i++){
-        let URLexo = 'https://raw.githubusercontent.com/exo7math/exercices-exo7/master/exercices/ex' + formatExoNumber(listeExos[i]) + '.txt';
-        listeURLs[i] = URLexo;
+      /**
+       * Télécharge les exercices récupérés à partir de la liste des numéros d'exercices fournie.
+       */
+      async function sauvegarderExos() {
+        try {
+          const concatenatedText = await fetchExosViaGithub(listeURLs);
+
+          // Créer un nouveau fichier texte avec le contenu concaténé
+          const file = new Blob([concatenatedText], {
+              type: "text/plain",
+          });
+
+          // Créer une URL de l'objet file pour télécharger le fichier
+          const fileUrl = URL.createObjectURL(file);
+
+          // Créer un élément <a> avec l'attribut `download` pour télécharger le fichier
+          const link = document.createElement("a");
+          link.href = fileUrl;
+          link.download = "exercices.txt";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+        catch (error) {
+          console.error(`Fetch error: ${error}`);
+          throw error;
+        }
       }
-  
-      fetchAndProcessAll(listeURLs);
+
+
+      /**
+       * Fonction qui retourne la liste des exercices par requête GET
+       */
+      function getExos(){
+        const params = new URLSearchParams(window.location.search);
+        const dataParam = params.get("exos");
+        const listeExos = parseDataParam(dataParam);
+        return listeExos;
+      }
+
+
+      /**
+       * Fonction retournant l'URL de chaque exo
+       */
+      function getURLsExos(){
+        let listeURLs = [];
+        for (var i = 0; i < listeExos.length; i++){
+          let URLexo = 'https://raw.githubusercontent.com/exo7math/exercices-exo7/master/exercices/ex' + formatExoNumber(listeExos[i]) + '.txt';
+          listeURLs[i] = URLexo;
+        }
+        return listeURLs;
+      }
       
+
+      /** 
+       * Fonction reformattant la liste d'exos pour pouvoir utiliser extract5.php 
+       *  e.g 5-8,11 devient "5 6 7 8 11"
+       */
+      function ouvrirPDF(){
+        var exosPDF = ""
+        for (var i = 0; i < listeExos.length; i++){
+          exosPDF += listeExos[i]
+          if (i != listeExos.length-1){
+            exosPDF += " ";
+          }
+        }
+        document.getElementById("maListe").textContent = exosPDF;
+      }
+      
+      const listeExos = getExos();
+      const listeURLs = getURLsExos();
+      fetchAndProcessAll(listeURLs);
+      ouvrirAvecOverleaf();
+      ouvrirPDF();
     </script>
   </body>
 </html>
