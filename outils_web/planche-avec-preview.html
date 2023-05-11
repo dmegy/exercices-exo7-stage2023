@@ -162,6 +162,7 @@
                             }
                         </style>
                     </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
 
                     <div class="valign-wrapper">
                         <form action="https://www.overleaf.com/docs" method="post" target="_blank">
@@ -173,9 +174,6 @@
 
                         <button class="btn" id="preview-button" onclick="preview()">Previsualiser</button>
 
-                        <div class="iframe-container">
-                            <iframe id="preview-frame" frameborder="0"></iframe>
-                        </div>
                     </div>
                 </section>
 
@@ -184,23 +182,9 @@
         </div>
     </div>
 
-    <style>
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 10%;
-            /* Ratio 16:9 (change as needed) */
-        }
-
-        .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    <div class="iframe-container">
+        <iframe id="preview-frame" frameborder="0"></iframe>
+    </div>
 
 </body>
 
@@ -809,6 +793,7 @@
                 var iframe = document.getElementById('preview-frame');
                 iframe.src = pdf;
             });
+
     }
 
     function getCodeLatex() {
