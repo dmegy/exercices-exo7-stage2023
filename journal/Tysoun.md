@@ -19,6 +19,11 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 11 mai
+
+Importer ce qu'il fallait pour tikz.sty mais il y'a de nouveaux erreurs...
+Mais la version avec preview sans packages ajouter est fait.
+
 ## 10 mai
 
 Le package "fancybox.sty" à pu être rajouter manuelement il reste le package "tikz.sty" et les erreurs avec babels.
