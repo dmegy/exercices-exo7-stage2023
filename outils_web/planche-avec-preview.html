@@ -2,7 +2,23 @@
 <html>
 
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <!-- Configuration de MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+
+    <!-- Librairie mathjax -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
+
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Pour le Toast -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
@@ -142,22 +158,28 @@
                         <a id="clipboard-btn" class="waves-effect waves-light btn" data-clipboard-target="#permalien"
                             onclick="copier()">
                             <i class="material-icons left">content_copy</i>
-                            Copier le lien
+                            Copier
                         </a>
 
                         &nbsp;&nbsp;&nbsp;&nbsp;
 
                         <a class="waves-effect waves-light btn" onclick="partagerPlanche()">
                             <i class="material-icons">share</i>
-                            <span class="btn-share-text">Partager la planche</span>
+                            <span class="btn-share-text">Partager</span>
                         </a>
 
                         &nbsp;&nbsp;&nbsp;&nbsp;
 
                         <form action="https://www.overleaf.com/docs" method="post" target="_blank">
-                            <textarea rows="8" cols="60" name="snip" style="display: none;"></textarea>
+                            <textarea rows="8" cols="60" id="codeLatex" name="snip" style="display: none;"></textarea>
                             <input class="btn" type="submit" value="Ouvrir dans Overleaf">
                         </form>
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <button class="btn" id="preview-button" onclick="preview()">Previsualiser</button>
+
+                        <iframe id="preview-frame" frameborder="0"></iframe>
 
                         <style>
                             .btn-share-text {
@@ -541,7 +563,7 @@
             // Regrouper les corrections en fin du document et dans une nouvelle page
             concatenatedText = moveCorrectionsToEnd(concatenatedText);
         }
-        console.log(concatenatedText);
+
         return concatenatedText;
     }
 
@@ -761,6 +783,14 @@
         }
     }
 
+    function preview() {
+        //console.log("preview");
+        //console.log(getCodeLatex());
+
+    }
+
+
+
 
     //get the value of maListe
     function getMaliste() {
@@ -795,6 +825,11 @@
     function getTitre() {
         const title = document.getElementById("txt-titre").value;
         return title;
+    }
+
+    function getCodeLatex() {
+        const codeLatex = document.getElementById("codeLatex").value;
+        return codeLatex;
     }
 
     // Récupérer toutes les cases à cocher
