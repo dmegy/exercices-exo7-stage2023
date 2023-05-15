@@ -28,14 +28,15 @@
     content="Choisissez vos exercices et sauvegardez votre feuille au format LaTeX, PDF, ou ouvrez votre feuille dans Overleaf">
   <meta name="twitter:image" content="export.png">
   <style>
-    .btn{
+    .btn {
       margin-top: .3rem;
     }
+
     form {
-      display : inline;
+      display: inline;
     }
 
-    h6{
+    h6 {
       font-weight: bold;
       padding-top: .5rem;
     }
@@ -53,18 +54,19 @@
       top: -4px;
       margin-left: 5px;
     }
+
     kbd {
-      border: 2px solid #666; 
-      box-shadow: 2px 2px #666; 
-      font-size: .85em; 
-      line-height: .85em; 
+      border: 2px solid #666;
+      box-shadow: 2px 2px #666;
+      font-size: .85em;
+      line-height: .85em;
       display: inline-block;
       font-weight: 600;
-      letter-spacing: .05em; 
+      letter-spacing: .05em;
       padding: 3px 5px;
       white-space: nowrap;
     }
-</style>
+  </style>
 
 </head>
 
@@ -146,27 +148,27 @@
 
           <h6>Export / Sauvegarde de la planche</h6>
 
-            <!--<input class="btn" type="submit" name="pdf" value="PDF (nouvel onglet)">-->
+          <!--<input class="btn" type="submit" name="pdf" value="PDF (nouvel onglet)">-->
 
-            <button class="btn waves-effect waves-light" type="submit" name="action">
-              <i class="material-icons left">open_in_new</i>
-              PDF
-            </button>
-            <!-- ce bouton utilisait export5.php : inutile, maintenant -->
-            <!--<input class="btn" type="submit" name="tex" value="LaTeX (nouvel onglet)">-->
+          <button class="btn waves-effect waves-light" type="submit" name="action">
+            <i class="material-icons left">open_in_new</i>
+            PDF
+          </button>
+          <!-- ce bouton utilisait export5.php : inutile, maintenant -->
+          <!--<input class="btn" type="submit" name="tex" value="LaTeX (nouvel onglet)">-->
         </form>
 
-          <!-- OUVRIR DANS OVERLEAF -->
-          <form action="https://www.overleaf.com/docs" method="post" target="_blank">
-            <textarea rows="8" cols="60" name="snip" style="display: none;"></textarea>
-            <button class="btn waves-effect waves-light" type="submit" name="action">
-              <i class="material-icons left">open_in_new</i>
-              Overleaf
-            </button>
-          </form>
+        <!-- OUVRIR DANS OVERLEAF -->
+        <form action="https://www.overleaf.com/docs" method="post" target="_blank">
+          <textarea rows="8" cols="60" name="snip" style="display: none;"></textarea>
+          <button class="btn waves-effect waves-light" type="submit" name="action">
+            <i class="material-icons left">open_in_new</i>
+            Overleaf
+          </button>
+        </form>
 
-          <!-- on ne garde que les boutons avec préambule-->
-          <!--<a class="waves-effect waves-light btn" onclick="ouvrirExosSource()">
+        <!-- on ne garde que les boutons avec préambule-->
+        <!--<a class="waves-effect waves-light btn" onclick="ouvrirExosSource()">
             <i class="material-icons">open_in_new</i>
             <span class="btn-share-text">Ouvrir LaTeX</span>
           </a>
@@ -174,39 +176,41 @@
             <i class="material-icons">save</i>
             <span class="btn-share-text">Enregistrer LaTeX</span>
           </a>-->
-          <!-- Dans les deux boutons suivants, c'est sous-entendu "avec préambule"-->
-          <a class="waves-effect waves-light btn" onclick="fetchLaTeXGithub()">
-            <i class="material-icons">open_in_new</i>
-            <span class="btn-share-text">LaTeX</span>
-          </a>
-          <a class="waves-effect waves-light btn" onclick="sauvegarderEnLaTeX()">
-            <i class="material-icons">download</i>
-            <i class="material-icons">save</i>
-            <span class="btn-share-text">LaTeX</span>
-          </a>
-          <a class="waves-effect waves-light btn" onclick="alert('todo')">
-            <i class="material-icons">email</i>
-            <span class="btn-share-text">LaTeX</span>
-          </a>
+        <!-- Dans les deux boutons suivants, c'est sous-entendu "avec préambule"-->
+        <a class="waves-effect waves-light btn" onclick="fetchLaTeXGithub()">
+          <i class="material-icons">open_in_new</i>
+          <span class="btn-share-text">LaTeX</span>
+        </a>
+        <a class="waves-effect waves-light btn" onclick="sauvegarderEnLaTeX()">
+          <i class="material-icons">download</i>
+          <i class="material-icons">save</i>
+          <span class="btn-share-text">LaTeX</span>
+        </a>
+        <a class="waves-effect waves-light btn" onclick="alert('todo')">
+          <i class="material-icons">email</i>
+          <span class="btn-share-text">LaTeX</span>
+        </a>
 
 
 
-          <h6>
-            <!--<i class="material-icons left">share</i>-->
-            Partage du lien vers cette page (avec la liste pré-enregistrée)
-          </h6>
-            
-          <input id="permalien" value="@getLien()" type="text" style="display:none">
-          <a id="clipboard-btn" class="waves-effect waves-light btn" data-clipboard-target="#permalien" onclick="copier()">
-            <i class="material-icons left">content_copy</i>
-            Copier le lien
-          </a>
-          <a class="waves-effect waves-light btn" onclick="partagerPlanche()">
-            <i class="material-icons left">email</i>
-            Envoi du lien par email
-          </a>
+        <h6>
+          <!--<i class="material-icons left">share</i>-->
+          Partage du lien vers cette page (avec la liste pré-enregistrée)
+        </h6>
 
-        <p>Vous pouvez également mettre cette page (avec la liste pré-enregistrée) en favori en appuyant sur <kbd>Cmd</kbd> + <kbd>D</kbd> ou <kbd>Ctrl</kbd> + <kbd>D</kbd> .</p>
+        <input id="permalien" value="@getLien()" type="text" style="display:none">
+        <a id="clipboard-btn" class="waves-effect waves-light btn" data-clipboard-target="#permalien"
+          onclick="copier()">
+          <i class="material-icons left">content_copy</i>
+          Copier le lien
+        </a>
+        <a class="waves-effect waves-light btn" onclick="partagerPlanche()">
+          <i class="material-icons left">email</i>
+          Envoi du lien par email
+        </a>
+
+        <p>Vous pouvez également mettre cette page (avec la liste pré-enregistrée) en favori en appuyant sur
+          <kbd>Cmd</kbd> + <kbd>D</kbd> ou <kbd>Ctrl</kbd> + <kbd>D</kbd> .</p>
 
       </div><!-- /card-content-->
     </div><!-- /card-->
