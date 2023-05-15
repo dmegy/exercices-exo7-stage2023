@@ -19,6 +19,14 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 15 mai
+
+planche_preview.html, preview impossible lors du dépploiement, erreur de "mixed active content". En localhost la preview ne posait pas de problème car le navigateur chargeait en http mais sur github.io comme c'est en https le navigateur bloque le chargement de contenue depuis une source non sécurisé : http://exo7.emath.fr/bin/extract5.php
+
+## 12 mai
+
+Réunion, changement de stratégie pour la preview des exos. Charger directement via extract5.php
+
 ## 11 mai
 
 Importer ce qu'il fallait pour tikz.sty mais il y'a de nouveaux erreurs...
