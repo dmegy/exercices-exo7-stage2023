@@ -1001,7 +1001,7 @@
         // form.submit();
 
         var pdftex = new PDFTeX();
-        var latex_code = getCodeLatex().replace(/\\usepackage\{(fontenc|babel|fancybox|graphicx|tikz)\}[^\n]*/g, '');
+        var latex_code = getCodeLatex().replace(/\\usepackage\{(?:T1\{fontenc\}|french\{babel\}|fancybox|graphicx|tikz)\}[^\n]*/g, '');
 
         console.log(latex_code);
 
