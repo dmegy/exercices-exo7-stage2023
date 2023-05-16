@@ -154,6 +154,22 @@
         .sidenav input {
             color: #fefefe;
         }
+
+        @media (min-width: 768px) {
+
+            /* Styles spécifiques aux écrans d'une largeur minimale de 768px */
+            .sidenav {
+                width: 30%;
+            }
+        }
+
+        @media (max-width: 767px) {
+
+            /* Styles spécifiques aux écrans d'une largeur maximale de 767px (appareils mobiles) */
+            .sidenav {
+                width: 100%;
+            }
+        }
     </style>
 
 </head>
@@ -171,7 +187,7 @@
 <body class="grey darken-1" onload="demarrage()">
 
     <div>
-        <div class="sidenav sidenav-fixed">
+        <div class="sidenav-fixed">
             <form target="_blank" name="formulaire" action="http://exo7.emath.fr/bin/extract5.php" method="post">
 
                 <div style="display:flex;justify-content: space-between;">
@@ -985,41 +1001,45 @@
     }
 
     function preview() {
-        // Obtenez une référence à l'iframe
-        // var iframe = document.getElementById('myIframe');
-
-
-        // var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-
-        // var form = iframeDocument.createElement('form');
-
-
-        // // Créez un formulaire
-        // form = document.forms['formulaire'];
-
-        // form.target = 'myIframe';
-        // form.submit();
-
         var pdftex = new PDFTeX();
         var latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
             .replace(/\\usepackage\{fancybox\}/g, '')
             .replace(/\\usepackage\{tikz\}/g, '')
-            .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');;
-
+            .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');
 
         console.log(latex_code);
 
+        // Show loading animation
+        var loadingAnimation = document.getElementById('loadingAnimation');
+        loadingAnimation.style.display = 'block';
+
         pdftex.compile(latex_code)
             .then(function (pdf) {
+                // Hide loading animation
+                loadingAnimation.style.display = 'none';
+
                 // PDF compilation completed
                 // Use 'pdf' variable as desired
                 console.log(pdf);
                 // Example: Display PDF in iframe
                 var iframe = document.getElementById('myIframe');
+
+                // Show loading animation while PDF is loading
+                iframe.onload = function () {
+                    loadingAnimation.style.display = 'none';
+                };
+
+                // Show error message if PDF fails to load
+                iframe.onerror = function () {
+                    loadingAnimation.style.display = 'none';
+                    alert('Failed to load PDF.');
+                };
+
+                // Set source to PDF
                 iframe.src = pdf;
             });
-
     }
+
 
 
 
