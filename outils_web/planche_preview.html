@@ -989,8 +989,13 @@
         // Obtenez une référence à l'iframe
         var iframe = document.getElementById('myIframe');
 
+
+        var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+        var form = iframeDocument.createElement('form');
+
+
         // Créez un formulaire
-        var form = document.createElement('form');
         form = document.forms['formulaire'];
 
         form.target = 'myIframe';
