@@ -2,23 +2,9 @@
 <html>
 
 <head>
-
-
-    <!-- Configuration de MathJax -->
-    <script>
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
-    </script>
-
-    <!-- Librairie mathjax -->
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
-
+    <!-- Textlive.js -->
+    <script src="../librairies/promisejs/promise.js"></script>
+    <script src="../librairies/pdftex.js"></script>
 
     <!-- Pour le clipboard -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -1014,22 +1000,15 @@
         // form.target = 'myIframe';
         // form.submit();
 
+        var pdftex = new PDFTeX();
+        var latex_code = getCodeLatex().replace(/\\usepackage\{(fontenc|babel|fancybox|graphicx|tikz)\}[^\n]*/g, '');
 
-        // VERSION MATHJAX
-        // Interprétation MathJax
+        console.log(latex_code);
 
-        let code = getCodeLatex();
+        pdftex.compile(latex_code)
+            .then(function (pdf) { window.open(pdf) });
 
-        let preview = document.getElementById('myIframe');
-        preview.innerHTML = `${getCodeLatex()}`;
 
-        MathJax.typesetPromise([preview]).then(() => {
-            // Get the HTML string with typeset math from the div
-            let html = preview.innerHTML;
-
-            // Set the srcdoc property of the iframe to the HTML string
-            document.getElementById("myIframe").srcdoc = html;
-        }).catch(error => console.error('Failed to typeset math:', error));
     }
 
 
