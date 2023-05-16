@@ -19,6 +19,11 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 16 mai
+
+Tentative de contourné l'erreur mixed active content sans succès, changement de stratégie pour la preview : affichage avec mathjax.
+15h40-17h réunion : plan pour quizz + fin exercice.
+
 ## 15 mai
 
 planche_preview.html, preview impossible lors du dépploiement, erreur de "mixed active content". En localhost la preview ne posait pas de problème car le navigateur chargeait en http mais sur github.io comme c'est en https le navigateur bloque le chargement de contenue depuis une source non sécurisé : http://exo7.emath.fr/bin/extract5.php

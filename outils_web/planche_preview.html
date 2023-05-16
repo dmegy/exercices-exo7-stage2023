@@ -2,6 +2,25 @@
 <html>
 
 <head>
+
+
+    <!-- Configuration de MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+
+    <!-- Librairie mathjax -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
+
+
+    <!-- Pour le clipboard -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Pour le Toast -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -145,6 +164,10 @@
             width: 70%;
             padding: 20px;
         }
+
+        .sidenav input {
+            color: #fefefe;
+        }
     </style>
 
 </head>
@@ -165,15 +188,37 @@
         <div class="sidenav sidenav-fixed">
             <form target="_blank" name="formulaire" action="http://exo7.emath.fr/bin/extract5.php" method="post">
 
-                <input type="text" id="txt-annee-hidden" name="txt-annee" style="display: none;">
+                <div style="display:flex;justify-content: space-between;">
 
-                <input type="text" id="txt-num-hidden" name="txt-num" style="display: none;">
+                    <input type="text" id="txt-annee" name="txt-annee"
+                        style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput"
+                        onkeyup=" maj()">
 
-                <input type="text" id="txt-univ-hidden" name="txt-univ" style="display: none;">
+                    <input type="text" id="txt-num" name="txt-num"
+                        style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
+                        class="textinput" onkeyup=" maj()">
 
-                <input type="text" id="txt-module-hidden" name="txt-module" style="display: none;">
+                </div>
+                <div style="display:flex;justify-content: space-between;">
+                    <input type="text" id="txt-univ" name="txt-univ"
+                        style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput"
+                        onkeyup=" maj()">
 
-                <input type="text" id="txt-titre-hidden" name="txt-titre" style="display: none;">
+                    <input type="text" id="txt-module" name="txt-module"
+                        style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
+                        class="textinput" onkeyup=" maj()">
+
+                </div>
+                <hr class="hrule">
+                <div style="text-align:center">
+                    <input type="text" id="txt-titre" name="txt-titre" size="30" align="center"
+                        style="width:60%;font-size:200%;text-align:center;border:1px dashed grey; padding:3px; height:2rem"
+                        class="textinput" onkeyup="maj()" value="">
+
+                </div>
+                <hr class="hrule">
+
+
 
                 <h6>Exercices à inclure dans la feuille :</h6>
 
@@ -230,7 +275,7 @@
 
             <!-- OUVRIR DANS OVERLEAF -->
             <form action="https://www.overleaf.com/docs" method="post" target="_blank" name="formulaire2">
-                <textarea rows="8" cols="60" name="snip" style="display: none;"></textarea>
+                <textarea id="codeLatex" rows="8" cols="60" name="snip" style="display: none;"></textarea>
                 <button class="btn waves-effect waves-light" type="submit" name="action">
                     <i class="material-icons left">open_in_new</i>
                     Overleaf
@@ -256,10 +301,6 @@
                 <i class="material-icons">save</i>
                 <span class="btn-share-text">LaTeX</span>
             </a>
-            <a class="waves-effect waves-light btn" onclick="alert('todo')">
-                <i class="material-icons">email</i>
-                <span class="btn-share-text">LaTeX</span>
-            </a>
 
             <h6>
                 <!--<i class="material-icons left">share</i>-->
@@ -276,6 +317,10 @@
                 <i class="material-icons left">email</i>
                 Envoi du lien par email
             </a>
+            <!-- <a class="waves-effect waves-light btn" onclick="partagerCodeLatex()">
+                <i class="material-icons">email</i>
+                <span class="btn-share-text">LaTeX</span>
+            </a> -->
 
             <p>Vous pouvez également mettre cette page (avec la liste pré-enregistrée) en favori en appuyant sur
                 <kbd>Cmd</kbd> + <kbd>D</kbd> ou <kbd>Ctrl</kbd> + <kbd>D</kbd> .
@@ -289,40 +334,10 @@
 
         <div class="container">
             <div class="card white z-depth-3">
-                <div class="card-content" style="padding:10%">
-                    <div style="display:flex;justify-content: space-between;">
+                <div class="card-content">
 
-                        <input type="text" id="txt-annee" name="txt-annee-visible"
-                            style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput"
-                            onkeyup="updateHiddenInput(); maj()">
-
-                        <input type="text" id="txt-num" name="txt-num-visible"
-                            style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
-                            class="textinput" onkeyup="updateHiddenInput(); maj()">
-
-                    </div>
-                    <div style="display:flex;justify-content: space-between;">
-                        <input type="text" id="txt-univ" name="txt-univ-visible"
-                            style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput"
-                            onkeyup="updateHiddenInput(); maj()">
-
-                        <input type="text" id="txt-module" name="txt-module-visible"
-                            style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
-                            class="textinput" onkeyup="updateHiddenInput(); maj()">
-
-                    </div>
-                    <hr class="hrule">
-                    <div style="text-align:center">
-                        <input type="text" id="txt-titre" name="txt-titre-visible" size="30" align="center"
-                            style="width:60%;font-size:200%;text-align:center;border:1px dashed grey; padding:3px; height:2rem"
-                            class="textinput" onkeyup="updateHiddenInput(); maj()" value="">
-
-                    </div>
-                    <hr class="hrule">
-
-                    <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="500" src=""
+                    <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="625px" src=""
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
-
 
                 </div><!-- /card-content-->
             </div><!-- /card-->
@@ -605,6 +620,14 @@
 
         window.location.href = mailtoLink; // Ouvre le client mail de l'utilisateur avec le nouvel email pré-rempli
     }
+
+    // function partagerCodeLatex() {
+    //     let subject = "Code LaTeX de la planche " + document.title; // Sujet de l'email
+    //     let body = "Voici le code LaTeX de la planche : \n" + getCodeLatex();
+    //     let mailtoLink = "mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body); // URL mailto
+
+    //     window.location.href = mailtoLink; // Ouvre le client mail de l'utilisateur avec le nouvel email pré-rempli
+    // }
 
     /**
     *Récupère les numéros d'exercices depuis un élément HTML et les retourne sous forme de tableau.
@@ -970,37 +993,43 @@
         };
     });
 
-    function updateHiddenInput() {
-        updateInput("txt-annee");
-        updateInput("txt-num");
-        updateInput("txt-univ");
-        updateInput("txt-module");
-        updateInput("txt-titre");
+    function getCodeLatex() {
+        const codeLatex = document.getElementById("codeLatex").value;
+        return codeLatex;
     }
-
-    function updateInput(inputId) {
-        var visibleInput = document.getElementById(inputId);
-        var hiddenInput = document.getElementById(inputId + "-hidden");
-
-        hiddenInput.value = visibleInput.value;
-    }
-
 
     function preview() {
         // Obtenez une référence à l'iframe
-        var iframe = document.getElementById('myIframe');
+        // var iframe = document.getElementById('myIframe');
 
 
-        var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+        // var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
 
-        var form = iframeDocument.createElement('form');
+        // var form = iframeDocument.createElement('form');
 
 
-        // Créez un formulaire
-        form = document.forms['formulaire'];
+        // // Créez un formulaire
+        // form = document.forms['formulaire'];
 
-        form.target = 'myIframe';
-        form.submit();
+        // form.target = 'myIframe';
+        // form.submit();
+
+
+        // VERSION MATHJAX
+        // Interprétation MathJax
+
+        let code = getCodeLatex();
+
+        let preview = document.getElementById('myIframe');
+        preview.innerHTML = `${getCodeLatex()}`;
+
+        MathJax.typesetPromise([preview]).then(() => {
+            // Get the HTML string with typeset math from the div
+            let html = preview.innerHTML;
+
+            // Set the srcdoc property of the iframe to the HTML string
+            document.getElementById("myIframe").srcdoc = html;
+        }).catch(error => console.error('Failed to typeset math:', error));
     }
 
 
