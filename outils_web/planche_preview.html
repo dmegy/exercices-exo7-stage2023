@@ -1006,8 +1006,14 @@
         console.log(latex_code);
 
         pdftex.compile(latex_code)
-            .then(function (pdf) { window.open(pdf) });
-
+            .then(function (pdf) {
+                // PDF compilation completed
+                // Use 'pdf' variable as desired
+                console.log(pdf);
+                // Example: Display PDF in iframe
+                var iframe = document.getElementById('myIframe');
+                iframe.src = pdf;
+            });
 
     }
 
