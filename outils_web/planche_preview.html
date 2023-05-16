@@ -229,7 +229,7 @@
             </form>
 
             <!-- OUVRIR DANS OVERLEAF -->
-            <form action="https://www.overleaf.com/docs" method="post" target="_blank">
+            <form action="https://www.overleaf.com/docs" method="post" target="_blank" name="formulaire2">
                 <textarea rows="8" cols="60" name="snip" style="display: none;"></textarea>
                 <button class="btn waves-effect waves-light" type="submit" name="action">
                     <i class="material-icons left">open_in_new</i>
@@ -996,7 +996,7 @@
 
 
         // Créez un formulaire
-        form = document.forms['formulaire'];
+        form = document.forms['formulaire2'];
 
         form.target = 'myIframe';
         form.submit();
