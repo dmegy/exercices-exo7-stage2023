@@ -19,6 +19,10 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 17 mai
+
+Compilation réussi avec TexLive.js + début de l'implémentation de la page final de recherche.
+
 ## 16 mai
 
 Tentative de contourné l'erreur mixed active content sans succès, changement de stratégie pour la preview : affichage avec mathjax.
