@@ -126,50 +126,6 @@
             margin: 0;
             padding: 0;
         }
-
-        .sidenav {
-            height: 100%;
-            width: 30%;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #000000;
-            padding: 20px;
-            color: #fefefe;
-        }
-
-        .sidenav textarea {
-            background-color: #000000;
-            color: #fefefe;
-            border-color: #fefefe;
-        }
-
-        .container {
-            margin-left: 30%;
-            width: 70%;
-            padding: 20px;
-        }
-
-        .sidenav input {
-            color: #fefefe;
-        }
-
-        @media (min-width: 768px) {
-
-            /* Styles spécifiques aux écrans d'une largeur minimale de 768px */
-            .sidenav {
-                width: 30%;
-            }
-        }
-
-        @media (max-width: 767px) {
-
-            /* Styles spécifiques aux écrans d'une largeur maximale de 767px (appareils mobiles) */
-            .sidenav {
-                width: 100%;
-            }
-        }
     </style>
 
 </head>
@@ -186,36 +142,36 @@
 
 <body class="grey darken-1" onload="demarrage()">
 
-    <div>
-        <div class="sidenav-fixed">
+    <div class="row">
+        <div class="col s12 m4 l3 black white-text" style="padding: 20px;">
             <form target="_blank" name="formulaire" action="http://exo7.emath.fr/bin/extract5.php" method="post">
 
                 <div style="display:flex;justify-content: space-between;">
 
                     <input type="text" id="txt-annee" name="txt-annee"
-                        style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput"
-                        onkeyup=" maj()">
+                        style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem"
+                        class="textinput white-text" onkeyup=" maj()">
 
                     <input type="text" id="txt-num" name="txt-num"
                         style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
-                        class="textinput" onkeyup=" maj()">
+                        class="textinput white-text" onkeyup=" maj()">
 
                 </div>
                 <div style="display:flex;justify-content: space-between;">
                     <input type="text" id="txt-univ" name="txt-univ"
-                        style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput"
-                        onkeyup=" maj()">
+                        style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem"
+                        class="textinput white-text" onkeyup=" maj()">
 
                     <input type="text" id="txt-module" name="txt-module"
                         style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
-                        class="textinput" onkeyup=" maj()">
+                        class="textinput white-text" onkeyup=" maj()">
 
                 </div>
                 <hr class="hrule">
                 <div style="text-align:center">
                     <input type="text" id="txt-titre" name="txt-titre" size="30" align="center"
                         style="width:60%;font-size:200%;text-align:center;border:1px dashed grey; padding:3px; height:2rem"
-                        class="textinput" onkeyup="maj()" value="">
+                        class="textinput white-text" onkeyup="maj()" value="">
 
                 </div>
                 <hr class="hrule">
@@ -334,16 +290,16 @@
             </div>
         </div>
 
-        <div class="container">
-            <div class="card white z-depth-3">
-                <div class="card-content">
-
-                    <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="625px" src=""
-                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
-
-                </div><!-- /card-content-->
-            </div><!-- /card-->
-        </div><!-- /container-->
+        <div class="col s12 l9 ">
+            <div class="container">
+                <div class="card white z-depth-3">
+                    <div class="card-content">
+                        <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="625px"
+                            src=""></iframe>
+                    </div><!-- /card-content-->
+                </div><!-- /card-->
+            </div><!-- /container-->
+        </div>
 
     </div>
 </body>
