@@ -126,6 +126,50 @@
             margin: 0;
             padding: 0;
         }
+
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+
+            position: absolute;
+            top: 40%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 
 </head>
@@ -294,8 +338,10 @@
             <div class="container">
                 <div class="card white z-depth-3">
                     <div class="card-content">
-                        <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="625px" src=""
-                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+                        <div id="loader" class="loader hidden"></div>
+
+                        <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="625px" src="">
+                        </iframe>
                     </div><!-- /card-content-->
                 </div><!-- /card-->
             </div><!-- /container-->
@@ -957,6 +1003,10 @@
     }
 
     function preview() {
+        // Afficher le loader
+        var loader = document.getElementById('loader');
+        loader.classList.remove('hidden');
+
         var pdftex = new PDFTeX();
         var latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
             .replace(/\\usepackage\{fancybox\}/g, '')
@@ -965,36 +1015,22 @@
 
         console.log(latex_code);
 
-        // Show loading animation
-        var loadingAnimation = document.getElementById('loadingAnimation');
-        loadingAnimation.style.display = 'block';
-
         pdftex.compile(latex_code)
             .then(function (pdf) {
-                // Hide loading animation
-                loadingAnimation.style.display = 'none';
-
                 // PDF compilation completed
                 // Use 'pdf' variable as desired
                 console.log(pdf);
                 // Example: Display PDF in iframe
                 var iframe = document.getElementById('myIframe');
-
-                // Show loading animation while PDF is loading
-                iframe.onload = function () {
-                    loadingAnimation.style.display = 'none';
-                };
-
-                // Show error message if PDF fails to load
-                iframe.onerror = function () {
-                    loadingAnimation.style.display = 'none';
-                    alert('Failed to load PDF.');
-                };
-
-                // Set source to PDF
                 iframe.src = pdf;
+
+                // Cacher le loader une fois l'affichage prêt
+                iframe.onload = function () {
+                    loader.classList.add('hidden');
+                };
             });
     }
+
 
 
 
