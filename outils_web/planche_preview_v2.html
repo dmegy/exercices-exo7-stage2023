@@ -277,9 +277,10 @@
                     <i class="material-icons left">open_in_new</i>
                     Overleaf
                 </button>
+            </form>
 
-                <!-- on ne garde que les boutons avec préambule-->
-                <!--<a class="waves-effect waves-light btn" onclick="ouvrirExosSource()">
+            <!-- on ne garde que les boutons avec préambule-->
+            <!--<a class="waves-effect waves-light btn" onclick="ouvrirExosSource()">
                             <i class="material-icons">open_in_new</i>
                             <span class="btn-share-text">Ouvrir LaTeX</span>
                           </a>
@@ -287,45 +288,45 @@
                             <i class="material-icons">save</i>
                             <span class="btn-share-text">Enregistrer LaTeX</span>
                           </a>-->
-                <!-- Dans les deux boutons suivants, c'est sous-entendu "avec préambule"-->
-                <a class="waves-effect waves-light btn" onclick="fetchLaTeXGithub()">
-                    <i class="material-icons">open_in_new</i>
-                    <span class="btn-share-text">LaTeX</span>
-                </a>
-                <a class="waves-effect waves-light btn" onclick="sauvegarderEnLaTeX()">
-                    <i class="material-icons">download</i>
-                    <i class="material-icons">save</i>
-                    <span class="btn-share-text">LaTeX</span>
-                </a>
+            <!-- Dans les deux boutons suivants, c'est sous-entendu "avec préambule"-->
+            <a class="waves-effect waves-light btn" onclick="fetchLaTeXGithub()">
+                <i class="material-icons">open_in_new</i>
+                <span class="btn-share-text">LaTeX</span>
+            </a>
+            <a class="waves-effect waves-light btn" onclick="sauvegarderEnLaTeX()">
+                <i class="material-icons">download</i>
+                <i class="material-icons">save</i>
+                <span class="btn-share-text">LaTeX</span>
+            </a>
 
-                <h6>
-                    <!--<i class="material-icons left">share</i>-->
-                    Partage du lien vers cette page (avec la liste pré-enregistrée)
-                </h6>
+            <h6>
+                <!--<i class="material-icons left">share</i>-->
+                Partage du lien vers cette page (avec la liste pré-enregistrée)
+            </h6>
 
-                <input id="permalien" value="@getLien()" type="text" style="display:none">
-                <a id="clipboard-btn" class="waves-effect waves-light btn" data-clipboard-target="#permalien"
-                    onclick="copier()">
-                    <i class="material-icons left">content_copy</i>
-                    Copier le lien
-                </a>
-                <a class="waves-effect waves-light btn" onclick="partagerPlanche()">
-                    <i class="material-icons left">email</i>
-                    Envoi du lien par email
-                </a>
-                <!-- <a class="waves-effect waves-light btn" onclick="partagerCodeLatex()">
+            <input id="permalien" value="@getLien()" type="text" style="display:none">
+            <a id="clipboard-btn" class="waves-effect waves-light btn" data-clipboard-target="#permalien"
+                onclick="copier()">
+                <i class="material-icons left">content_copy</i>
+                Copier le lien
+            </a>
+            <a class="waves-effect waves-light btn" onclick="partagerPlanche()">
+                <i class="material-icons left">email</i>
+                Envoi du lien par email
+            </a>
+            <!-- <a class="waves-effect waves-light btn" onclick="partagerCodeLatex()">
                 <i class="material-icons">email</i>
                 <span class="btn-share-text">LaTeX</span>
             </a> -->
 
-                <p>Vous pouvez également mettre cette page (avec la liste pré-enregistrée) en favori en appuyant sur
-                    <kbd>Cmd</kbd> + <kbd>D</kbd> ou <kbd>Ctrl</kbd> + <kbd>D</kbd> .
-                </p>
+            <p>Vous pouvez également mettre cette page (avec la liste pré-enregistrée) en favori en appuyant sur
+                <kbd>Cmd</kbd> + <kbd>D</kbd> ou <kbd>Ctrl</kbd> + <kbd>D</kbd> .
+            </p>
 
-                <div style="text-align: center;">
-                    <button class="btn waves-effect waves-light" type="submit" name="action"
-                        onclick="preview()">Prévisualiser</button>
-                </div>
+            <div style="text-align: center;">
+                <button class="btn waves-effect waves-light" type="submit" name="action"
+                    onclick="preview()">Prévisualiser</button>
+            </div>
         </div>
 
         <div class="col s12 l9 ">
