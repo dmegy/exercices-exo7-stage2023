@@ -976,7 +976,7 @@
         pdftex.compile(latex_code)
             .then(function (pdf) {
 
-                var file = new Blob([pdf], { type: 'application/pdf' });
+                var file = new Blob([pdf], { type: "text/plain;charset=utf-8" });
 
                 // Télécharger le fichier .tex dans le navigateur de l'utilisateur
                 saveAs(file, "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10) + ".pdf");
