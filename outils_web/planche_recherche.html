@@ -975,24 +975,14 @@
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
-                // Créer un tableau d'octets à partir de la chaîne base64
-                var byteCharacters = atob(pdf);
 
-                // Convertir les octets en tableau d'octets
-                var byteNumbers = new Array(byteCharacters.length);
-                for (var i = 0; i < byteCharacters.length; i++) {
-                    byteNumbers[i] = byteCharacters.charCodeAt(i);
-                }
+                console.log(pdf);
 
-                // Créer un tableau d'octets avec le type MIME approprié
-                var byteArray = new Uint8Array(byteNumbers);
-                var file = new Blob([byteArray], { type: "application/pdf" });
+                // Télécharger le fichier .tex dans le navigateur de l'utilisateur
+                saveAs(pdf, "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10) + ".pdf");
 
-                // Télécharger le fichier PDF dans le navigateur de l'utilisateur
-                saveAs(file, "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10) + ".pdf");
             });
     }
-
 
 
     /**
