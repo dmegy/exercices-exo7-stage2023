@@ -221,88 +221,89 @@
             </select>
 
 
+            <form target="_blank" name="formulaire" action="http://exo7.emath.fr/bin/extract5.php" method="post">
 
-            <div style="display:flex;justify-content: space-between;">
+                <div style="display:flex;justify-content: space-between;">
 
-                <input type="text" id="txt-annee" name="txt-annee"
-                    style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput white-text"
-                    onkeyup=" maj()">
+                    <input type="text" id="txt-annee" name="txt-annee"
+                        style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem"
+                        class="textinput white-text" onkeyup=" maj()">
 
-                <input type="text" id="txt-num" name="txt-num"
-                    style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
-                    class="textinput white-text" onkeyup=" maj()">
+                    <input type="text" id="txt-num" name="txt-num"
+                        style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
+                        class="textinput white-text" onkeyup=" maj()">
 
-            </div>
-            <div style="display:flex;justify-content: space-between;">
-                <input type="text" id="txt-univ" name="txt-univ"
-                    style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput white-text"
-                    onkeyup=" maj()">
+                </div>
+                <div style="display:flex;justify-content: space-between;">
+                    <input type="text" id="txt-univ" name="txt-univ"
+                        style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem"
+                        class="textinput white-text" onkeyup=" maj()">
 
-                <input type="text" id="txt-module" name="txt-module"
-                    style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
-                    class="textinput white-text" onkeyup=" maj()">
+                    <input type="text" id="txt-module" name="txt-module"
+                        style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
+                        class="textinput white-text" onkeyup=" maj()">
 
-            </div>
-            <hr class="hrule">
-            <div style="text-align:center">
-                <input type="text" id="txt-titre" name="txt-titre" size="30" align="center"
-                    style="width:60%;font-size:200%;text-align:center;border:1px dashed grey; padding:3px; height:2rem"
-                    class="textinput white-text" onkeyup="maj()" value="">
+                </div>
+                <hr class="hrule">
+                <div style="text-align:center">
+                    <input type="text" id="txt-titre" name="txt-titre" size="30" align="center"
+                        style="width:60%;font-size:200%;text-align:center;border:1px dashed grey; padding:3px; height:2rem"
+                        class="textinput white-text" onkeyup="maj()" value="">
 
-            </div>
-            <hr class="hrule">
+                </div>
+                <hr class="hrule">
 
-            <h6>Exercices à inclure dans la feuille :</h6>
+                <h6>Exercices à inclure dans la feuille :</h6>
 
-            <textarea name="MesExos" id="maListe" rows="5" cols="100"
-                onkeydown='wordCounter(this.form.MesExos,this.form.nombredexos);'
-                style="width:100%;height:3em;resize:none; color: #fefefe;" onkeyup="maj()"></textarea>
-            <div id="txt-maListeError"></div>
+                <textarea name="MesExos" id="maListe" rows="5" cols="100"
+                    onkeydown='wordCounter(this.form.MesExos,this.form.nombredexos);'
+                    style="width:100%;height:3em;resize:none; color: #fefefe;" onkeyup="maj()"></textarea>
+                <div id="txt-maListeError"></div>
 
-            <!-- $theliste est la liste qui peux provenir d'une selection en ligne -->
-            <br>
-            <i> Vous pouvez saisir directement les numéros des exercices.
-                Exemple : 7 11 14-18 : pour les exercices 7, 11 et de 14 à 18.</i>
+                <!-- $theliste est la liste qui peux provenir d'une selection en ligne -->
+                <br>
+                <i> Vous pouvez saisir directement les numéros des exercices.
+                    Exemple : 7 11 14-18 : pour les exercices 7, 11 et de 14 à 18.</i>
 
-            <h6>
-                <!--<i class="material-icons left">visibility</i>-->
-                Parties des exercices à inclure (si disponible) :
-            </h6>
+                <h6>
+                    <!--<i class="material-icons left">visibility</i>-->
+                    Parties des exercices à inclure (si disponible) :
+                </h6>
 
-            <label>
-                <input type="checkbox" name="Pos[]" value="e1" checked="checked">
-                <span>Énoncés</span>
-            </label>
-            <br />
-            <label>
-                <input type="checkbox" name="Pos[]" value="i1" checked="checked">
-                <span>Indications</span>
-            </label>
-            <label>
-                <input type="checkbox" name="Pos[]" value="i2" checked="checked">
-                <span>sur une page à part</span>
-            </label>
-            <br />
-            <label>
-                <input type="checkbox" name="Pos[]" value="c1" checked="checked">
-                <span>Corrections</span>
-            </label>
-            <label>
-                <input type="checkbox" name="Pos[]" value="c2" checked="checked">
-                <span>sur une page à part</span>
-            </label>
+                <label>
+                    <input type="checkbox" name="Pos[]" value="e1" checked="checked">
+                    <span>Énoncés</span>
+                </label>
+                <br />
+                <label>
+                    <input type="checkbox" name="Pos[]" value="i1" checked="checked">
+                    <span>Indications</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="Pos[]" value="i2" checked="checked">
+                    <span>sur une page à part</span>
+                </label>
+                <br />
+                <label>
+                    <input type="checkbox" name="Pos[]" value="c1" checked="checked">
+                    <span>Corrections</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="Pos[]" value="c2" checked="checked">
+                    <span>sur une page à part</span>
+                </label>
 
 
-            <h6>Export / Sauvegarde de la planche</h6>
+                <h6>Export / Sauvegarde de la planche</h6>
 
-            <!--<input class="btn" type="submit" name="pdf" value="PDF (nouvel onglet)">-->
+                <!--<input class="btn" type="submit" name="pdf" value="PDF (nouvel onglet)">-->
 
-            <button class="btn waves-effect waves-light" type="submit" name="action" onclick="openPDF()">
-                <i class="material-icons left">open_in_new</i>
-                PDF
-            </button>
-            <!-- ce bouton utilisait export5.php : inutile, maintenant -->
-            <!--<input class="btn" type="submit" name="tex" value="LaTeX (nouvel onglet)">-->
+                <button class="btn waves-effect waves-light" type="submit" name="action">
+                    <i class="material-icons left">open_in_new</i>
+                    PDF
+                </button>
+                <!-- ce bouton utilisait export5.php : inutile, maintenant -->
+                <!--<input class="btn" type="submit" name="tex" value="LaTeX (nouvel onglet)">-->
             </form>
 
             <!-- OUVRIR DANS OVERLEAF -->
@@ -332,6 +333,11 @@
                 <i class="material-icons">download</i>
                 <i class="material-icons">save</i>
                 <span class="btn-share-text">LaTeX</span>
+            </a>
+            <a class="waves-effect waves-light btn" onclick="sauvegarderPDF()">
+                <i class="material-icons">download</i>
+                <i class="material-icons">save</i>
+                <span class="btn-share-text">PDF</span>
             </a>
 
             <h6>
@@ -945,6 +951,23 @@
         }
     }
 
+    async function sauvegarderPDF() {
+        var pdftex = new PDFTeX();
+        var latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
+            .replace(/\\usepackage\{fancybox\}/g, '')
+            .replace(/\\usepackage\{tikz\}/g, '')
+            .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');
+
+        pdftex.compile(latex_code)
+            .then(function (pdf) {
+
+                // Save PDF file
+                var blob = new Blob([pdf], { type: 'application/pdf' });
+                saveAs(blob, "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10) + ".pdf");
+
+            });
+    }
+
     /**
      * Récupère le contenu des fichiers texte des exercices à partir de la liste des numéros d'exercices fournie.
      * Concatène le préambule LaTeX avec le contenu des fichiers texte des exercices.
@@ -1060,21 +1083,6 @@
                 iframe.onload = function () {
                     loader.classList.add('hidden');
                 };
-            });
-    }
-
-    function openPDF() {
-        var pdftex = new PDFTeX();
-        var latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
-            .replace(/\\usepackage\{fancybox\}/g, '')
-            .replace(/\\usepackage\{tikz\}/g, '')
-            .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');
-
-        pdftex.compile(latex_code)
-            .then(function (pdf) {
-
-                window.open(pdf, '_blank');
-
             });
     }
 

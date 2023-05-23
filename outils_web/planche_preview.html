@@ -1031,24 +1031,4 @@
             });
     }
 
-    // Récupérer le bouton PDF
-    var pdfButton = document.querySelector('button[name="action"]');
-
-    // Ajouter un gestionnaire d'événement au clic sur le bouton PDF
-    pdfButton.addEventListener('click', function () {
-        console.time('formSubmission'); // Début du chronomètre
-    });
-
-    // Ajouter un gestionnaire d'événement à la soumission du formulaire
-    document.forms['formulaire'].addEventListener('submit', function () {
-        console.timeEnd('formSubmission'); // Fin du chronomètre, affiche le temps d'exécution dans la console
-    });
-
-
-
-
-
-
-
-
 </script>
