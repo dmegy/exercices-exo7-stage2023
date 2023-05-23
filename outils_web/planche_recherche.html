@@ -976,6 +976,8 @@
         pdftex.compile(latex_code)
             .then(function (pdf) {
 
+                console.log(pdf);
+
                 var file = new Blob([pdf], { type: "application/pdf" });
 
                 // Télécharger le fichier .tex dans le navigateur de l'utilisateur
