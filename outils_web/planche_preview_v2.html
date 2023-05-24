@@ -280,9 +280,8 @@
                         <div id="consoleOutput" style="display: none;">
                             <h3>Console Output</h3>
                             <pre id="infosCompil" style="overflow: scroll; max-height: 300px">
-                                    Click "Compile this LaTeX code to PDF" at the top of this page and watch the console output here.
-                                    </pre>
-
+                            Click "Compile this LaTeX code to PDF" at the top of this page and watch the console output here.
+                          </pre>
                             <a name="running" id="running" style="display: none">
                                 Compiling…
                                 <img src="librairies/texlive.js/loading.gif" />
@@ -962,7 +961,7 @@
     }
 
     var appendOutput = function (msg) {
-        var output = document.getElementById("output");
+        var output = document.getElementById("infosCompil");
 
         var content = output.textContent;
 
