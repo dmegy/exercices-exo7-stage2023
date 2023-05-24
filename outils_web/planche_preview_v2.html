@@ -278,6 +278,7 @@
                             AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                         </div>
                         <div id="consoleOutput" style="display: none;">
+                            <h3>Console Output</h3>
                             <pre id="infosCompil" style="overflow: scroll; max-height: 300px">
                                     Click "Compile this LaTeX code to PDF" at the top of this page and watch the console output here.
                                     </pre>
@@ -969,36 +970,6 @@
 
         output.scrollTop = 999999;
         console.log(msg);
-    }
-
-    var pdf_dataurl = undefined;
-    var compile = function (source_code) {
-        document.getElementById("output").textContent = "";
-        showLoadingIndicator(true);
-        window.location.href = "#running";
-
-        var pdftex = new PDFTeX();
-        pdftex.set_TOTAL_MEMORY(80 * 1024 * 1024).then(function () {
-            pdftex.FS_createLazyFile('/', 'snowden.jpg', 'snowden.jpg', true, true);
-
-            pdftex.on_stdout = appendOutput;
-            pdftex.on_stderr = appendOutput;
-
-            console.time("Execution time");
-
-            pdftex.compile(source_code).then(function (pdf_dataurl) {
-                console.timeEnd("Execution time");
-
-                showLoadingIndicator(false);
-
-                if (pdf_dataurl === false)
-                    return;
-
-                showOpenButton(true);
-                window.location.href = "#open_pdf";
-                document.getElementById("open_pdf_btn").focus();
-            });
-        });
     }
 
 </script>
