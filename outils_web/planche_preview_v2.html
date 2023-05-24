@@ -898,7 +898,7 @@
         return codeLatex;
     }
 
-    function preview() {
+    async function preview() {
 
         document.getElementById("textPresentation").style.display = "none";
         document.getElementById("consoleOutput").style.display = "";
@@ -909,7 +909,7 @@
             .replace(/\\usepackage\{tikz\}/g, '')
             .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');
 
-        pdftex.compile(latex_code)
+        await pdftex.compile(latex_code)
             .then(function (pdf) {
                 // Example: Display PDF in iframe
                 var iframe = document.getElementById('myIframe');
