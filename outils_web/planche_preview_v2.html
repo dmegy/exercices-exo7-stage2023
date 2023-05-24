@@ -905,36 +905,36 @@
         textPresentation.style.display = "none";
         consoleOutput.style.display = "";
 
-
         let pdftex = new PDFTeX();
         let latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
             .replace(/\\usepackage\{fancybox\}/g, '')
             .replace(/\\usepackage\{tikz\}/g, '')
             .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');
 
-        var appendOutput = function (msg) {
-            var output = document.getElementById("output");
-
-            var content = output.textContent;
-
-            output.textContent = content + "\r\n" + msg;
-
-            output.scrollTop = 999999;
-            console.log("APPEL A LA FONCTION QUI AFFICHE LES ETAPES DE LA COMPIL" + msg);
-        }
+        pdftex.on_stdout = appendOutput; // Appeler la fonction appendOutput lorsque la sortie standard est disponible
+        pdftex.on_stderr = appendOutput; // Appeler la fonction appendOutput lorsque la sortie d'erreur est disponible
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
-
-                pdftex.on_stdout = appendOutput;
-                pdftex.on_stderr = appendOutput;
-
                 myIframe.src = pdf;
                 consoleOutput.style.display = "none";
                 btnSavePDF.style.display = "";
                 myIframe.style.display = "";
             });
     }
+
+
+    var appendOutput = function (msg) {
+        var output = document.getElementById("output");
+
+        var content = output.textContent;
+
+        output.textContent = content + "\r\n" + msg;
+
+        output.scrollTop = 999999;
+        console.log("APPEL A LA FONCTION QUI AFFICHE LES ETAPES DE LA COMPIL" + msg);
+    }
+
 
 
     function sauvegarderPDF() {
