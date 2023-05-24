@@ -206,7 +206,7 @@
                 <i class="material-icons left">visibility</i>
             </button>
 
-            <button class="btn waves-effect waves-light" type="submit" name="action" onclick="openPDF()"
+            <button id="btnOpenPDF" class="btn waves-effect waves-light" type="submit" name="action" onclick="openPDF()"
                 style="display: none;">
                 <i class="material-icons left">open_in_new</i>
                 PDF
@@ -331,8 +331,8 @@
                 document.getElementById("maListe").style.borderColor = "red";
                 document.getElementById("txt-maListeError").innerHTML = "Les nombres doivent être inférieurs à " + nbExosMax + ".";
                 return false;
-                // sinon si l'élément n'est pas un nombre
-            } else if (isNaN(exercices[i]) || exercices[i] != "") {
+                // sinon si l'élément n'est pas un nombre sauf si c'est vide
+            } else if (isNaN(exercices[i]) && exercices[i] != "") {
                 document.getElementById("maListe").style.borderColor = "red";
                 document.getElementById("txt-maListeError").innerHTML = "Les nombres doivent être dans un format valide (ex: 1-10) et inférieurs à " + nbExosMax + ".";
                 return false;
@@ -915,37 +915,36 @@
                     loader.classList.add('hidden');
                 };
             });
-        document.getElementById("openPDF").classList.remove('hidden');
-    }
+        document.getElementById("btnOpenPDF").style.display = "";
 
-    function openPDF() {
-        window.open(this.pdf, '_blank');
-    }
+        function openPDF() {
+            window.open(this.pdf, '_blank');
+        }
 
 
-    // Déclaration des variables
-    var startTime, elapsedTime, timer;
+        // Déclaration des variables
+        var startTime, elapsedTime, timer;
 
-    // Fonction pour démarrer le chronomètre
-    function startTimer() {
-        startTime = new Date().getTime(); // Enregistre le temps de départ
-        timer = setTimeout(updateTimer, 1000); // Lance la fonction updateTimer toutes les secondes (1000 millisecondes)
-    }
+        // Fonction pour démarrer le chronomètre
+        function startTimer() {
+            startTime = new Date().getTime(); // Enregistre le temps de départ
+            timer = setTimeout(updateTimer, 1000); // Lance la fonction updateTimer toutes les secondes (1000 millisecondes)
+        }
 
-    // Fonction pour mettre à jour le chronomètre
-    function updateTimer() {
-        var currentTime = new Date().getTime(); // Temps actuel
-        elapsedTime = Math.floor((currentTime - startTime) / 1000); // Temps écoulé en secondes
+        // Fonction pour mettre à jour le chronomètre
+        function updateTimer() {
+            var currentTime = new Date().getTime(); // Temps actuel
+            elapsedTime = Math.floor((currentTime - startTime) / 1000); // Temps écoulé en secondes
 
-        // Afficher le temps écoulé
-        console.log(elapsedTime);
+            // Afficher le temps écoulé
+            console.log(elapsedTime);
 
-        // Relancer la fonction updateTimer toutes les secondes
-        timer = setTimeout(updateTimer, 1000);
-    }
+            // Relancer la fonction updateTimer toutes les secondes
+            timer = setTimeout(updateTimer, 1000);
+        }
 
-    // Fonction pour arrêter le chronomètre
-    function stopTimer() {
-        clearTimeout(timer); // Arrête le chronomètre
-    }
+        // Fonction pour arrêter le chronomètre
+        function stopTimer() {
+            clearTimeout(timer); // Arrête le chronomètre
+        }
 </script>
