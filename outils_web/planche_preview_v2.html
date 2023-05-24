@@ -72,56 +72,6 @@
             white-space: nowrap;
         }
 
-        /* The Modal (background) */
-        .modal {
-            display: none;
-            /* Hidden by default */
-            position: fixed;
-            /* Stay in place */
-            z-index: 1;
-            /* Sit on top */
-            padding-top: 100px;
-            /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%;
-            /* Full width */
-            height: 100%;
-            /* Full height */
-            overflow: auto;
-            /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0);
-            /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/ opacity */
-            z-index: 9999;
-            /* Sit on top - higher than any other z-index in your site*/
-        }
-
-        /* Modal Content */
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
         body {
             margin: 0;
             padding: 0;
@@ -174,44 +124,34 @@
 
 </head>
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-    </div>
-
-</div>
-
 <body class="grey darken-1" onload="demarrage()">
 
     <div class="row">
         <div class="col s12 m4 l3 black white-text" style="padding: 20px;">
             <div style="display:flex;justify-content: space-between;">
 
-                <input type="text" id="txt-annee" name="txt-annee"
+                <input type="text" id="txt-annee" name="txt-annee" maxlength="40"
                     style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput white-text"
                     onkeyup=" maj()">
 
-                <input type="text" id="txt-num" name="txt-num"
+                <input type="text" id="txt-num" name="txt-num" maxlength="40"
                     style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
                     class="textinput white-text" onkeyup=" maj()">
 
             </div>
             <div style="display:flex;justify-content: space-between;">
-                <input type="text" id="txt-univ" name="txt-univ"
+                <input type="text" id="txt-univ" name="txt-univ" maxlength="40"
                     style="width:30%;border:1px dashed grey; padding:3px; height:1.2rem" class="textinput white-text"
                     onkeyup=" maj()">
 
-                <input type="text" id="txt-module" name="txt-module"
+                <input type="text" id="txt-module" name="txt-module" maxlength="40"
                     style="width:30%;text-align:right;border:1px dashed grey; padding:3px; height:1.2rem"
                     class="textinput white-text" onkeyup=" maj()">
 
             </div>
             <hr class="hrule">
             <div style="text-align:center">
-                <input type="text" id="txt-titre" name="txt-titre" size="30" align="center"
+                <input type="text" id="txt-titre" name="txt-titre" size="30" align="center" maxlength="80"
                     style="width:60%;font-size:200%;text-align:center;border:1px dashed grey; padding:3px; height:2rem"
                     class="textinput white-text" onkeyup="maj()" value="">
 
@@ -262,7 +202,12 @@
 
             <!--<input class="btn" type="submit" name="pdf" value="PDF (nouvel onglet)">-->
 
-            <button class="btn waves-effect waves-light" type="submit" name="action" onclick="openPDF()">
+            <button class="btn waves-effect waves-light" type="submit" name="action" onclick="preview()">Prévisualiser
+                <i class="material-icons left">visibility</i>
+            </button>
+
+            <button class="btn waves-effect waves-light" type="submit" name="action" onclick="openPDF()"
+                style="display: none;">
                 <i class="material-icons left">open_in_new</i>
                 PDF
             </button>
@@ -323,10 +268,6 @@
                 <kbd>Cmd</kbd> + <kbd>D</kbd> ou <kbd>Ctrl</kbd> + <kbd>D</kbd> .
             </p>
 
-            <div style="text-align: center;">
-                <button class="btn waves-effect waves-light" type="submit" name="action"
-                    onclick="preview()">Prévisualiser</button>
-            </div>
         </div>
 
         <div class="col s12 l9 ">
@@ -367,11 +308,6 @@
     let maListePlus = "";
     const racine = window.location.origin + window.location.pathname;
     let permalien = racine;
-    const nbMaxCharHautGauche = 40;
-    const nbMaxCharHautDroite = 40;
-    const nbMaxCharBasGauche = 40;
-    const nbMaxCharBasDroite = 40;
-    const nbMaxCharTitre = 80;
     const nbExosMax = 7904;
     let pdf = "";
 
@@ -395,6 +331,11 @@
                 document.getElementById("maListe").style.borderColor = "red";
                 document.getElementById("txt-maListeError").innerHTML = "Les nombres doivent être inférieurs à " + nbExosMax + ".";
                 return false;
+                // sinon si l'élément n'est pas un nombre
+            } else if (isNaN(exercices[i]) || exercices[i] != "") {
+                document.getElementById("maListe").style.borderColor = "red";
+                document.getElementById("txt-maListeError").innerHTML = "Les nombres doivent être dans un format valide (ex: 1-10) et inférieurs à " + nbExosMax + ".";
+                return false;
             } else {
                 document.getElementById("maListe").style.borderColor = "black";
                 document.getElementById("txt-maListeError").innerHTML = "";
@@ -405,56 +346,6 @@
         document.getElementById("maListe").style.borderColor = "black";
         return true;
     }
-
-    function limits() {
-        var isValid = true;
-        var modal = document.getElementById("myModal");
-        var modalContent = modal.querySelector(".modal-content");
-        modalContent.innerHTML = ''; // Effacer le contenu existant
-
-        // Ajouter le bouton de fermeture
-        var closeButton = '<span class="close">&times;</span>';
-
-        // Déclarer la variable errorMessage
-        var errorMessage;
-
-        if (hautGauche.length > nbMaxCharHautGauche)
-            errorMessage = '<p>Le champ en haut à gauche ne doit pas dépasser ' + nbMaxCharHautGauche + ' caractères.</p>';
-
-        if (hautDroite.length > nbMaxCharHautDroite)
-            errorMessage = '<p>Le champ en haut à droite ne doit pas dépasser ' + nbMaxCharHautDroite + ' caractères.</p>';
-
-        if (basGauche.length > nbMaxCharBasGauche)
-            errorMessage = '<p>Le champ en bas à gauche ne doit pas dépasser ' + nbMaxCharBasGauche + ' caractères.</p>';
-
-        if (basDroit.length > nbMaxCharBasDroite)
-            errorMessage = '<p>Le champ en bas à droite ne doit pas dépasser ' + nbMaxCharBasDroite + ' caractères.</p>';
-
-        // Vérifier si errorMessage est défini avant d'afficher le modal
-        if (errorMessage) {
-            // Mettre à jour le contenu en ajoutant le bouton de fermeture et le message d'erreur
-            modalContent.insertAdjacentHTML('beforeend', closeButton);
-            modalContent.insertAdjacentHTML('beforeend', errorMessage);
-
-            modal.style.display = "block";
-            isValid = false;
-
-            // Attacher l'événement de clic à l'élément parent (modalContent) pour gérer la délégation d'événements
-            modalContent.addEventListener('click', function (event) {
-                if (event.target.classList.contains('close')) {
-                    modal.style.display = "none";
-                }
-            });
-        }
-        // Attacher l'événement de clic à la fenêtre pour fermer le modal en cliquant à l'extérieur
-        window.addEventListener('click', function (event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        });
-        return isValid;
-    }
-
 
     /*
       Rempli les champs du formulaire avec les variables de l'URL
@@ -1024,6 +915,7 @@
                     loader.classList.add('hidden');
                 };
             });
+        document.getElementById("openPDF").classList.remove('hidden');
     }
 
     function openPDF() {
