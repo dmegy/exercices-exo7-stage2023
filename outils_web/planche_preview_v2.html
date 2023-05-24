@@ -960,6 +960,12 @@
         clearTimeout(timer); // Arrête le chronomètre
     }
 
+    var visibilityChanger = function (element_id) {
+        return function (visible) {
+            document.getElementById(element_id).style.display = visible ? 'block' : 'none';
+        }
+    }
+
     var appendOutput = function (msg) {
         var output = document.getElementById("infosCompil");
 
