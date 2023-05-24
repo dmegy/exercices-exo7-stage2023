@@ -914,6 +914,10 @@
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
+
+                pdftex.on_stdout = appendOutput;
+                pdftex.on_stderr = appendOutput;
+
                 myIframe.src = pdf;
                 consoleOutput.style.display = "none";
                 btnSavePDF.style.display = "";
@@ -966,6 +970,5 @@
         console.log("APPEL A LA FONCTION QUI AFFICHE LES ETAPES DE LA COMPIL" + msg);
     }
 
-    pdftex.on_stdout = appendOutput;
-    pdftex.on_stderr = appendOutput;
+
 </script>
