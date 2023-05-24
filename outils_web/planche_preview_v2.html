@@ -278,9 +278,10 @@
                             AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                         </div>
                         <div id="consoleOutput" style="display: none;">
-                            <h3>Console Output</h3>
-                            <textarea name="infosCompil" id="infosCompil" cols="30" rows="10"
-                                style="overflow: scroll; max-height: 300px"></textarea>
+                            <pre id="infosCompil" style="overflow: scroll; max-height: 300px">
+                                    Click "Compile this LaTeX code to PDF" at the top of this page and watch the console output here.
+                                    </pre>
+
                             <a name="running" id="running" style="display: none">
                                 Compiling…
                                 <img src="librairies/texlive.js/loading.gif" />
@@ -908,7 +909,6 @@
         myIframe.style.display = "none";
         textPresentation.style.display = "none";
         consoleOutput.style.display = "";
-        console.clear();
 
 
         let pdftex = new PDFTeX();
@@ -960,53 +960,45 @@
         clearTimeout(timer); // Arrête le chronomètre
     }
 
+    var appendOutput = function (msg) {
+        var output = document.getElementById("output");
 
-    var visibilityChanger = function (element_id) {
-        return function (visible) {
-            document.getElementById(element_id).style.display = visible ? 'block' : 'none';
-        }
+        var content = output.textContent;
+
+        output.textContent = content + "\r\n" + msg;
+
+        output.scrollTop = 999999;
+        console.log(msg);
     }
 
-    function redirectConsoleOutputToTextarea(textareaId) {
-        var textarea = document.getElementById(textareaId);
+    var pdf_dataurl = undefined;
+    var compile = function (source_code) {
+        document.getElementById("output").textContent = "";
+        showLoadingIndicator(true);
+        window.location.href = "#running";
 
-        if (!textarea) {
-            console.error('Textarea element not found.');
-            return;
-        }
+        var pdftex = new PDFTeX();
+        pdftex.set_TOTAL_MEMORY(80 * 1024 * 1024).then(function () {
+            pdftex.FS_createLazyFile('/', 'snowden.jpg', 'snowden.jpg', true, true);
 
-        // Redirige la sortie de la console vers le textarea
-        var originalLog = console.log;
-        console.log = function (message) {
-            originalLog.apply(console, arguments);
-            textarea.value += message + '\n';
-        };
+            pdftex.on_stdout = appendOutput;
+            pdftex.on_stderr = appendOutput;
 
-        var originalError = console.error;
-        console.error = function (message) {
-            originalError.apply(console, arguments);
-            textarea.value += 'Error: ' + message + '\n';
-        };
+            console.time("Execution time");
 
-        var originalWarn = console.warn;
-        console.warn = function (message) {
-            originalWarn.apply(console, arguments);
-            textarea.value += 'Warning: ' + message + '\n';
-        };
+            pdftex.compile(source_code).then(function (pdf_dataurl) {
+                console.timeEnd("Execution time");
 
-        var originalInfo = console.info;
-        console.info = function (message) {
-            originalInfo.apply(console, arguments);
-            textarea.value += 'Info: ' + message + '\n';
-        };
+                showLoadingIndicator(false);
 
-        var originalDebug = console.debug;
-        console.debug = function (message) {
-            originalDebug.apply(console, arguments);
-            textarea.value += 'Debug: ' + message + '\n';
-        };
+                if (pdf_dataurl === false)
+                    return;
+
+                showOpenButton(true);
+                window.location.href = "#open_pdf";
+                document.getElementById("open_pdf_btn").focus();
+            });
+        });
     }
-
-    redirectConsoleOutputToTextarea('infosCompil');
 
 </script>
