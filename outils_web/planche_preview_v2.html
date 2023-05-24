@@ -277,9 +277,10 @@
                         <div id="textPresentation">
                             AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                         </div>
-                        <div id="output" style="display: none;">
+                        <div id="consoleOutput" style="display: none;">
                             <h3>Console Output</h3>
-                            <pre id="outputContent" style="overflow: scroll; max-height: 200px"></pre>
+                            <pre id="output" style="overflow: scroll; max-height: 200px">
+                            </pre>
                         </div>
                         <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="100%" src=""
                             style="display: none;">
@@ -896,13 +897,13 @@
 
     function preview() {
         let textPresentation = document.getElementById("textPresentation");
-        var output = document.getElementById("outputContent");
+        let consoleOutput = document.getElementById("consoleOutput");
         let btnSavePDF = document.getElementById("btnSavePDF");
         let myIframe = document.getElementById("myIframe");
 
         myIframe.style.display = "none";
         textPresentation.style.display = "none";
-        output.style.display = "";
+        consoleOutput.style.display = "";
 
 
         let pdftex = new PDFTeX();
@@ -910,6 +911,17 @@
             .replace(/\\usepackage\{fancybox\}/g, '')
             .replace(/\\usepackage\{tikz\}/g, '')
             .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');
+
+        var appendOutput = function (msg) {
+            var output = document.getElementById("output");
+
+            var content = output.textContent;
+
+            output.textContent = content + "\r\n" + msg;
+
+            output.scrollTop = 999999;
+            console.log("APPEL A LA FONCTION QUI AFFICHE LES ETAPES DE LA COMPIL" + msg);
+        }
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
@@ -957,17 +969,5 @@
     function stopTimer() {
         clearTimeout(timer); // Arrête le chronomètre
     }
-
-    var appendOutput = function (msg) {
-        var output = document.getElementById("output");
-
-        var content = output.textContent;
-
-        output.textContent = content + "\r\n" + msg;
-
-        output.scrollTop = 999999;
-        console.log("APPEL A LA FONCTION QUI AFFICHE LES ETAPES DE LA COMPIL" + msg);
-    }
-
 
 </script>
