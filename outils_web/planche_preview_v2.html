@@ -898,32 +898,30 @@
         return codeLatex;
     }
 
-    async function preview() {
+    function preview() {
+        let textPresentation = document.getElementById("textPresentation");
+        let consoleOutput = document.getElementById("consoleOutput");
+        let btnSavePDF = document.getElementById("btnSavePDF");
+        let myIframe = document.getElementById("myIframe");
 
-        document.getElementById("textPresentation").style.display = "none";
-        document.getElementById("consoleOutput").style.display = "";
+        textPresentation.style.display = "none";
+        consoleOutput.style.display = "";
 
-        var pdftex = new PDFTeX();
-        var latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
+        let pdftex = new PDFTeX();
+        let latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
             .replace(/\\usepackage\{fancybox\}/g, '')
             .replace(/\\usepackage\{tikz\}/g, '')
             .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');
 
-        await pdftex.compile(latex_code)
+        pdftex.compile(latex_code)
             .then(function (pdf) {
-                // Example: Display PDF in iframe
-                var iframe = document.getElementById('myIframe');
-                iframe.src = pdf;
-
-                this.pdf = pdf;
-
-
+                myIframe.src = pdf;
+                consoleOutput.style.display = "none";
+                btnSavePDF.style.display = "";
+                myIframe.style.display = "";
             });
-
-        document.getElementById("consoleOutput").style.display = "none";
-        document.getElementById("btnSavePDF").style.display = "";
-        document.getElementById("myIframe").style.display = "";
     }
+
 
     function sauvegarderPDF() {
         // Télécharger le fichier .tex dans le navigateur de l'utilisateur
