@@ -277,10 +277,9 @@
                         <div id="textPresentation">
                             AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                         </div>
-                        <div id="consoleOutput" style="display: none;">
+                        <div id="output" style="display: none;">
                             <h3>Console Output</h3>
-                            <pre id="output" style="overflow: scroll; max-height: 200px">
-                            </pre>
+                            <pre id="outputContent" style="overflow: scroll; max-height: 200px"></pre>
                         </div>
                         <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="100%" src=""
                             style="display: none;">
@@ -897,13 +896,13 @@
 
     function preview() {
         let textPresentation = document.getElementById("textPresentation");
-        let consoleOutput = document.getElementById("consoleOutput");
+        var output = document.getElementById("outputContent");
         let btnSavePDF = document.getElementById("btnSavePDF");
         let myIframe = document.getElementById("myIframe");
 
         myIframe.style.display = "none";
         textPresentation.style.display = "none";
-        consoleOutput.style.display = "";
+        output.style.display = "";
 
 
         let pdftex = new PDFTeX();
