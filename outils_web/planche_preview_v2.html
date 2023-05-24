@@ -277,16 +277,25 @@
                         <div id="textPresentation">
                             AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                         </div>
-                        <div id="consoleOutput" style="display: none;">
+
+
+                        <div class="tab" id="tab_output" style="display: none;">
                             <h3>Console Output</h3>
-                            <pre id="infosCompil" style="overflow: scroll; max-height: 300px">
-                            Click "Compile this LaTeX code to PDF" at the top of this page and watch the console output here.
-                          </pre>
+
+                            <pre id="output" style="overflow: scroll; max-height: 300px">
+                                Click "Compile this LaTeX code to PDF" at the top of this page and watch the console output here.
+                                </pre>
+
                             <a name="running" id="running" style="display: none">
                                 Compiling…
-                                <img src="librairies/texlive.js/loading.gif" />
+                                <img src="loading.gif" />
                             </a>
                         </div>
+
+
+
+
+
                         <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="100%" src=""
                             style="display: none;">
                         </iframe>
@@ -902,7 +911,7 @@
 
     function preview() {
         let textPresentation = document.getElementById("textPresentation");
-        let consoleOutput = document.getElementById("consoleOutput");
+        let consoleOutput = document.getElementById("tab_output");
         let btnSavePDF = document.getElementById("btnSavePDF");
         let myIframe = document.getElementById("myIframe");
 
