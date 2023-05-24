@@ -905,8 +905,11 @@
         let btnSavePDF = document.getElementById("btnSavePDF");
         let myIframe = document.getElementById("myIframe");
 
+        myIframe.style.display = "none";
         textPresentation.style.display = "none";
         consoleOutput.style.display = "";
+        console.clear();
+
 
         let pdftex = new PDFTeX();
         let latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
