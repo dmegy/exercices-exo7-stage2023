@@ -206,11 +206,11 @@
                 <i class="material-icons left">visibility</i>
             </button>
 
-            <button id="btnOpenPDF" class="btn waves-effect waves-light" type="submit" name="action" onclick="openPDF()"
-                style="display: none;">
-                <i class="material-icons left">open_in_new</i>
-                PDF
-            </button>
+            <a id="btnSavePDF" class="waves-effect waves-light btn" onclick="sauvegarderPDF()" style="display: none;">
+                <i class="material-icons">download</i>
+                <i class="material-icons">save</i>
+                <span class="btn-share-text">PDF</span>
+            </a>
             <!-- ce bouton utilisait export5.php : inutile, maintenant -->
             <!--<input class="btn" type="submit" name="tex" value="LaTeX (nouvel onglet)">-->
             </form>
@@ -277,6 +277,9 @@
                         <div id="loader" class="loader hidden"></div>
 
                         <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="100%" src="">
+                            <div>
+                                <h5>Bienvenu</h5>
+                            </div>
                         </iframe>
                     </div><!-- /card-content-->
                 </div><!-- /card-->
@@ -915,12 +918,14 @@
                     loader.classList.add('hidden');
                 };
             });
-        document.getElementById("btnOpenPDF").style.display = "";
+        document.getElementById("btnSavePDF").style.display = "";
     }
 
-    function openPDF() {
-        window.open(this.pdf, '_blank');
+    function sauvegarderPDF() {
+        // Télécharger le fichier .tex dans le navigateur de l'utilisateur
+        saveAs(this.pdf, "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10) + ".pdf");
     }
+
 
 
     // Déclaration des variables
