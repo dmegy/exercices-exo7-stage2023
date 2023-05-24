@@ -332,10 +332,10 @@
         <div class="col s12 l9 ">
             <div class="container">
                 <div class="card white z-depth-3">
-                    <div class="card-content">
+                    <div class="card-content" style="height: calc(100dvh - 30px);">
                         <div id="loader" class="loader hidden"></div>
 
-                        <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="625px" src="">
+                        <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="100%" src="">
                         </iframe>
                     </div><!-- /card-content-->
                 </div><!-- /card-->
@@ -1012,12 +1012,11 @@
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
-                // PDF compilation completed
-                // Use 'pdf' variable as desired
-                console.log(pdf);
                 // Example: Display PDF in iframe
                 var iframe = document.getElementById('myIframe');
                 iframe.src = pdf;
+
+                console.log("TYPE DE PDF : " + typeof pdf);
 
                 // Cacher le loader une fois l'affichage prêt
                 iframe.onload = function () {

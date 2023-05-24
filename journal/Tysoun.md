@@ -19,6 +19,18 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 23 mai
+
+planche_recherche.html terminer + début des quizz.
+
+## 22 mai
+
+Implémentation de la planche final + correction des autres planches.
+
+## 19 mai
+
+Début implémentation de la page de recherche.
+
 ## 17 mai
 
 Compilation réussi avec TexLive.js + début de l'implémentation de la page final de recherche.
