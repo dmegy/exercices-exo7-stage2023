@@ -277,25 +277,16 @@
                         <div id="textPresentation">
                             AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                         </div>
-
-
-                        <div class="tab" id="tab_output" style="display: none;">
+                        <div id="consoleOutput" style="display: none;">
                             <h3>Console Output</h3>
-
                             <pre id="output" style="overflow: scroll; max-height: 300px">
-                                Click "Compile this LaTeX code to PDF" at the top of this page and watch the console output here.
-                                </pre>
+                                    </pre>
 
                             <a name="running" id="running" style="display: none">
                                 Compiling…
-                                <img src="loading.gif" />
+                                <img src="librairies/texlive.js/loading.gif" />
                             </a>
                         </div>
-
-
-
-
-
                         <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="100%" src=""
                             style="display: none;">
                         </iframe>
@@ -911,7 +902,7 @@
 
     function preview() {
         let textPresentation = document.getElementById("textPresentation");
-        let consoleOutput = document.getElementById("tab_output");
+        let consoleOutput = document.getElementById("consoleOutput");
         let btnSavePDF = document.getElementById("btnSavePDF");
         let myIframe = document.getElementById("myIframe");
 
@@ -969,15 +960,6 @@
         clearTimeout(timer); // Arrête le chronomètre
     }
 
-    var visibilityChanger = function (element_id) {
-        return function (visible) {
-            document.getElementById(element_id).style.display = visible ? 'block' : 'none';
-        }
-    }
-
-    var showLoadingIndicator = visibilityChanger("running")
-    var showOpenButton = visibilityChanger("tab_open_pdf")
-
     var appendOutput = function (msg) {
         var output = document.getElementById("output");
 
@@ -989,47 +971,5 @@
         console.log(msg);
     }
 
-    var pdf_dataurl = undefined;
-    var compile = function (source_code) {
-        document.getElementById("output").textContent = "";
-        showLoadingIndicator(true);
-        window.location.href = "#running";
-
-        var pdftex = new PDFTeX();
-        pdftex.set_TOTAL_MEMORY(80 * 1024 * 1024).then(function () {
-            pdftex.FS_createLazyFile('/', 'snowden.jpg', 'snowden.jpg', true, true);
-
-            pdftex.on_stdout = appendOutput;
-            pdftex.on_stderr = appendOutput;
-
-            console.time("Execution time");
-
-            pdftex.compile(source_code).then(function (pdf_dataurl) {
-                console.timeEnd("Execution time");
-
-                showLoadingIndicator(false);
-
-                if (pdf_dataurl === false)
-                    return;
-
-                showOpenButton(true);
-                window.location.href = "#open_pdf";
-                document.getElementById("open_pdf_btn").focus();
-            });
-        });
-    }
-
-    document.getElementById("compile").addEventListener("click", function (e) {
-        var source_code = document.getElementById("input").value;
-        compile(source_code);
-    });
-
-    document.getElementById("open_pdf_btn").addEventListener("click", function (e) {
-        window.open(pdf_dataurl);
-        e.preventDefault();
-    });
-
-    var pdftex_preload = new PDFTeX("pdftex-worker.js");
-    pdftex_preload = undefined;
 
 </script>
