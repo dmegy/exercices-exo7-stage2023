@@ -916,35 +916,36 @@
                 };
             });
         document.getElementById("btnOpenPDF").style.display = "";
+    }
 
-        function openPDF() {
-            window.open(this.pdf, '_blank');
-        }
+    function openPDF() {
+        window.open(this.pdf, '_blank');
+    }
 
 
-        // Déclaration des variables
-        var startTime, elapsedTime, timer;
+    // Déclaration des variables
+    var startTime, elapsedTime, timer;
 
-        // Fonction pour démarrer le chronomètre
-        function startTimer() {
-            startTime = new Date().getTime(); // Enregistre le temps de départ
-            timer = setTimeout(updateTimer, 1000); // Lance la fonction updateTimer toutes les secondes (1000 millisecondes)
-        }
+    // Fonction pour démarrer le chronomètre
+    function startTimer() {
+        startTime = new Date().getTime(); // Enregistre le temps de départ
+        timer = setTimeout(updateTimer, 1000); // Lance la fonction updateTimer toutes les secondes (1000 millisecondes)
+    }
 
-        // Fonction pour mettre à jour le chronomètre
-        function updateTimer() {
-            var currentTime = new Date().getTime(); // Temps actuel
-            elapsedTime = Math.floor((currentTime - startTime) / 1000); // Temps écoulé en secondes
+    // Fonction pour mettre à jour le chronomètre
+    function updateTimer() {
+        var currentTime = new Date().getTime(); // Temps actuel
+        elapsedTime = Math.floor((currentTime - startTime) / 1000); // Temps écoulé en secondes
 
-            // Afficher le temps écoulé
-            console.log(elapsedTime);
+        // Afficher le temps écoulé
+        console.log(elapsedTime);
 
-            // Relancer la fonction updateTimer toutes les secondes
-            timer = setTimeout(updateTimer, 1000);
-        }
+        // Relancer la fonction updateTimer toutes les secondes
+        timer = setTimeout(updateTimer, 1000);
+    }
 
-        // Fonction pour arrêter le chronomètre
-        function stopTimer() {
-            clearTimeout(timer); // Arrête le chronomètre
-        }
+    // Fonction pour arrêter le chronomètre
+    function stopTimer() {
+        clearTimeout(timer); // Arrête le chronomètre
+    }
 </script>
