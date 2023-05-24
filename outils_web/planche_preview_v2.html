@@ -373,6 +373,7 @@
     const nbMaxCharBasDroite = 40;
     const nbMaxCharTitre = 80;
     const nbExosMax = 7904;
+    let pdf = "";
 
     function isValidList(liste) {
 
@@ -1016,7 +1017,7 @@
                 var iframe = document.getElementById('myIframe');
                 iframe.src = pdf;
 
-                console.log("TYPE DE PDF : " + typeof pdf);
+                this.pdf = pdf;
 
                 // Cacher le loader une fois l'affichage prêt
                 iframe.onload = function () {
@@ -1026,19 +1027,7 @@
     }
 
     function openPDF() {
-        console.time('openPDF'); // Début du chronomètre
-
-        var pdftex = new PDFTeX();
-        var latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
-            .replace(/\\usepackage\{fancybox\}/g, '')
-            .replace(/\\usepackage\{tikz\}/g, '')
-            .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');
-
-        pdftex.compile(latex_code)
-            .then(function (pdf) {
-                window.open(pdf, '_blank');
-                console.timeEnd('openPDF'); // Fin du chronomètre, affiche le temps d'exécution dans la console
-            });
+        window.open(this.pdf, '_blank');
     }
 
 
