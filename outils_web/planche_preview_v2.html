@@ -279,9 +279,7 @@
                         </div>
                         <div id="consoleOutput" style="display: none;">
                             <h3>Console Output</h3>
-                            <pre id="output" style="overflow: scroll; max-height: 300px">
-        Click "Compile this LaTeX code to PDF" at the top of this page and watch the console output here.
-        </pre>
+                            <textarea name="infosCompil" id="infosCompil" cols="30" rows="10"></textarea>
                             <a name="running" id="running" style="display: none">
                                 Compiling…
                                 <img src="librairies/texlive.js/loading.gif" />
@@ -964,33 +962,46 @@
         }
     }
 
-    var showLoadingIndicator = visibilityChanger("running")
-    var showOpenButton = visibilityChanger("tab_open_pdf")
+    function redirectConsoleOutputToTextarea(textareaId) {
+        var textarea = document.getElementById(textareaId);
 
-    var appendOutput = function (msg) {
-        var output = document.getElementById("output");
+        if (!textarea) {
+            console.error('Textarea element not found.');
+            return;
+        }
 
-        var content = output.textContent;
+        // Redirige la sortie de la console vers le textarea
+        var originalLog = console.log;
+        console.log = function (message) {
+            originalLog.apply(console, arguments);
+            textarea.value += message + '\n';
+        };
 
-        output.textContent = content + "\r\n" + msg;
+        var originalError = console.error;
+        console.error = function (message) {
+            originalError.apply(console, arguments);
+            textarea.value += 'Error: ' + message + '\n';
+        };
 
-        output.scrollTop = 999999;
-        console.log(msg);
+        var originalWarn = console.warn;
+        console.warn = function (message) {
+            originalWarn.apply(console, arguments);
+            textarea.value += 'Warning: ' + message + '\n';
+        };
+
+        var originalInfo = console.info;
+        console.info = function (message) {
+            originalInfo.apply(console, arguments);
+            textarea.value += 'Info: ' + message + '\n';
+        };
+
+        var originalDebug = console.debug;
+        console.debug = function (message) {
+            originalDebug.apply(console, arguments);
+            textarea.value += 'Debug: ' + message + '\n';
+        };
     }
 
-    var compile = function (source_code) {
-        document.getElementById("output").textContent = "";
-        showLoadingIndicator(true);
-        window.location.href = "#running";
-
-
-    }
-
-    document.getElementById("compile").addEventListener("click", function (e) {
-        var source_code = document.getElementById("input").value;
-        compile(source_code);
-    });
-
-
+    redirectConsoleOutputToTextarea('infosCompil');
 
 </script>
