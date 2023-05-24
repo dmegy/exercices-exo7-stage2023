@@ -1,55 +1,57 @@
 <!doctype html>
 <html>
-  <head>
-    <style>
-      html {
-        font-family: Arial;
-      }
 
-      textarea {
-        font-family: monospace;
-        width: 100%;
-      }
+<head>
+  <style>
+    html {
+      font-family: Arial;
+    }
 
-      code {
-        background: #eee;
-      }
+    textarea {
+      font-family: monospace;
+      width: 100%;
+    }
 
-      code .string {
-        color: rgb(102, 153, 0);
-      }
+    code {
+      background: #eee;
+    }
 
-      code .keyword {
-        color: rgb(0, 119, 170);
-      }
-    </style>
+    code .string {
+      color: rgb(102, 153, 0);
+    }
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    code .keyword {
+      color: rgb(0, 119, 170);
+    }
+  </style>
 
-    <script type="text/javascript">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <script type="text/javascript">
     /* <![CDATA[ */
-        // flattr button
-        (function() {
-            var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-            s.type = 'text/javascript';
-            s.async = true;
-            s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
-            t.parentNode.insertBefore(s, t);
-        })();
+    // flattr button
+    (function () {
+      var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+      t.parentNode.insertBefore(s, t);
+    })();
     /* ]]> */</script>
-  </head>
+</head>
 
-  <body>
-    <script src="promisejs/promise.js"></script>
-    <script src="pdftex.js"></script>
+<body>
+  <script src="promisejs/promise.js"></script>
+  <script src="pdftex.js"></script>
 
-    <h1>texlive.js – A LaTeX Compiler for Javascript</h1>
-    <a href="https://github.com/manuels/texlive.js/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+  <h1>texlive.js – A LaTeX Compiler for Javascript</h1>
+  <a href="https://github.com/manuels/texlive.js/"><img style="position: absolute; top: 0; right: 0; border: 0;"
+      src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
 
-    <h2>
-      Usage
-    </h2>
-    <code style="width: 55em; margin: 0 auto; padding: 1em; display: block">
+  <h2>
+    Usage
+  </h2>
+  <code style="width: 55em; margin: 0 auto; padding: 1em; display: block">
       <span class="keyword">var</span> pdftex = <span class="keyword">new</span> PDFTeX();<br />
       <span class="keyword">var</span> latex_code = <span class="string">""</span> + <br />
       <span class="string">&nbsp;&nbsp;"\\documentclass{article}"</span> + <br />
@@ -64,19 +66,20 @@
       });
     </code>
 
-    <div id="tabs">
-      <div class="tab" id="tab_input">
-        <h2>
-          Demo
-        </h2>
-        <h3>
-          LaTeX Input
-        </h3>
-        <button id="compile" autofocus>Compile this LaTeX code to a PDF</button>
-        <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://github.com/manuels/texlive.js"></a>
+  <div id="tabs">
+    <div class="tab" id="tab_input">
+      <h2>
+        Demo
+      </h2>
+      <h3>
+        LaTeX Input
+      </h3>
+      <button id="compile" autofocus>Compile this LaTeX code to a PDF</button>
+      <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;"
+        href="http://github.com/manuels/texlive.js"></a>
 
-        <button onclick="TogetherJS(this); return false;">Start Collaboration Mode</button>
-        <textarea rows="30" id="input">
+      <button onclick="TogetherJS(this); return false;">Start Collaboration Mode</button>
+      <textarea rows="30" id="input">
 \documentclass[12pt]{article}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -110,111 +113,115 @@
   \includegraphics[height=5cm, keepaspectratio]{snowden}
 \end{document}
         </textarea>
-      </div>
+    </div>
 
 
-      <div class="tab" id="tab_output">
-        <h3>Console Output</h3>
+    <div class="tab" id="tab_output">
+      <h3>Console Output</h3>
 
-        <pre id="output" style="overflow: scroll; max-height: 300px">
+      <pre id="output" style="overflow: scroll; max-height: 300px">
         Click "Compile this LaTeX code to PDF" at the top of this page and watch the console output here.
         </pre>
 
-        <a name="running" id="running" style="display: none">
-          Compiling…
-          <img src="loading.gif" />
-        </a>
-      </div>
-
-      <div class="tab" id="tab_open_pdf" style="display: none">
-        <h3>View your PDF</h3>
-
-        <button id="open_pdf_btn">Open your PDF</button>
-        <p>
-          Your LaTeX code is now compiled to a PDF document. The document is converted to a <a href="https://developer.mozilla.org/en-US/docs/data_URIs">data URI</a> that makes it possible to interpret the format correctly.
-        </p>
-        <a name="open_pdf"></a>
-      </div>
-
+      <a name="running" id="running" style="display: none">
+        Compiling…
+        <img src="loading.gif" />
+      </a>
     </div>
 
-    <h2>License</h2>
-    <p>GNU/GPL</p>
+    <div class="tab" id="tab_open_pdf" style="display: none">
+      <h3>View your PDF</h3>
 
-    <h2>More Information</h2>
-    <p>Checkout the <a href="https://github.com/manuels/texlive.js/wiki">wiki page</a></p>
+      <button id="open_pdf_btn">Open your PDF</button>
+      <p>
+        Your LaTeX code is now compiled to a PDF document. The document is converted to a <a
+          href="https://developer.mozilla.org/en-US/docs/data_URIs">data URI</a> that makes it possible to interpret the
+        format correctly.
+      </p>
+      <a name="open_pdf"></a>
+    </div>
 
-    <h2>Related Projects</h2>
-    <ul>
-      <li><a href="https://github.com/mozilla/pdf.js">pdf.js</a>: a PDF reader in Javascript by Mozilla</li>
-      <li><a href="https://github.com/kripken/emscripten">emscripten</a>: An LLVM-to-JavaScript Compiler used to create texlive.js</li>
-    </ul>
+  </div>
 
-    <script>
-      var visibilityChanger = function(element_id) {
-        return function(visible) {
-          document.getElementById(element_id).style.display = visible ? 'block' : 'none';
-        }
+  <h2>License</h2>
+  <p>GNU/GPL</p>
+
+  <h2>More Information</h2>
+  <p>Checkout the <a href="https://github.com/manuels/texlive.js/wiki">wiki page</a></p>
+
+  <h2>Related Projects</h2>
+  <ul>
+    <li><a href="https://github.com/mozilla/pdf.js">pdf.js</a>: a PDF reader in Javascript by Mozilla</li>
+    <li><a href="https://github.com/kripken/emscripten">emscripten</a>: An LLVM-to-JavaScript Compiler used to create
+      texlive.js</li>
+  </ul>
+
+  <script>
+    var visibilityChanger = function (element_id) {
+      return function (visible) {
+        document.getElementById(element_id).style.display = visible ? 'block' : 'none';
       }
+    }
 
-      var showLoadingIndicator = visibilityChanger("running")
-      var showOpenButton = visibilityChanger("tab_open_pdf")
+    var showLoadingIndicator = visibilityChanger("running")
+    var showOpenButton = visibilityChanger("tab_open_pdf")
 
-      var appendOutput = function(msg) {
-        var output = document.getElementById("output");
+    var appendOutput = function (msg) {
+      var output = document.getElementById("output");
 
-        var content = output.textContent;
+      var content = output.textContent;
 
-        output.textContent = content + "\r\n" + msg;
+      output.textContent = content + "\r\n" + msg;
 
-        output.scrollTop = 999999;
-        console.log(msg);
-      }
+      output.scrollTop = 999999;
+      console.log(msg);
+    }
 
-      var pdf_dataurl = undefined;
-      var compile = function(source_code) {
-        document.getElementById("output").textContent = "";
-        showLoadingIndicator(true);
-        window.location.href = "#running";
+    var pdf_dataurl = undefined;
+    var compile = function (source_code) {
+      document.getElementById("output").textContent = "";
+      showLoadingIndicator(true);
+      window.location.href = "#running";
 
-        var pdftex = new PDFTeX();
-        pdftex.set_TOTAL_MEMORY(80*1024*1024).then(function() {
-          pdftex.FS_createLazyFile('/', 'snowden.jpg', 'snowden.jpg', true, true);
+      var pdftex = new PDFTeX();
+      pdftex.set_TOTAL_MEMORY(80 * 1024 * 1024).then(function () {
+        pdftex.FS_createLazyFile('/', 'snowden.jpg', 'snowden.jpg', true, true);
 
-          pdftex.on_stdout = appendOutput;
-          pdftex.on_stderr = appendOutput;
+        pdftex.on_stdout = appendOutput;
+        pdftex.on_stderr = appendOutput;
 
-          console.time("Execution time");
+        console.time("Execution time");
 
-          pdftex.compile(source_code).then(function(pdf_dataurl) {
-            console.timeEnd("Execution time");
+        pdftex.compile(source_code).then(function (pdf_dataurl) {
+          console.timeEnd("Execution time");
 
-            showLoadingIndicator(false);
+          showLoadingIndicator(false);
 
-            if (pdf_dataurl === false)
-              return;
+          if (pdf_dataurl === false)
+            return;
 
-            showOpenButton(true);
-            window.location.href = "#open_pdf";
-            document.getElementById("open_pdf_btn").focus();
-          });
+          showOpenButton(true);
+          window.location.href = "#open_pdf";
+          document.getElementById("open_pdf_btn").focus();
         });
-      }
-
-      document.getElementById("compile").addEventListener("click", function(e) {
-        var source_code = document.getElementById("input").value;
-        compile(source_code);
       });
+    }
 
-      document.getElementById("open_pdf_btn").addEventListener("click", function(e) {
-        window.open(pdf_dataurl);
-        e.preventDefault();
-      });
+    document.getElementById("compile").addEventListener("click", function (e) {
+      var source_code = document.getElementById("input").value;
+      compile(source_code);
+    });
 
-      var pdftex_preload = new PDFTeX("pdftex-worker.js");
-      pdftex_preload = undefined;
-    </script>
+    document.getElementById("open_pdf_btn").addEventListener("click", function (e) {
+      window.open(pdf_dataurl);
+      e.preventDefault();
+    });
 
-    <script src="https://togetherjs.com/togetherjs-min.js"></script>
-  </body>
+    var pdftex_preload = new PDFTeX("pdftex-worker.js");
+    pdftex_preload = undefined;
+  </script>
+
+  <script src="https://togetherjs.com/togetherjs-min.js"></script>
+</body>
+
 </html>

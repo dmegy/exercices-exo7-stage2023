@@ -274,12 +274,21 @@
             <div class="container">
                 <div class="card white z-depth-3">
                     <div class="card-content" style="height: calc(100dvh - 30px);">
-                        <div id="loader" class="loader hidden"></div>
-
-                        <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="100%" src="">
-                            <div>
-                                <h5>Bienvenu</h5>
-                            </div>
+                        <div id="textPresentation">
+                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                        </div>
+                        <div id="consoleOutput" style="display: none;">
+                            <h3>Console Output</h3>
+                            <pre id="output" style="overflow: scroll; max-height: 300px">
+        Click "Compile this LaTeX code to PDF" at the top of this page and watch the console output here.
+        </pre>
+                            <a name="running" id="running" style="display: none">
+                                Compiling…
+                                <img src="librairies/texlive.js/loading.gif" />
+                            </a>
+                        </div>
+                        <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="100%" src=""
+                            style="display: none;">
                         </iframe>
                     </div><!-- /card-content-->
                 </div><!-- /card-->
@@ -439,7 +448,6 @@
         ouvrirAvecOverleaf();
 
         isValidList(maListe);
-        limits();
 
         document.getElementById("permalien").value = permalien;
         // fin update permalien 
@@ -893,17 +901,15 @@
     }
 
     function preview() {
-        // Afficher le loader
-        var loader = document.getElementById('loader');
-        loader.classList.remove('hidden');
+
+        document.getElementById("textPresentation").style.display = "none";
+        document.getElementById("consoleOutput").style.display = "";
 
         var pdftex = new PDFTeX();
         var latex_code = getCodeLatex().replace(/\\usepackage\[french\]\{babel\}/g, '')
             .replace(/\\usepackage\{fancybox\}/g, '')
             .replace(/\\usepackage\{tikz\}/g, '')
             .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');
-
-        console.log(latex_code);
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
@@ -913,10 +919,7 @@
 
                 this.pdf = pdf;
 
-                // Cacher le loader une fois l'affichage prêt
-                iframe.onload = function () {
-                    loader.classList.add('hidden');
-                };
+
             });
         document.getElementById("btnSavePDF").style.display = "";
     }
@@ -953,4 +956,41 @@
     function stopTimer() {
         clearTimeout(timer); // Arrête le chronomètre
     }
+
+
+    var visibilityChanger = function (element_id) {
+        return function (visible) {
+            document.getElementById(element_id).style.display = visible ? 'block' : 'none';
+        }
+    }
+
+    var showLoadingIndicator = visibilityChanger("running")
+    var showOpenButton = visibilityChanger("tab_open_pdf")
+
+    var appendOutput = function (msg) {
+        var output = document.getElementById("output");
+
+        var content = output.textContent;
+
+        output.textContent = content + "\r\n" + msg;
+
+        output.scrollTop = 999999;
+        console.log(msg);
+    }
+
+    var compile = function (source_code) {
+        document.getElementById("output").textContent = "";
+        showLoadingIndicator(true);
+        window.location.href = "#running";
+
+
+    }
+
+    document.getElementById("compile").addEventListener("click", function (e) {
+        var source_code = document.getElementById("input").value;
+        compile(source_code);
+    });
+
+
+
 </script>
