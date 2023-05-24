@@ -277,7 +277,7 @@
                         <div id="textPresentation">
                             AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                         </div>
-                        <div id="consoleOutput" style="display: none;">
+                        <div id="consoleOutput" style="display: none; overflow: scroll; max-height: 300px">
                             <h3>Console Output</h3>
                             <textarea name="infosCompil" id="infosCompil" cols="30" rows="10"></textarea>
                             <a name="running" id="running" style="display: none">
@@ -919,6 +919,8 @@
 
 
             });
+
+        document.getElementById("consoleOutput").style.display = "none";
         document.getElementById("btnSavePDF").style.display = "";
     }
 
