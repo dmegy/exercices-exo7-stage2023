@@ -936,6 +936,7 @@
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
+                this.pdf = pdf;
                 myIframe.src = pdf;
                 consoleOutput.style.display = "none";
                 btnSavePDF.style.display = "";
