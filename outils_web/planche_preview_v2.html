@@ -920,6 +920,7 @@
 
         output.innerHTML = "";
 
+        btnSavePDF.style.display = "none";
         myIframe.style.display = "none";
         textPresentation.style.display = "none";
         consoleOutput.style.display = "";
@@ -942,7 +943,6 @@
             });
     }
 
-
     var appendOutput = function (msg) {
         var output = document.getElementById("output");
 
@@ -951,15 +951,13 @@
         output.textContent = content + "\r\n" + msg;
 
         output.scrollTop = 999999;
-        console.log("APPEL A LA FONCTION QUI AFFICHE LES ETAPES DE LA COMPIL" + msg);
     }
-
-
 
     function sauvegarderPDF() {
         // Télécharger le fichier .tex dans le navigateur de l'utilisateur
         saveAs(this.pdf, "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10) + ".pdf");
     }
+
 
 
 
