@@ -1,0 +1,155 @@
+<html lang="en">
+
+<head>
+    <script type='text/javascript' src="../exercices/_chapitres.js">
+
+    </script>
+    <script type='text/javascript' src="../exercices/_chapitres.js">
+
+    </script>
+    <script type='text/javascript' src="../exercices/_subcategories.js">
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Rechercher des exercices</h2>
+    <div class="contentarea">
+        <html>
+        <p>
+            <select name="lemodule" id="lemodule" style="width:20em" size=10 onchange='gensel1();'>
+                <option value=-1 selected="selected">--- Choix du module ---</option>
+                <option value=1>L1 Algèbre</option>
+                <option value=2>L1 Analyse</option>
+                <option value=3>L1 Géométrie</option>
+                <option value=4>L2 Algèbre</option>
+                <option value=5>L2 Analyse</option>
+                <option value=6>L2 Géométrie</option>
+                <option value=7>L2 Probabilité et statistique</option>
+                <option value=8>L3 Théorie des groupes</option>
+                <option value=9>L3 Algèbre et géométrie</option>
+                <option value=10>L3 Algèbre et théorie des nombres</option>
+                <option value=11>L3 Géométrie différentielle</option>
+                <option value=12>L3 Calcul différentiel</option>
+                <option value=13>L3 Equation différentielle</option>
+                <option value=14>L3 Théorie de la mesure, intégrale de Lebesgue</option>
+                <option value=15>L3 Topologie</option>
+                <option value=16>L3 Analyse complexe</option>
+                <option value=17>L3 Analyse numérique</option>
+                <option value=18>L3 Optimisation</option>
+                <option value=19>L3 Probabilité et statistique</option>
+            </select>
+            <select name="lechapitre" id="lechapitre" style="width:20em" size=10
+                onchange='gensel2();wordCounter(this.form.MesExos,this.form.nombredexos);'>
+                <option value=-1 selected="selected">--- Choix du chapitre ---</option>
+            </select>
+            <select name="lecode" id="lecode" size=10 style="width:20em"
+                onchange='gensel3();wordCounter(this.form.MesExos,this.form.nombredexos);'>
+                <option value=-1 selected="selected">--- Choix du sous-chapitre ---</option>
+            </select>
+        </p>
+        <p>
+            <i>Nombre d'exercices correspondants :</i>
+            <INPUT type=text name="nombredexos" id="nombredexos" size="4" readonly value="0">
+            <input type="reset" value=" Remise à zéro ">
+        </p>
+        <textarea name="MesExos" id="mesexos" rows="5" cols="100"
+            onkeydown='wordCounter(this.form.MesExos,this.form.nombredexos);'></textarea>
+        <!-- $theliste est la liste qui peux provenir d'une selection en ligne -->
+        <br>
+        <i>
+            Vous pouvez saisir directement les numéros des exercices.
+            Exemple : 7 11 14-18 : pour les exercices 7, 11 et de 14 à 18. <br />Vous pouvez aussi saisir le nom de
+            la
+            fiche. Exemple fic00001.txt.
+        </i>
+        <br />
+
+</body>
+
+<script type="text/javascript">
+    function gensel1() {
+        var ss1 = document.getElementById("lemodule");
+        var ss2 = document.getElementById("lechapitre");
+        var ss3 = document.getElementById("lecode");
+
+        var t1 = document.getElementById("mesexos");
+        t1.value = "";
+        ss2.length = 1;
+        ss2.options[0].value = -1;
+        ss2.options[0].text = "--- Choix du chapitre ---";
+        ss2.options[0].selected = true;
+        var choix = parseInt(ss1.options[ss1.selectedIndex].value);
+        var choixdeb = parseInt(tabdebchJS[choix - 1]);
+        var choixfin = parseInt(tabfinchJS[choix - 1]);
+        for (var n = 0; n < tabchcodeJS.length; n++) {
+            if (tabchcodeJS[n] >= choixdeb && tabchcodeJS[n] <= choixfin) {
+                ss2.length++;
+                ss2.options[ss2.length - 1].value = tabchcodeJS[n];
+                ss2.options[ss2.length - 1].text = tabchdescJS[n];
+            }
+        }
+
+        ss3.length = 1;
+        ss3.options[0].value = -1;
+        ss3.options[0].text = "--- Choix du sous-chapitre ---";
+        ss23options[0].selected = true;
+
+    }
+
+    function gensel2() {
+        var s1 = document.getElementById("lechapitre");
+        var s2 = document.getElementById("lecode");
+        var t1 = document.getElementById("mesexos");
+
+        var choix = s1.options[s1.selectedIndex].value;
+        for (var n = 0; n < tabchcodeJS.length; n++) {
+            if (tabchcodeJS[n] == choix) {
+                t1.value = tabchexosJS[n];
+            }
+        }
+
+        s2.length = 1;
+        s2.options[0].value = -1;
+        s2.options[0].text = "--- Choix du sous-chapitre ---";
+        s2.options[0].selected = true;
+        var choix = parseInt(s1.options[s1.selectedIndex].value);
+        for (var n = 0; n < tabcodeJS.length; n++) {
+            if (tabcodeJS[n] >= choix && tabcodeJS[n] < choix + 1) {
+                s2.length++;
+                s2.options[s2.length - 1].value = tabcodeJS[n];
+                s2.options[s2.length - 1].text = tabdescJS[n];
+            }
+        }
+    }
+
+    function gensel3() {
+        var sss3 = document.getElementById("lecode");
+        var t1 = document.getElementById("mesexos");
+        var choix = sss3.options[sss3.selectedIndex].value;
+        for (var n = 0; n < tabcodeJS.length; n++) {
+            if (tabcodeJS[n] == choix) {
+                t1.value = tabexosJS[n];
+            }
+        }
+    }
+
+    function wordCounter(field, countfield) {
+        wordcounter = 0;
+        for (x = 0; x < field.value.length; x++) {
+            if (field.value.charAt(x) == " " && field.value.charAt(x - 1) != " ") {
+                wordcounter++
+            }// Counts the spaces while ignoring double spaces, usually one in between each word.
+            //  if (wordcounter > 250) {field.value = field.value.substring(0, x);}
+            else {
+                countfield.value = wordcounter + 1;
+            }
+        }
+    }
+
+</script>
+
+</html>

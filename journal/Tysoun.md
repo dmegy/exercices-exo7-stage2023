@@ -19,9 +19,57 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 23 mai
+
+planche_recherche.html terminer + début des quizz.
+
+## 22 mai
+
+Implémentation de la planche final + correction des autres planches.
+
+## 19 mai
+
+Début implémentation de la page de recherche.
+
+## 17 mai
+
+Compilation réussi avec TexLive.js + début de l'implémentation de la page final de recherche.
+
+## 16 mai
+
+Tentative de contourné l'erreur mixed active content sans succès, changement de stratégie pour la preview : affichage avec mathjax.
+15h40-17h réunion : plan pour quizz + fin exercice.
+
+## 15 mai
+
+planche_preview.html, preview impossible lors du dépploiement, erreur de "mixed active content". En localhost la preview ne posait pas de problème car le navigateur chargeait en http mais sur github.io comme c'est en https le navigateur bloque le chargement de contenue depuis une source non sécurisé : http://exo7.emath.fr/bin/extract5.php
+
+## 12 mai
+
+Réunion, changement de stratégie pour la preview des exos. Charger directement via extract5.php
+
+## 11 mai
+
+Importer ce qu'il fallait pour tikz.sty mais il y'a de nouveaux erreurs...
+Mais la version avec preview sans packages ajouter est fait.
+
+## 10 mai
+
+Le package "fancybox.sty" à pu être rajouter manuelement il reste le package "tikz.sty" et les erreurs avec babels.
+fancybox.sty trouver sur le site suivant : https://ctan.org/pkg/fancybox
+
+## 09 mai
+
+Avancement de la fonctionnalité de preview. La preview d'un fichier basique avec les packages existant déjà dans texlive.js est effectué mais il reste la version avec les packages à inclures.
+
+## 05 mai
+
+Erreur lors du test de texlive, en local le test de la doc de github ne trouve pas le fichier pdftex-worker.js
+Le test est sera disponible dans mon github.
+
 ## 04 mai
 
-Objectif : Commencer le quiz-exo7
+Prise en main de texlive
 
 ## 03 mai
 
