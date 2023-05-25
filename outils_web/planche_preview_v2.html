@@ -955,14 +955,8 @@
 
     function sauvegarderPDF() {
 
-        // Créer un nouveau fichier texte avec le contenu concaténé
-        const file = new Blob([this.pdf], {
-            type: "application/pdf",
-        });
-
-
         // Télécharger le fichier .tex dans le navigateur de l'utilisateur
-        saveAs(file, "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10) + ".pdf");
+        saveAs(pdf, "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10) + ".pdf");
     }
 
 
