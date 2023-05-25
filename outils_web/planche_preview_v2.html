@@ -955,8 +955,9 @@
 
     function sauvegarderPDF() {
 
+        console.log("sauvegarderPDF VOICI LE PDF " + this.pdf);
         // Télécharger le fichier .tex dans le navigateur de l'utilisateur
-        saveAs(pdf, "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10) + ".pdf");
+        saveAs(this.pdf, "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10) + ".pdf");
     }
 
 
