@@ -911,8 +911,11 @@
             .replace(/\\usepackage\{tikz\}/g, '')
             .replace(/\\usepackage\[T1\]\{fontenc\}/g, '');
 
-        pdftex.on_stdout = appendOutput; // Appeler la fonction appendOutput lorsque la sortie standard est disponible
-        pdftex.on_stderr = appendOutput; // Appeler la fonction appendOutput lorsque la sortie d'erreur est disponible
+        pdftex.on_stdout = appendOutput;
+        pdftex.on_stderr = appendOutput;
+
+        console.log("STDOUT : " + pdftex.on_stdout);
+        console.log("STDERR : " + pdftex.on_stderr);
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
