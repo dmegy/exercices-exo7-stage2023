@@ -206,11 +206,7 @@
                 <i class="material-icons left">visibility</i>
             </button>
 
-            <a id="btnSavePDF" class="waves-effect waves-light btn" onclick="sauvegarderPDF()" style="display: none;">
-                <i class="material-icons">download</i>
-                <i class="material-icons">save</i>
-                <span class="btn-share-text">PDF</span>
-            </a>
+
             <!-- ce bouton utilisait export5.php : inutile, maintenant -->
             <!--<input class="btn" type="submit" name="tex" value="LaTeX (nouvel onglet)">-->
             </form>
@@ -297,6 +293,13 @@
                         <iframe id="myIframe" name="myIframe" title="myIframe" width="100%" height="100%" src=""
                             style="display: none;">
                         </iframe>
+                        <div id="btnSavePDF" style=" bottom: 0; right: 0; position: absolute; margin: 1rem;">
+                            <a class="waves-effect waves-light btn" onclick="sauvegarderPDF()">
+                                <i class=" material-icons">download</i>
+                                <i class="material-icons">save</i>
+                                <span class="btn-share-text">Enregirstrer le PDF</span>
+                            </a>
+                        </div>
                     </div><!-- /card-content-->
                 </div><!-- /card-->
             </div><!-- /container-->
