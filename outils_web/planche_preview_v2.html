@@ -275,7 +275,19 @@
                 <div class="card white z-depth-3">
                     <div class="card-content" style="height: calc(100dvh - 30px);">
                         <div id="textPresentation">
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                            Bienvienu sur planche_preview.html ! <br />
+                            Cette page possède les fonctionnalités suivantes :
+                            <ul>
+                                <li>Prévisualisation de la feuille d'exercices</li>
+                                <li>Sauvegarde de la planche en PDF sur le disque</li>
+                                <li>Sauvegarde du code LaTeX sur le disque</li>
+                                <li>Export de la planche en LaTeX</li>
+                                <li>Partage de la planche par mail</li>
+                                <li>Copier le lien de la planche</li>
+                            </ul>
+                            <br />
+                            Pour sauvegarder la planche en PDF, il faut prévisualiser la planche, puis cliquer sur le
+                            bouton "PDF". <br />
                         </div>
                         <div id="consoleOutput" style="display: none;">
                             <h3>Console Output</h3>
@@ -900,6 +912,9 @@
         let consoleOutput = document.getElementById("consoleOutput");
         let btnSavePDF = document.getElementById("btnSavePDF");
         let myIframe = document.getElementById("myIframe");
+        var output = document.getElementById("output");
+
+        output.innerHTML = "";
 
         myIframe.style.display = "none";
         textPresentation.style.display = "none";
@@ -913,9 +928,6 @@
 
         pdftex.on_stdout = appendOutput;
         pdftex.on_stderr = appendOutput;
-
-        console.log("STDOUT : " + pdftex.on_stdout);
-        console.log("STDERR : " + pdftex.on_stderr);
 
         pdftex.compile(latex_code)
             .then(function (pdf) {
