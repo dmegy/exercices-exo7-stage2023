@@ -1,18 +1,34 @@
 # Utilisation de MathJax (version 3)
 
-Ici, tout ce que vous avez appris sur l'utilisation de la lib Mathjax:
 
 ## Import dans un doc
 
-insertion ds un document,
+    import et configuration de Mathjax via un CDN
 
-## section
+    
+    ```<!-- Configuration de MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
 
-problèmes rencontrés (délimiteurs, relancer le rendu, etc)
+    <!-- Librairie mathjax -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
+    ```
 
-Parsage par mathjax du code latex à l'extérieur de formules mathématiques (retours à la ligne etc)
+    A insérer dans le <head> du document html et dans cet ordre. Il faut configurer Mathjax avant de l'importer.
 
-## section
 
-Façons de parser à la main du code latex lorsque Mathjax ne le fait pas, avec des expressions régulières par exemple.
-
+## Problèmes rencontrés
+    
+    - Divers problèmes au niveau de l'import et la configuration.
+    - Beaucoup de balises ne sont pas interprétées et doivent être gérées manuellement.
+    - Des balises sont parfois interprétées mais pas comme il le faut (Par exemple : \begin(enumerate) ... \item \end(enumerate) )
+    - Utilisation d'expressions régulières pour gérer du code LaTeX, des accents et autres manuellement.
+    - Très grand nombre de balises présentant des bugs et devant être gérées manuellement.

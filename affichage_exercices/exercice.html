@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Page d'exercice</title>
+    <!-- Include Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Import materialize.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  
+    <!--Let browser know website is optimized for mobile-->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@exo7math">
+    <meta name="twitter:creator" content="@exo7math">
+    <meta name="twitter:title" content="Exportez vos feuilles d'exercices">
+    <meta name="twitter:description"
+      content="Choisissez vos exercices et sauvegardez votre feuille au format LaTeX, PDF, ou ouvrez votre feuille dans Overleaf">
+    <meta name="twitter:image" content="export.png">
+
+    <!-- Configuration de MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+
+    <!-- Librairie mathjax -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.4/es5/tex-mml-chtml.min.js"></script>
+
+    <!-- Include custom CSS -->
+    <style>
+        #container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .top-div {
+            width: 70%;
+            height: 100px;
+            display: flex;
+            margin-bottom: 0px;
+            margin-top: 10px;
+        }
+        .left-div {
+            flex: 3;
+            /* background-color: lightblue; Added for visual clarity */
+            padding-left: 1%;
+        }
+        .right-div {
+            flex: 1;
+            position: relative;
+            /* background-color: lightgreen; Added for visual clarity */
+        }
+        .mathjax-button {
+            position: relative;
+            width: 67%;
+            height: 40%;
+            top: 20%;
+            left: 20%;
+            padding: 0.4%;
+        }
+        .btn-share-text {
+            position: relative;
+            top: -10%;
+            /* margin-left: 1px; */
+        }
+        .center-div {
+            width: 70%;
+            max-height: 60%;
+            display: flex;
+            margin-bottom: 0px;
+            overflow-y:auto;
+        }
+        .bottom-div {
+            width: 70%;
+            height: 10%;
+            max-height: 100%;
+            display: flex;
+        }
+        .collapsible {
+            margin-left: 1%;
+            height: 100%;
+            width: 95%;
+            max-height: 100%;
+            flex-wrap: wrap;
+        }
+        .boutons-bottom{
+            margin: 0.5%;
+            white-space: normal; 
+            padding-left: 1%; 
+            padding-right: 1%;
+        }
+        .bouton-pdf{
+            margin-right: -1.5%;
+        }
+        .bouton-overleaf{
+            margin-right: -0.5%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+
+        <div class="row top-div">
+            <div class="left-div">
+                <h3 id="header-exercice"></h3>
+            </div>
+            <div class="right-div">
+                <a class="waves-effect waves-light btn mathjax-button" id="bouton-mathjax">
+                    <i class="material-icons" id="icon-mathjax">visibility</i>
+                    <span class="btn-share-text">MATHJAX</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="row center-div" id="center-div">
+            <ul class="collapsible expandable">
+                <li class="active">
+                    <div class="collapsible-header">
+                        <span style="font-weight: bold;">Énoncé</span>
+                    </div>
+                    <div class="collapsible-body">
+                        <p id="enonce"></p>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <span style="font-weight: bold;">Indications</span>
+                    </div>
+                    <div class="collapsible-body">
+                        <p id="indications"></p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                        <span style="font-weight: bold;">Correction</span>
+                    </div>
+                    <div class="collapsible-body">
+                        <p id="correction"></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Affiché en cas d'absence du paramètre exo dans l'url-->
+        <div class="row center-div" id="accueil" style="margin-left: 16.5%;">
+            <h5>Ceci est une page dédiée à l'affichage d'un exercice.</h5>
+            <br>
+            <h6><u>Correcte utilisation :</u></h6>
+            <p>Il faut ajouter à la fin de l'url le paramètre <b>"?exo="</b> suivi du <b>numéro d'exercice</b>.</p>
+            <p id="exemple-accueil"></p>
+            <br>
+            <h6><u>Boutons :</u></h6>
+            <p>- Activation / Désactivation de l'interprétation MathJax</p>
+            <p>- Exporter la page en pdf</p>
+            <p>- Ouvrir la page dans overleaf</p>
+            <p>- Ouvrir le code LaTeX source</p>
+            <p>- Sauvegarder le code LaTeX source</p>
+            <p>- Envoi du lien de la page par mail</p>
+            <p>- Copier lien de la page dans le presse-papier</p>
+            <p>- (Éventuellement) Redirection vers une vidéo youtube de l'exercice</p>
+        </div>
+
+        <div class="row bottom-div">
+            <!-- BOUTONS -->
+            <!-- Exporter en PDF -->
+            <form target="_blank" name="formulaire" action="http://exo7.emath.fr/bin/extract5.php" class="boutons-bottom bouton-pdf" method="post">
+                <textarea name="MesExos" id="maListe" rows="5" cols="100" style="width=100%;height:3em;resize:none;"
+                    onkeyup="maj()" hidden></textarea>
+                <label hidden>
+                    <input type="checkbox" name="Pos[]" value="e1" checked="checked">
+                    <span>Énoncés</span>
+                </label>
+                <label hidden>
+                    <input type="checkbox" name="Pos[]" value="i1" checked="checked">
+                    <span>Indications</span>
+                </label>
+                <label hidden>
+                    <!-- <input type="checkbox" name="Pos[]" value="i2" checked="checked"> -->
+                    <input type="checkbox" name="Pos[]" value="i2">
+                    <span>sur une page à part</span>
+                </label>
+                <label hidden>
+                    <input type="checkbox" name="Pos[]" value="c1" checked="checked">
+                    <span>Corrections</span>
+                </label>
+                <label hidden>
+                    <!-- <input type="checkbox" name="Pos[]" value="c2" checked="checked"> -->
+                    <input type="checkbox" name="Pos[]" value="c2">
+                    <span>sur une page à part</span>
+                </label>
+
+                <!-- Exporter en PDF -->
+                <button class="waves-effect waves-light btn" type="submit" name="action">
+                    <i class="material-icons">open_in_new</i>
+                    <span class="btn-share-text">PDF</span>
+                </button>
+                    <!-- ce bouton utilisait export5.php : inutile, maintenant -->
+                    <!--<input class="btn" type="submit" name="tex" value="LaTeX (nouvel onglet)">-->
+            </form>
+
+            <!-- Ouvrir dans Overleaf -->
+            <form action="https://www.overleaf.com/docs" class="boutons-bottom bouton-overleaf" method="post" target="_blank">
+                <textarea rows="8" cols="60" name="snip" style="display: none;"></textarea>
+                <button class="waves-effect waves-light btn" type="submit" name="action">
+                    <i class="material-icons">open_in_new</i>
+                    <span class="btn-share-text">Overleaf</span>
+                </button>
+            </form>
+            
+            <!-- Ouvrir code source LaTeX-->
+            <a class="waves-effect waves-light btn boutons-bottom" onclick="ouvrirExosSource()">
+                <i class="material-icons">open_in_new</i>
+                <span class="btn-share-text">LaTeX</span>
+            </a>
+            
+            <!-- Sauvegarder code LaTeX-->
+            <a class="waves-effect waves-light btn boutons-bottom" onclick="sauvegarderExos()">
+                <i class="material-icons">download</i>
+                <i class="material-icons">save</i>
+                <span class="btn-share-text">LaTeX</span>
+            </a>
+            
+            <!-- Envoyer lien par mail -->
+            <a class="waves-effect waves-light btn boutons-bottom" onclick="partagerLien()">
+                <i class="material-icons">email</i>
+                <i class="material-icons">insert_link</i>
+                <span class="btn-share-text">Envoi du lien par mail</span>
+            </a>
+
+            <!-- Copier le lien -->
+            <a class="waves-effect waves-light btn boutons-bottom" onclick="copierLien()">
+                <i class="material-icons">content_copy</i>
+                <i class="material-icons">insert_link</i>
+                <span class="btn-share-text">copier le lien</span>
+            </a>
+            
+            <!-- Redirection Video-->
+            <a id="bouton-video">
+                <!-- Côté JavaScript-->
+            </a>
+            
+        </div>
+    </div>
+</body>
+
+<!-- Include Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>    
+
+<script>
+    /** 
+     * Fonction qui change les dimensions du tableau quand un collapsible est ouvert
+     */
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.collapsible.expandable');
+        var options = {
+            accordion: false,
+            onOpenStart: function () {
+                // Increase height of center and bottom divs when collapsible is opened
+                document.querySelector('.center-div').style.maxHeight = '100%';
+                // document.querySelector('.collapsible').style.height = '100%';
+            },
+            onCloseStart: function () {
+                // Revert back to initial height when collapsible is closed
+                // document.querySelector('.center-div').style.maxHeight = '30%';
+            }
+        };
+        var instances = M.Collapsible.init(elems, options);
+    });
+
+    /**
+     * Fonction pour partager le lien de la page par mail
+     */
+    function partagerLien() {
+        // Subject de l'email
+        let subject = "Exercice numéro " + numExo;
+        // Corps de l'email
+        let body = "Voici une feuille d'exercices compilée à partir du site exo7 " + "(https://exo7.emath.fr, https://github.com/exo7math/exercices-exo7, https://exo7math.github.io/exercices-exo7).\n\nCette feuille contient l'exercice " + numExo + ".\n\nLe lien pour accéder à cette fiche directement est: " + window.location.href; 
+        let mailtoLink = "mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body); // URL mailto
+
+        window.location.href = mailtoLink; // Ouvre le client mail de l'utilisateur avec le nouvel email pré-rempli
+    }
+
+    /**
+     * Fonction permettant d'ouvrir la page dans Overleaf
+     */
+    async function ouvrirAvecOverleaf() {
+        try {
+            // Récupérer le contenu du fichier texte
+            const fileResponse = await fetch(
+                "https://raw.githubusercontent.com/dmegy/exercices-exo7-stage2023/main/exercices/_preambule.txt"
+            );
+            let fileContent = (await fileResponse.text());
+            // Concaténer le contenu du fichier avec le résultat de la fonction fetchExos()
+            let concatenatedText = fileContent + (await fetchText(URLexo));
+            concatenatedText += "\n" + "\\end{document}";
+
+            // Mettre le contenu dans le textarea du formulaire
+            const textarea = document.querySelector('textarea[name="snip"]');
+            if (textarea) {
+                textarea.value = concatenatedText;
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    /**
+     * Fonction pour le bouton "Copier le lien dans le presse-papier"
+     */
+    function copierLien() {       
+        var dummyTextArea = document.createElement('textarea');
+        dummyTextArea.value = window.location.href;
+        document.body.appendChild(dummyTextArea);
+        dummyTextArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummyTextArea);
+    }
+
+    /**
+     * Remplacement des symboles spéciaux dans une chaîne de caractères
+     * @param {string} myString - La chaîne de caractères
+     * @returns <string> - La chaîne de caractères avec les symboles remplacés
+     */
+    function replaceSymbols(myString) {
+        const specialChars = {
+            "\\'e": "é", "\\\`e": "è", "\\^e": "ê", '\\"e': "ë", "\\\`a": "à", "\\\^a": "â", '\\\"a': "ä", "\\'a": "á", "\\'i": "í",
+            "\\\^i": "î", "\\^{\\i}": "î", '\\"i': "ï", "\\\^o": "ô", '\\"o': "ö", "\\'o": "ó", "\\\^u": "û", '\\"u': "ü", "\\'u": "ú",
+            "\\cc": "ç", "\\cC": "Ç", "\\~n": "ñ", "\\~N": "Ñ", "\\AE": "Æ", "\\ae": "æ", "\\OE": "Œ", "\\oe": "œ", "\\ss": "ß",
+            "\\qquad": "&emsp;", "\\'E": "É", "\\begin{enumerate}": '<br>', "\\item": '<br> &emsp; - ', "\\end{enumerate}": '<br>',
+            "\\N": "ℕ", "\\N*": "ℕ*", "\\R": "ℝ", "\\R*": "ℝ*", "\\C": "ℂ", "\\C*": "ℂ*", "\\Z": "ℤ", "\\Z*": "ℤ*", "\\Zz": "ℤz",
+            "\\Cc": "ℂc", "\\Q": "ℚ", "\\Q*": "ℚ*",
+            "\\emph": "<em>", "\\\\": "<br>",
+        };
+        for (var eachKey in specialChars) {
+            myString = myString.replaceAll(eachKey, specialChars[eachKey]);
+        }
+        return myString;
+    }
+
+    /**
+     * Fonction pour formatter le numéro d'un exercice à 6 chiffres
+     *
+     * @param {string} number - Le numéro de l'exercice
+     * @returns {string} Le numéro formatté
+     */
+    function formatExoNumber(number) {
+        // Conversion en string
+        let str = String(number);
+
+        // string de 6 chiffres maximum
+        if (str.length > 6) {
+            throw new Error('Taille du nombre est supérieur à 6');
+        }
+
+        // padStart :
+        // 1er paramètre = taille total voulue du string.
+        // 2ème paramètre = string ajouté pour compléter le string de base
+        return str.padStart(6, '0');
+    }
+
+    /**
+    * Fonction asynchrone pour fetch le texte de l'url d'un exercice puis appel de la fonction de parsage
+    *
+    * @param {string} url - L'url du texte brut de l'exercice
+    * @returns {Promise<string>} Le texte de l'exercice en chaîne de caractères.
+    */
+    const fetchText = async (url) => {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const text = await response.text();
+        return text;
+    };
+
+    /**
+     * Fonction pour parser le texte fetché. Découpage et stockage dans des variables, puis affichage dans les conteneurs
+     * correspondants
+     * @param {string} fetchedText - Le texte fetché à parser
+     */
+    const parseText = (fetchedText) => {
+        // Mots clés devant figurant dans chaque exercice 
+        var motsObligatoires = ["\\exercice", "\\finexercice", "\\enonce", "\\finenonce"];
+        // Vérifie si ces mots sont présents dans le texte de l'exercice
+        let latexValide = motsObligatoires.every(item => fetchedText.includes(item));
+
+        if (!latexValide) { // Si non présents, exercice incorrect, arrêt du script
+            document.write("<h2> Le code latex de l'exercice contient une erreur </h2>");
+            throw new Error("Code latex incorrect");
+        }
+
+        // Récupération de la vidéo
+        const regexString = "\\\\video\\{([^}]+)\\}";
+        /*
+        Explications expression régulière
+            \\\\ échappe 2 backslashes.
+            video match la chaine de caracteres "video"
+            \\{ match l'accolade {. Le backslash \ échappe le symbole spécial { dans les expressions régulières pour matcher le caractère littéral : {.
+            ( et ) délimitent le capturing group, qui capture le texte qui match le pattern entre les parenthèses.
+            [^}] match tous caracteres sauf l'accolade fermante }.
+            + match 1 ou plus occurrences du pattern [^}] donc 1 ou plusieurs caractères compris entre les parenthèses
+            \\} match le caractère littéral accolade fermante }. Backslash utilisé pour échapper le symbole spécial {
+        */
+        const regex = new RegExp(regexString);
+        presenceVideo = fetchedText.match(regex);  
+    
+        // S'il y a une video, on affiche le bouton vidéo
+        if (presenceVideo){
+            affichageBoutonVideo();
+        }
+
+        // Récupération de l'énoncé
+        const debutEnonce = fetchedText.indexOf("\\enonce");
+        const finEnonce = fetchedText.indexOf("\\finenonce");
+        parties.enonce = fetchedText.slice(debutEnonce + 8, finEnonce);
+
+        // Récupération de l'indication s'il y en a
+        const debutIndication = fetchedText.indexOf("\\indication");
+        if (debutIndication != -1) {
+            const finIndication = fetchedText.indexOf("\\finindication");
+            parties.indications = fetchedText.slice(debutIndication + 12, finIndication);
+        }
+
+        // Récupération de la correction s'il y en a
+        const debutCorrection = fetchedText.indexOf("\\correction");
+        if (debutCorrection != -1) {
+            const finCorrection = fetchedText.indexOf("\\fincorrection");
+            parties.correction = fetchedText.slice(debutCorrection + 12, finCorrection - 1);
+        }
+
+        // Remplacement des accents.
+        parties.enonce = replaceSymbols(parties.enonce);
+        parties.indications = replaceSymbols(parties.indications);
+        parties.correction = replaceSymbols(parties.correction);
+
+        // Affichage
+        document.getElementById('header-exercice').innerHTML = '<span style="font-weight: bold;">' + "Exercice " + numExo + '</span>'
+        document.getElementById('enonce').innerHTML = parties.enonce;
+        document.getElementById('indications').innerHTML = parties.indications;
+        document.getElementById('correction').innerHTML = parties.correction;
+
+        renderMathJax();
+    };
+    
+    /**
+     * Fonction qui affiche le bouton video. Appelée uniquement quand l'exercice a une vidéo
+     */
+    function affichageBoutonVideo(){
+        const button = document.getElementById('bouton-video');
+        const icon1 = document.createElement('i');
+        const icon2 = document.createElement('i');
+        const textSpan = document.createElement('span');
+
+        button.id = 'redirection-video';
+        button.classList.add('waves-effect', 'waves-light', 'btn', 'boutons-bottom');
+        icon1.classList.add('material-icons');
+        icon2.classList.add('material-icons');
+        textSpan.classList.add('btn-share-text');
+
+        icon1.textContent = 'open_in_new';
+
+        icon2.textContent = 'play_circle_outline';
+
+        textSpan.textContent = 'Video';
+
+        button.appendChild(icon1);
+        button.appendChild(icon2);
+        button.appendChild(textSpan);
+
+        const codeVideo = presenceVideo[1]; // Code de la vidéo (par exemple : 8nXKgqMsucU)
+        const urlVideo = "https://www.youtube.com/watch?v=" + codeVideo; // URL Youtube de la vidéo
+        
+        // Fonction appelée quand le bouton est cliqué
+        button.addEventListener('click', function () {
+            // Redirection vers l'url de la vidéo
+            window.open(urlVideo, '_blank');
+        });
+    }
+
+    /**
+     * Fonction qui fetch puis appelle le parsage l'exercice
+     */
+    async function fetchAndParseText(url) {
+        try {
+            const fetchedText = await fetchText(url);
+            const parsedText = parseText(fetchedText);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    /**
+     * Ouvre la source LaTeX de l'exercice fourni en paramètre dans l'URL    
+     */
+    async function ouvrirExosSource() {
+        try {
+            const concatenatedText = await fetchText(URLexo);
+
+            // Créer un nouveau fichier texte avec le contenu concaténé
+            const file = new File([concatenatedText], "exercices.txt", {
+                type: "text/plain",
+            });
+
+            // Créer une URL de l'objet file pour l'ouvrir dans un nouvel onglet
+            const fileUrl = URL.createObjectURL(file);
+
+            // Ouvrir le fichier dans un nouvel onglet
+            window.open(fileUrl, "_blank");
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    /**
+     * Télécharge en local un fichier contenant le texte de l'exercice
+     */
+    async function sauvegarderExos() {
+        try {
+            const concatenatedText = await fetchText(URLexo);
+
+            // Créer un nouveau fichier texte avec le contenu concaténé
+            const file = new Blob([concatenatedText], {
+                type: "text/plain",
+            });
+
+            // Créer une URL de l'objet file pour télécharger le fichier
+            const fileUrl = URL.createObjectURL(file);
+
+            // Créer un élément <a> avec l'attribut `download` pour télécharger le fichier
+            const link = document.createElement("a");
+            link.href = fileUrl;
+            link.download = "exercices.txt";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        catch (error) {
+            console.error(`Fetch error: ${error}`);
+            throw error;
+        }
+    }
+
+    /**
+     * Fonction qui retourne l'exercices par requête GET
+     */
+    function getExo() {
+        const params = new URLSearchParams(window.location.search);
+        const numExo = params.get("exo");
+        return numExo;
+    }
+
+    /**
+     * Fonction qui active mathjax sur l'énoncé, les indications et la correction 
+     */
+    function renderMathJax() {
+        MathJax.typesetPromise([enonceContainer])
+            .catch(function (err) {
+                console.log('MathJax rendering failed: ' + err.message);
+            });
+
+        MathJax.typesetPromise([indicationsContainer])
+            .catch(function (err) {
+                console.log('MathJax rendering failed: ' + err.message);
+            });
+
+        MathJax.typesetPromise([correctionContainer])
+            .catch(function (err) {
+                console.log('MathJax rendering failed: ' + err.message);
+            });
+    }
+
+    /**
+     * Fonction du bouton "activation/désactivation de mathjax"
+     */
+    document.getElementById('bouton-mathjax').addEventListener('click', function() {
+        if (rendered == false) { // Activation du rendering mathjax
+            icon.textContent = 'visibility';
+            enonceContainer.innerHTML = parties.enonce;
+            indicationsContainer.innerHTML = parties.indications;
+            correctionContainer.innerHTML = parties.correction;
+            MathJax.typesetPromise([enonceContainer]);
+            MathJax.typesetPromise([indicationsContainer]);
+            MathJax.typesetPromise([correctionContainer]);
+            rendered = true;
+        }
+        else { // Désactivation du rendering mathjax
+            icon.textContent = 'visibility_off';
+            enonceContainer.innerHTML = parties.enonce;
+            indicationsContainer.innerHTML = parties.indications;
+            correctionContainer.innerHTML = parties.correction;
+            rendered = false;
+        }
+    });         
+    
+
+    /* PROGRAMME PRINCIPAL */
+    // Get le numéro d'exo en paramètre dans l'URL
+    const numExo = getExo();
+    if (numExo){
+        // Si URL rentrée correctement
+        document.getElementById('center-div').style.display = 'block'; // Affichage du div
+        document.getElementById('accueil').style.display = 'none'; // Div caché
+    }
+    else{
+        document.getElementById('center-div').style.display = 'none'; // Div caché
+
+        var str = window.location.href // URL rentrée
+        var endIndex = str.indexOf('.html') + 5; 
+        var slicedStr = str.slice(0, endIndex); // Nouvelle chaîne de caractères s'arrêtant à ".html"
+        document.getElementById('exemple-accueil').innerHTML = 'Par exemple, <a href="' + slicedStr + '?exo=123">' + slicedStr + '?exo=123' + '</a>';
+    
+        document.getElementById('accueil').style.display = 'block'; // Affichage du div
+        throw new Error('URL incorrecte. Arrêt du programme');
+    }
+
+    // Pour le formulaire d'export de pdf
+    document.getElementById("maListe").textContent = numExo;
+
+    // Construction de l'URL à fetch
+    let URLexo = 'https://raw.githubusercontent.com/exo7math/exercices-exo7/master/exercices/ex' + formatExoNumber(numExo) + '.txt';
+
+    // Initialisation de variables globales
+    let parties = {
+            enonce: '',
+            indications: "pas d'indications",
+            correction: "pas de correction",
+        };
+    
+    // Fetch et parsage de l'exo
+    fetchAndParseText(URLexo);
+
+    // Icone du bouton d'activation / désactivation mathjax
+    const icon = document.getElementById('icon-mathjax');
+
+    // Indique la présence d'une video pour l'exercice
+    let presenceVideo;
+
+    // Variable permettant de suivre l'état du rendering mathjax
+    let rendered = true;
+
+    let enonceContainer = document.getElementById('enonce');
+    let indicationsContainer = document.getElementById('indications');
+    let correctionContainer = document.getElementById('correction');
+
+    ouvrirAvecOverleaf();
+</script>
+</html>
