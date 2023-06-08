@@ -19,9 +19,20 @@ On peut aussi inliner du `code` dans un paragraphe.
 Et on peut mettre des liens cliquables, par exemple
 [Syntaxe basique en markdown](https://www.markdownguide.org/basic-syntax/)
 
+## 31 mai - 06 juin
+
+Code l'appli + prepare rapport de stage
+
+## 24-30 mai
+
+Fin de exercice d'exo7, attente de retour.
+Page sélection quiz v1 en svelte supprimer du repo.
+Page sélection quiz v2 sans framework, attente de retour.
+Conception application quiz, attente de retour.
+
 ## 23 mai
 
-planche_recherche.html terminer + début des quizz.
+planche_recherche.html terminer + début des quiz.
 
 ## 22 mai
 

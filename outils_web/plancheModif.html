@@ -243,32 +243,33 @@
 
     // Vérifie que chaque nombre est inférieur ou égal à la valeur maximale
     for (let i = 0; i < exercices.length; i++) {
-      if (exercices[i].includes("-")) { // Si l'élément contient un tiret
+      if (exercices[i].includes("-")) {
         const range = exercices[i].split("-");
         const debut = parseInt(range[0]);
         const fin = parseInt(range[1]);
-        if (debut >= fin || debut > nbExosMax || fin > nbExosMax) { // Vérifie que le début est inférieur à la fin et que les nombres sont inférieurs ou égaux à la valeur maximale
+        if (debut >= fin || debut > nbExosMax || fin > nbExosMax || isNaN(debut) || isNaN(fin)) {
           document.getElementById("maListe").style.borderColor = "red";
           document.getElementById("txt-maListeError").innerHTML = "Les nombres doivent être dans un format valide (ex: 1-10) et inférieurs à " + nbExosMax + ".";
           return false;
         }
-      } else if (parseInt(exercices[i]) > nbExosMax) { // Si l'élément est un nombre simple
+      }
+      else if (parseInt(exercices[i]) > nbExosMax) {
         document.getElementById("maListe").style.borderColor = "red";
         document.getElementById("txt-maListeError").innerHTML = "Les nombres doivent être inférieurs à " + nbExosMax + ".";
         return false;
-        // sinon si l'élément n'est pas un nombre
-      } else if (isNaN(parseInt(exercices[i])) && exercices[i] != "") {
+        // sinon si l'élément n'est pas un nombre sauf si c'est vide
+      } else if (isNaN(exercices[i]) && exercices[i] != "") {
         document.getElementById("maListe").style.borderColor = "red";
         document.getElementById("txt-maListeError").innerHTML = "Les nombres doivent être dans un format valide (ex: 1-10) et inférieurs à " + nbExosMax + ".";
         return false;
       } else {
         document.getElementById("maListe").style.borderColor = "black";
-        document.getElementById("txt-maListeError").innerHTML = "";
       }
     }
 
     // Si toutes les vérifications ont réussi, retourne true
     document.getElementById("maListe").style.borderColor = "black";
+    document.getElementById("txt-maListeError").innerHTML = "";
     return true;
   }
 
@@ -322,7 +323,7 @@
     mise à jour des champs, du titre de la page etc
   */
   function maj() {
-    maListe = document.getElementById("maListe").value;
+    maListe = document.getElementById("maListe").value.trim().replace(/\s+/g, ' ');
     hautGauche = document.getElementById("txt-annee").value;
     hautDroite = document.getElementById("txt-num").value;
     basGauche = document.getElementById("txt-univ").value;
@@ -330,7 +331,7 @@
     titre = document.getElementById("txt-titre").value;
 
     // update titre de la page avec le titre la liste d'exercices 
-    document.title = "Exo7 : planche " + document.getElementById("txt-titre").value + " | exos " + document.getElementById("maListe").value;
+    document.title = "Exo7 : planche " + document.getElementById("txt-titre").value + " | exos " + document.getElementById("maListe").value.trim().replace(/\s+/g, ' ');
 
     // planche.html?liste=10+13-15&titre=mon%20titre&hautgauche=blabla&hautdroite=paf&basgauche=hello&basdroite=blabla
 
@@ -338,7 +339,7 @@
     // update du permalien en bas
     permalien = racine;
     if (maListe != "") {
-      permalien += "?liste=" + document.getElementById("maListe").value.split(' ').join('+');
+      permalien += "?liste=" + document.getElementById("maListe").value.trim().replace(/\s+/g, ' ').split(' ').join('+');
     }
     if (document.getElementById("txt-titre").value != "") {
       permalien += "&titre=" + encodeURIComponent(document.getElementById("txt-titre").value);
@@ -429,7 +430,7 @@
    */
   function partagerPlanche() {
     let subject = "Feuille d'exercices" + document.title; // Sujet de l'email
-    let body = "Voici une feuille d'exercices compilée à partir du site exo7 " + "(https://exo7.emath.fr, https://github.com/exo7math/exercices-exo7, https://exo7math.github.io/exercices-exo7).\n\nCette feuille contient les exercices " + formaterNumerosDesExosDansMails(document.getElementById("maListe").value) + ".\n\nLe lien pour accéder à cette fiche directement est: " + window.location.href; // Corps de l'email
+    let body = "Voici une feuille d'exercices compilée à partir du site exo7 " + "(https://exo7.emath.fr, https://github.com/exo7math/exercices-exo7, https://exo7math.github.io/exercices-exo7).\n\nCette feuille contient les exercices " + formaterNumerosDesExosDansMails(document.getElementById("maListe").value.trim().replace(/\s+/g, ' ')) + ".\n\nLe lien pour accéder à cette fiche directement est: " + window.location.href; // Corps de l'email
     let mailtoLink = "mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body); // URL mailto
 
     window.location.href = mailtoLink; // Ouvre le client mail de l'utilisateur avec le nouvel email pré-rempli
@@ -440,7 +441,7 @@
   @returns {Array} - Tableau contenant les numéros d'exercices.
   */
   function getExos() {
-    let liste = document.getElementById("maListe").value;
+    let liste = document.getElementById("maListe").value.trim().replace(/\s+/g, ' ');
     let exos = [];
 
     // Divise la chaîne en un tableau de chaînes
@@ -620,7 +621,7 @@
       // Créer un élément <a> avec l'attribut `download` pour télécharger le fichier
       const link = document.createElement("a");
       link.href = fileUrl;
-      link.download = "exo7_exercices_" + document.getElementById("maListe").value.replace(/\s+/g, '_').substring(0, 10);
+      link.download = "exo7_exercices_" + document.getElementById("maListe").value.trim().replace(/\s+/g, '_').substring(0, 10);
       + ".txt";
       document.body.appendChild(link);
       link.click();
@@ -755,7 +756,7 @@
 
   //get the value of maListe
   function getMaliste() {
-    const maListe = formaterNumerosDesExosDansMails(document.getElementById("maListe").value);
+    const maListe = formaterNumerosDesExosDansMails(document.getElementById("maListe").value.trim().replace(/\s+/g, ' '));
     return maListe;
   }
   // get the value of hautGauche
